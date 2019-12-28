@@ -1,122 +1,5 @@
 #include "./includes/asm.h"
 
-void	exit_usage(char *exe)
-{
-	ft_printf("%{red}Usage:%{eoc} %s", exe);
-	ft_printf(" [-r | --reverse] <sourcefile.s> ...\n");
-	ft_printf("       -r : deassembler mode\n");
-	exit(EXIT_FAILURE);
-}
-
-t_chr			*file_save_chr(int fd)
-{
-	t_chr		*input;
-	char		*line;
-	char		*str;
-	int			ret;
-	int			i;
-
-	i = 1;
-	input = NULL;
-	while ((ret = get_next_line(fd, &line)) > 0)
-	{
-		str = ft_strtrim(line);
-		chr_addnode(&input, str, i);
-		free(line);
-		free(str);
-		i++;
-	}
-	free(line);
-	if (ret == 0)
-		return (input);
-	if (input)
-		chr_free(&input);
-	return (NULL);
-}
-
-static void		free_op_tab(t_op **op_tab)
-{
-	int			i;
-
-	i = 0;
-	while (i < 16)
-		free((*op_tab)[i++].name);
-	free(*op_tab);
-}
-
-void			free_sfile(t_sfile *sfile)
-{
-	if (sfile->name)
-		free(sfile->name);
-	if (sfile->comment)
-		free(sfile->comment);
-	if (sfile->sf)
-		chr_free(&(sfile->sf));
-	free_op_tab(&(sfile->op_tab));
-	//if (sfile->insts)
-	//	free_insts(sfile->insts);
-}
-
-int		is_allblank(char *str)
-{
-	int		i;
-
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] != ' ' && str[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void		init_sfile(t_sfile *sfile, int fd)
-{
-	sfile->name = NULL;
-	sfile->comment = NULL;
-	sfile->insts = NULL;
-	sfile->cmds = NULL;
-	sfile->sf = file_save_chr(fd);
-	sfile->op_tab = (t_op*)malloc(sizeof(t_op) * 16);
-	fill_op_tab(sfile->op_tab);
-}
-
-void		ft_str_n_combin(char **str1, char *str2)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*str1, "\n");
-	free(*str1);
-	*str1 = tmp;
-	ft_strcombin(str1, str2);
-}
-
-void	exit_error(t_sfile *sfile, t_chr *def, int type)
-{
-	ft_printf("line %{red}%d%{eoc}:", def->len);
-	if (type == ERROR_NAME_LENGTH)
-	{
-		ft_printf(" Champion name is too long ");
-		ft_printf("(Max length %d)\n", PROG_NAME_LENGTH);
-	}
-	else if (type == ERROR_COMMENT_LENGTH)
-	{
-		ft_printf(" Champion comment is too long ");
-		ft_printf("(Max length %d)\n", COMMENT_LENGTH);
-	}
-	else if (type == ERROR_LESS_QUOTES)
-		ft_printf(" Closing quote not found!\n");
-	else if (type == ERROR_LEXICAL)
-		ft_printf(" Lexical Error!\n");
-	else if (type == ERROR_NC_NAME_CMT)
-		ft_printf(" Syntax Error Wrong line or Executable Code before name and comment!\n");
-	else if (type == ERROR_BAD_INSTRUCT)
-		ft_printf(" Syntax Error! Bad Instruction! %s\n", def->str);
-	free_sfile(sfile);
-	exit(1);
-}
-
 char		*complete_line(t_sfile *sfile, t_chr **curr, char *str)
 {
 	char	*complete;
@@ -229,115 +112,6 @@ int			is_alonelabel(char *str)
 	return (0);
 }
 
-int			is_op(t_op *op_tab, char *str)
-{
-	int		i;
-
-	i = 0;
-	while (i < 16)
-	{
-		if (!ft_strcmp(str, op_tab[i].name))
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
-void		tabstr_trim(char **tab)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	while (tab[i])
-	{
-		tmp = tab[i];
-		tab[i] = ft_strtrim(tab[i]);
-		free(tmp);
-		i++;
-	}
-}
-
-static int	is_reg(char *str)
-{
-	int		n;
-	int		i;
-
-	if (str[0] != 'r')
-		return (0);
-	if (ft_strlen(str) == 2)
-	{
-		if (!ft_isdigit(str[1]))
-			return (0);
-		n = str[1] - 48;
-		if (n == 0 || n > REG_NUMBER)
-			return (0);
-		return (1);
-	}
-	else if (ft_strlen(str) == 3)
-	{
-		if (!ft_isdigit(str[i]) || !ft_isdigit(str[i]))
-			return (0);
-		n = ft_atoi(&str[1]);
-		if (n == 0 || n > REG_NUMBER)
-			return (0);
-		return (1);
-	}
-	return (0);
-}
-
-static int	is_dir(char *str)
-{
-	int		i;
-
-	if (str[0] != DIRECT_CHAR)
-		return (0);
-	if (str[1] == LABEL_CHAR)
-	{
-		i = 1;
-		while (str[++i])
-			if (!ft_strchr(LABEL_CHARS, str[i]))
-				return (0);
-		return (1);
-	}
-	i = 0;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
-}
-
-static int	is_ind(char *str)
-{
-	int		i;
-
-	if (str[0] == LABEL_CHAR)
-	{
-		i = 0;
-		while (str[++i])
-			if (!ft_strchr(LABEL_CHARS, str[i]))
-				return (0);
-		return (1);
-	}
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
-}
-
-int			type_arg(char *str)
-{
-	if (is_reg(str))
-		return (T_REG);
-	else if (is_dir(str))
-		return (T_DIR);
-	else if (is_ind(str))
-		return (T_IND);
-	else
-		return (0);
-}
-
 int			corr_tabargs(char **tab_arg, t_op op_ref)
 {
 	int		i;
@@ -396,7 +170,7 @@ int			is_instlabel(t_op *op_tab, char *str)
 	if (str[i] != LABEL_CHAR)
 		return (0);
 	i++;
-	while (str[i] == ' ')
+	while (ft_isblank(str[i]))
 		i++;
 	if (str[i] == '\0')
 		return (0);
@@ -406,56 +180,258 @@ int			is_instlabel(t_op *op_tab, char *str)
 	return (ret);
 }
 
-void			get_instructions(t_sfile *sfile, t_chr *node)
+void	chr_addnode_sm(t_chr **list, char *str, int len)
 {
-	t_inst		*instruct;
+	t_chr	*curr;
+	t_chr	*node;
+
+	if(!(node = (t_chr*)malloc(sizeof(t_chr))))
+		return ;
+	node->str = str;
+	node->len = len;
+	node->next = NULL;
+	if (!*list)
+	{
+		*list = node;
+		return ;
+	}
+	curr = *list;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = node;
+}
+
+t_cmd		*create_cmd()
+{
+	t_cmd	*cmd;
+
+	if (!(cmd = (t_cmd*)malloc(sizeof(t_cmd))))
+		return NULL;
+	cmd->op = NULL;
+	cmd->labels = NULL;
+	cmd->args[0] = NULL;
+	cmd->args[1] = NULL;
+	cmd->args[2] = NULL;
+	return (cmd);
+}
+
+t_cmd		*fill_cmd_aloneinst(t_sfile *sfile, t_chr **list_label, char *str)
+{
+	char	**tab_args;
+	t_cmd	*cmd;
+	int		i;
+	int		j;
+
+	i = 0;
+	if (!(cmd = create_cmd()))
+		exit_serror(sfile);
+	cmd->labels = *list_label;
+	while (str[i] && !ft_isblank(str[i]))
+		i++;
+	cmd->op = ft_strsub(str, 0, i);
+	while (ft_isblank(str[i]))
+		i++;
+	tab_args = ft_strsplit(&str[i], SEPARATOR_CHAR);
+	tabstr_trim(tab_args);
+	i = 0;
+	while (i < 3 && i < tabstr_len(tab_args))
+	{
+		cmd->args[i] = ft_strdup(tab_args[i]);
+		i++;
+	}
+	tabstr_free(&tab_args);
+	return (cmd);
+}
+
+t_cmd		*fill_cmd_instlabel(t_sfile *sfile, t_chr **list_label, char *str)
+{
+	char	**tab_args;
+	char	*label;
+	t_cmd	*cmd;
+	int		i;
+	int		j;
+
+	i = 0;
+	if (!(cmd = create_cmd()))
+		exit_serror(sfile);
+	while (ft_strchr(LABEL_CHARS, str[i]) && str[i] != LABEL_CHAR)
+		i++;
+	label = ft_strsub(str, 0, i);
+	chr_addnode_sm(list_label, label, 0);
+	cmd->labels = *list_label;
+	i++;
+	while (str[i] && ft_isblank(str[i]))
+		i++;
+	j = i;
+	while (str[i] && !ft_isblank(str[i]))
+		i++;
+	cmd->op = ft_strsub(str, j, i - j);
+	while (ft_isblank(str[i]))
+		i++;
+	tab_args = ft_strsplit(&str[i], SEPARATOR_CHAR);
+	tabstr_trim(tab_args);
+	i = 0;
+	while (i < 3 && i < tabstr_len(tab_args))
+	{
+		cmd->args[i] = ft_strdup(tab_args[i]);
+		i++;
+	}
+	tabstr_free(&tab_args);
+	return (cmd);
+}
+
+void			print_cmds(t_list *cmds)
+{
+	t_list		*curr;
+	t_chr		*tmp;
+	t_cmd		*cmd;
+
+	curr = cmds;
+	while (curr)
+	{
+		cmd = curr->content;
+		ft_printf("===============\n");
+		ft_printf("op     = [%s]\n", cmd->op);
+		tmp = cmd->labels;
+		while (tmp)
+		{
+			ft_printf(" label = [%s]\n", tmp->str);
+			tmp = tmp->next;
+		}
+		ft_printf("arg1   = [%s]\n", cmd->args[0]);
+		ft_printf("arg2   = [%s]\n", cmd->args[1]);
+		ft_printf("arg3   = [%s]\n", cmd->args[2]);
+		ft_printf("===============\n");
+		curr = curr->next;
+	}
+}
+
+void			get_cmds(t_sfile *sfile, t_chr *begin)
+{
+	t_cmd		*cmd;
 	t_chr		*list_label;
-	t_list		*cell;
+	t_list		*node;
 	t_chr		*curr;
 	char		*label;
 
-	curr = node;
+	curr = begin;
 	list_label = NULL;
-	instruct = NULL;
 	while (curr)
 	{
-		if (is_alonelabel(curr->str))
+		if (curr->str[0] != COMMENT_CHAR && curr->str[0] != '\0')
 		{
-			ft_printf("|%s| label only\n", curr->str);			////////////////
-			label = ft_strsub(curr->str, 0, ft_strlen(curr->str) - 1);
-			chr_addnode(&list_label, label, ft_strlen(label));
-			free(label);
-		}
-		else if (is_instlabel(sfile->op_tab, curr->str))
-		{
-			ft_printf("|%s| instruction with label\n", curr->str);   /////////////
-			/*label = label_instlabel(curr->str);
-			chr_addnode(&list_label, label, ft_strlen(label));
-			free(label);
-			instlabel_aloneinst(&(curr->str));
-			instruct = fill_inst(list_label, curr->str);
-			cell = dt_createnode(instruct);
-			dt_addnode(&(sfile->insts), cell);
-			list_label = NULL;
-			cell = NULL;*/
-		}
-		else if (is_aloneinst(sfile->op_tab, curr->str))
-		{
-			ft_printf("|%s| instruction alone\n", curr->str);   /////////////
-		}
-		else
-		{
-			chr_free(&list_label);
-			exit_error(sfile, curr, BAD_INSTRUCT);
+			if (is_alonelabel(curr->str))
+			{
+				ft_printf("|%s| label only\n", curr->str);			////////////////
+				label = ft_strsub(curr->str, 0, ft_strlen(curr->str) - 1);
+				chr_addnode_sm(&list_label, label, 0);
+			}
+			else if (is_instlabel(sfile->op_tab, curr->str))
+			{
+				ft_printf("|%s| instruction with label\n", curr->str);   /////////////
+				cmd = fill_cmd_instlabel(sfile, &list_label, curr->str);
+				node = ft_lstnew_sm(cmd, sizeof(cmd));
+				ft_lstadd_last(&sfile->cmds, node);
+				list_label = NULL;
+			}
+			else if (is_aloneinst(sfile->op_tab, curr->str))
+			{
+				ft_printf("|%s| instruction alone\n", curr->str);   /////////////
+				cmd = fill_cmd_aloneinst(sfile, &list_label, curr->str);
+				node = ft_lstnew_sm(cmd, sizeof(cmd));
+				ft_lstadd_last(&sfile->cmds, node);
+				list_label = NULL;
+			}
+			else
+			{
+				chr_free(&list_label);
+				exit_instruct_error(sfile, curr);
+			}
 		}
 		curr = curr->next;
 	}
-	chr_free(&list_label);
+	if (list_label)
+	{
+		if (!(cmd = create_cmd()))
+			exit_serror(sfile);
+		cmd->labels = list_label;
+		node = ft_lstnew_sm(cmd, sizeof(cmd));
+		ft_lstadd_last(&sfile->cmds, node);
+	}
 }
 
-void		print_inst_error()
+t_inst		*create_inst()
 {
-	ft_printf("Error in a instruction!");
+	t_inst	*inst;
+	
+	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
+		return NULL;
+	inst->op = 0;
+	inst->nbr_bytes = 0;
+	inst->args[0].type = 0;
+	inst->args[0].value = 0;
+	inst->args[0].type = 0;
+	inst->args[0].value = 0;
+	inst->args[0].type = 0;
+	inst->args[0].value = 0;
+	return (inst);
+}
+
+t_inst		*cmd_inst(t_sfile *sfile, t_cmd *cmd)
+{
+	t_inst	*inst;
+	int		i;
+
+	if (!(inst = create_inst()))
+		exit_serror(sfile);
+	inst->op = is_op(sfile->op_tab, cmd->op);
+	inst->nbr_bytes = 1;
+	if (sfile->op_tab[inst->op - 1].args_type_code)
+		inst->nbr_bytes++;
+	i = 0;
+	while (i < sfile->op_tab[inst->op - 1].args_nbr)
+	{
+		if (is_reg(cmd->args[i]))
+		{
+			inst->args[i].type = T_REG;
+			inst->nbr_bytes += 1;
+		}
+		else if (is_dir(cmd->args[i]))
+		{
+			inst->args[i].type = T_DIR;
+			inst->nbr_bytes += sfile->op_tab[inst->op - 1].tdir_size;
+		}
+		else if (is_ind(cmd->args[i]))
+		{
+			inst->args[i].type = T_IND;
+			inst->nbr_bytes += 2;
+		}
+		i++;
+	}
+	return (inst);
+}
+
+void		fill_insts_basic(t_sfile *sfile)
+{
+	t_list	*curr;
+	t_list	*node;
+	t_inst	*inst;
+	t_cmd	*cmd;
+
+	curr = sfile->cmds;
+	while (curr)
+	{
+		cmd = (t_cmd*)curr->content;
+		inst = cmd_inst(sfile, cmd);
+		node = ft_lstnew_sm(inst, sizeof(inst));
+		ft_lstadd_last(&(sfile->insts), node);
+		curr = curr->next;
+	}
+}
+
+void		get_insts(t_sfile *sfile)
+{
+	fill_insts_basic(sfile);
 }
 
 char		*encode_asm(t_sfile *sfile)
@@ -474,10 +450,9 @@ char		*encode_asm(t_sfile *sfile)
 	}
 	if (sfile->name && sfile->comment)
 	{
-		if (get_instructions(sfile, curr))
-			code = ft_strdup("Encode time!\n");
-		else
-			print_inst_error();
+		get_cmds(sfile, curr);
+		get_insts(sfile);
+		code = ft_strdup("Encode time!\n");
 	}
 	else
 		exit_error(sfile, curr, ERROR_NC_NAME_CMT);
@@ -492,45 +467,45 @@ char		*decode_asm(t_sfile *sfile)
 	return (code);
 }
 /*
-static void		print_op_case(t_op op)
-{
-	ft_printf("%d  ", op.nbr);
-	ft_printf("%s\t", op.name);
-	ft_printf("%d  ", op.args_nbr);
-	if (op.args_type[0] & T_REG)
-		ft_printf("T_REG|");
-	if (op.args_type[0] & T_DIR)
-		ft_printf("T_DIR|");
-	if (op.args_type[0] & T_IND)
-		ft_printf("T_IND|");
-	ft_printf("\t");
-	if (op.args_type[1] & T_REG)
-		ft_printf("T_REG|");
-	if (op.args_type[1] & T_DIR)
-		ft_printf("T_DIR|");
-	if (op.args_type[1] & T_IND)
-		ft_printf("T_IND|");
-	ft_printf("\t");
-	if (op.args_type[2] & T_REG)
-		ft_printf("T_REG|");
-	if (op.args_type[2] & T_DIR)
-		ft_printf("T_DIR|");
-	if (op.args_type[2] & T_IND)
-		ft_printf("T_IND|");
-	ft_printf("\t");
-	ft_printf("atc:%d\t", op.args_type_code);
-	ft_printf("tdir:%d\n", op.tdir_size);
-}
+   static void		print_op_case(t_op op)
+   {
+   ft_printf("%d  ", op.nbr);
+   ft_printf("%s\t", op.name);
+   ft_printf("%d  ", op.args_nbr);
+   if (op.args_type[0] & T_REG)
+   ft_printf("T_REG|");
+   if (op.args_type[0] & T_DIR)
+   ft_printf("T_DIR|");
+   if (op.args_type[0] & T_IND)
+   ft_printf("T_IND|");
+   ft_printf("\t");
+   if (op.args_type[1] & T_REG)
+   ft_printf("T_REG|");
+   if (op.args_type[1] & T_DIR)
+   ft_printf("T_DIR|");
+   if (op.args_type[1] & T_IND)
+   ft_printf("T_IND|");
+   ft_printf("\t");
+   if (op.args_type[2] & T_REG)
+   ft_printf("T_REG|");
+   if (op.args_type[2] & T_DIR)
+   ft_printf("T_DIR|");
+   if (op.args_type[2] & T_IND)
+   ft_printf("T_IND|");
+   ft_printf("\t");
+   ft_printf("atc:%d\t", op.args_type_code);
+   ft_printf("tdir:%d\n", op.tdir_size);
+   }
 
-void			print_op_tab(t_op *op_tab)
-{
-	int			i;
+   void			print_op_tab(t_op *op_tab)
+   {
+   int			i;
 
-	i = 0;
-	while (i < 16)
-		print_op_case(op_tab[i++]);
-}
-*/
+   i = 0;
+   while (i < 16)
+   print_op_case(op_tab[i++]);
+   }
+   */
 static void		treate_correct_asm(char *file_name, int fd, int mode)
 {
 	t_sfile		sfile;
@@ -538,7 +513,8 @@ static void		treate_correct_asm(char *file_name, int fd, int mode)
 	char		*code;
 	int			cor_fd;
 
-	init_sfile(&sfile, fd);
+	if (!init_sfile(&sfile, fd))
+		exit_serror(&sfile);
 	code = (mode) ? encode_asm(&sfile) : decode_asm(&sfile);
 	if (code)
 	{
@@ -552,6 +528,7 @@ static void		treate_correct_asm(char *file_name, int fd, int mode)
 	ft_putendl("------------------");    ////////////////
 	chr_print(sfile.sf);
 	ft_putendl("------------------");
+	//print_cmds(sfile.cmds); /////////////////////
 	//print_op_tab(sfile.op_tab);*/
 	free_sfile(&sfile);
 }

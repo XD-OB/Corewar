@@ -36,6 +36,7 @@ typedef struct		s_inst
 {
 	int				op;
 	t_arg			args[3];
+	int				nbr_bytes;
 }					t_inst;
 
 typedef struct		s_op
@@ -62,5 +63,18 @@ void		fill_op_tab(t_op *op_tab);
 void		fill_optab_p1(t_op *op_case);
 void		fill_optab_p2(t_op *op_case);
 void		fill_optab_p3(t_op *op_case);
+void		free_sfile(t_sfile *sfile);
+int			init_sfile(t_sfile *sfile, int fd);
+void		exit_usage(char *exe);
+void		exit_error(t_sfile *sfile, t_chr *def, int type);
+void		exit_serror(t_sfile *sfile);
+t_chr		*file_save_chr(int fd);
+void		tabstr_trim(char **tab);
+void		exit_instruct_error(t_sfile *sfile, t_chr *curr);
+int			type_arg(char *str);
+int			is_op(t_op *op_tab, char *str);
+int			is_reg(char *str);
+int			is_dir(char *str);
+int			is_ind(char *str);
 
 #endif
