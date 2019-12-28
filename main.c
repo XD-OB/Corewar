@@ -405,6 +405,40 @@ void		fill_insts_basic(t_sfile *sfile)
 	}
 }
 
+static t_cmd	*point_in_label()
+{
+}
+
+static int		find_value(t_sfile *sfile, t_cmd *cmd, char *str)
+{
+	t_cmd	*point_label;
+	int		n;
+
+	if (str[0] == LABEL_CHAR)
+	{
+		point_label = point_in_label(cmd, &str[1]);
+	}
+	else
+		n = ft_atoi(str);
+	return (n);
+}
+
+void		inst_values(t_sfile *sfile, t_inst *inst, t_cmd *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (i < sfile->op_tab[inst->op - 1].args_nbr)
+	{
+		if (inst->args[i].type == T_IND)
+			inst->args[i].value = find_value(inst, cmd, &(cmd->args[i][1]));
+		else
+		{
+		}
+		i++;
+	}
+}
+
 void		fill_insts_adv(t_sfile *sfile)
 {
 	t_list	*curr_inst;
@@ -416,9 +450,10 @@ void		fill_insts_adv(t_sfile *sfile)
 	while (curr_inst && curr_cmd)
 	{
 		inst = (t_inst*)curr->content;
-		cmd = ()
+		cmd = (t_cmd*)curr->content;
 		inst_values(sfile, inst, cmd);
-		curr = curr->next;
+		curr_inst = curr_inst->next;
+		curr_cmd = curr_cmd->next;
 	}
 }
 
