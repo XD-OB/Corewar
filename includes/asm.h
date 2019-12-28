@@ -77,4 +77,9 @@ int			is_reg(char *str);
 int			is_dir(char *str);
 int			is_ind(char *str);
 
+void		print_insts(t_sfile sfile, t_list *insts);
+void		print_cmds(t_list *cmds);
+void		print_op_tab(t_op *op_tab);
+
+
 #endif

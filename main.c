@@ -69,7 +69,6 @@ char		*get_q_text_q(t_sfile *sfile, t_chr **curr, char *str)
 	free(complete);
 	if (!text)
 		exit_error(sfile, *curr, ERROR_LEXICAL);
-	ft_putendl(text);		/////////
 	return (text);
 }
 
@@ -280,32 +279,6 @@ t_cmd		*fill_cmd_instlabel(t_sfile *sfile, t_chr **list_label, char *str)
 	return (cmd);
 }
 
-void			print_cmds(t_list *cmds)
-{
-	t_list		*curr;
-	t_chr		*tmp;
-	t_cmd		*cmd;
-
-	curr = cmds;
-	while (curr)
-	{
-		cmd = curr->content;
-		ft_printf("===============\n");
-		ft_printf("op     = [%s]\n", cmd->op);
-		tmp = cmd->labels;
-		while (tmp)
-		{
-			ft_printf(" label = [%s]\n", tmp->str);
-			tmp = tmp->next;
-		}
-		ft_printf("arg1   = [%s]\n", cmd->args[0]);
-		ft_printf("arg2   = [%s]\n", cmd->args[1]);
-		ft_printf("arg3   = [%s]\n", cmd->args[2]);
-		ft_printf("===============\n");
-		curr = curr->next;
-	}
-}
-
 void			get_cmds(t_sfile *sfile, t_chr *begin)
 {
 	t_cmd		*cmd;
@@ -370,10 +343,10 @@ t_inst		*create_inst()
 	inst->nbr_bytes = 0;
 	inst->args[0].type = 0;
 	inst->args[0].value = 0;
-	inst->args[0].type = 0;
-	inst->args[0].value = 0;
-	inst->args[0].type = 0;
-	inst->args[0].value = 0;
+	inst->args[1].type = 0;
+	inst->args[1].value = 0;
+	inst->args[2].type = 0;
+	inst->args[2].value = 0;
 	return (inst);
 }
 
@@ -422,9 +395,29 @@ void		fill_insts_basic(t_sfile *sfile)
 	while (curr)
 	{
 		cmd = (t_cmd*)curr->content;
-		inst = cmd_inst(sfile, cmd);
-		node = ft_lstnew_sm(inst, sizeof(inst));
-		ft_lstadd_last(&(sfile->insts), node);
+		if (cmd->op)
+		{
+			inst = cmd_inst(sfile, cmd);
+			node = ft_lstnew_sm(inst, sizeof(inst));
+			ft_lstadd_last(&(sfile->insts), node);
+		}
+		curr = curr->next;
+	}
+}
+
+void		fill_insts_adv(t_sfile *sfile)
+{
+	t_list	*curr_inst;
+	t_list	*curr_cmd;
+	t_inst	*inst;
+
+	curr_inst = sfile->insts;
+	curr_cmd = sfile->cmds;
+	while (curr_inst && curr_cmd)
+	{
+		inst = (t_inst*)curr->content;
+		cmd = ()
+		inst_values(sfile, inst, cmd);
 		curr = curr->next;
 	}
 }
@@ -432,6 +425,7 @@ void		fill_insts_basic(t_sfile *sfile)
 void		get_insts(t_sfile *sfile)
 {
 	fill_insts_basic(sfile);
+	fill_insts_adv(sfile);
 }
 
 char		*encode_asm(t_sfile *sfile)
@@ -466,46 +460,7 @@ char		*decode_asm(t_sfile *sfile)
 	code = ft_strdup("Decode time!\n");
 	return (code);
 }
-/*
-   static void		print_op_case(t_op op)
-   {
-   ft_printf("%d  ", op.nbr);
-   ft_printf("%s\t", op.name);
-   ft_printf("%d  ", op.args_nbr);
-   if (op.args_type[0] & T_REG)
-   ft_printf("T_REG|");
-   if (op.args_type[0] & T_DIR)
-   ft_printf("T_DIR|");
-   if (op.args_type[0] & T_IND)
-   ft_printf("T_IND|");
-   ft_printf("\t");
-   if (op.args_type[1] & T_REG)
-   ft_printf("T_REG|");
-   if (op.args_type[1] & T_DIR)
-   ft_printf("T_DIR|");
-   if (op.args_type[1] & T_IND)
-   ft_printf("T_IND|");
-   ft_printf("\t");
-   if (op.args_type[2] & T_REG)
-   ft_printf("T_REG|");
-   if (op.args_type[2] & T_DIR)
-   ft_printf("T_DIR|");
-   if (op.args_type[2] & T_IND)
-   ft_printf("T_IND|");
-   ft_printf("\t");
-   ft_printf("atc:%d\t", op.args_type_code);
-   ft_printf("tdir:%d\n", op.tdir_size);
-   }
 
-   void			print_op_tab(t_op *op_tab)
-   {
-   int			i;
-
-   i = 0;
-   while (i < 16)
-   print_op_case(op_tab[i++]);
-   }
-   */
 static void		treate_correct_asm(char *file_name, int fd, int mode)
 {
 	t_sfile		sfile;
@@ -530,6 +485,7 @@ static void		treate_correct_asm(char *file_name, int fd, int mode)
 	ft_putendl("------------------");
 	//print_cmds(sfile.cmds); /////////////////////
 	//print_op_tab(sfile.op_tab);*/
+	print_insts(sfile, sfile.insts);    /////////////////////
 	free_sfile(&sfile);
 }
 
