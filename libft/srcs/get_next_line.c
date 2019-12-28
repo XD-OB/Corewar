@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 18:19:36 by obelouch          #+#    #+#             */
-/*   Updated: 2019/05/16 07:44:36 by obelouch         ###   ########.fr       */
+/*   Updated: 2019/12/28 00:34:11 by vegeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int						get_next_line(int const fd, char **line)
 	}
 	*line = ft_strsub(tab[fd], 0, ft_linelen(tab[fd]));
 	if (ft_line(tab[fd]) == NULL)
+	{
+		free(tab[fd]);
 		return (0);
+	}
 	return (1);
 }

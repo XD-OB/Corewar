@@ -15,7 +15,7 @@ LIBFT  = ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_printhe
 		 ft_lltoa ft_ulltoa_base ft_strpower ft_strmult ft_strcnew ft_ltoa ft_maxmin\
 		 hash_str hash_filltab hash_findid hash_strtoind hash_putintab hash_freetab\
 		 tabstr_len tabstr_free tabstr_add tabstr_join tabstr_njoin tabstr_copy\
-		 tabstr_ncopy\
+		 tabstr_ncopy tabstr_print\
 
 LIBFT_SRC = $(addprefix srcs/, $(addsuffix .c, $(LIBFT)))
 LIBFT_OBJ = $(addsuffix .o, $(LIBFT))

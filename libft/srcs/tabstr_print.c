@@ -2,14 +2,13 @@
 
 void		tabstr_print(char **tab)
 {
-	int	len_t;
-	char	*str;
+	int	len_tab;
 	int	i;
 
 	i = -1;
-	len_t = len_tab(tab);
+	len_tab = tabstr_len(tab);
 	ft_printf("-------------------\n");
-	while (++i < len_t)
+	while (++i < len_tab)
 		ft_printf("%s\n", tab[i]);
 	ft_printf("-------------------\n");
 }
