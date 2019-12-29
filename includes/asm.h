@@ -14,6 +14,8 @@
 # define ERROR_LEXICAL 4
 # define ERROR_NC_NAME_CMT 5
 # define ERROR_BAD_INSTRUCT 6
+# define ERROR_ALLOC 7
+# define ERROR_FD 8
 
 typedef struct		s_arg
 {
@@ -68,7 +70,7 @@ void		free_sfile(t_sfile *sfile);
 int			init_sfile(t_sfile *sfile, int fd);
 void		exit_usage(char *exe);
 void		exit_error(t_sfile *sfile, t_chr *def, int type);
-void		exit_serror(t_sfile *sfile);
+void		exit_serror(t_sfile *sfile, int type);
 t_chr		*file_save_chr(int fd);
 void		tabstr_trim(char **tab);
 void		exit_instruct_error(t_sfile *sfile, t_chr *curr);
@@ -80,6 +82,10 @@ int			is_dir(char *str);
 int			is_ind(char *str);
 int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos);
 void		get_insts_values(t_sfile *sfile);
+void		write_exec_code(t_sfile sfile, int fd);
+void		write_bin(t_sfile sfile, char *file_name);
+void		write_short(short n, int fd);
+void		write_int(int n, int fd);
 
 
 void		print_insts(t_list *cmds);

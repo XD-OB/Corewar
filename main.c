@@ -253,7 +253,7 @@ t_inst		*fill_inst_aloneinst(t_sfile *sfile, t_chr **list_label, t_chr *curr)
 	i = 0;
 	str = curr->str;
 	if (!(inst = create_inst()))
-		exit_serror(sfile);
+		exit_serror(sfile, ERROR_ALLOC);
 	inst->labels = *list_label;
 	while (str[i] && !ft_isblank(str[i]))
 		i++;
@@ -290,7 +290,7 @@ t_inst		*fill_inst_instlabel(t_sfile *sfile, t_chr **list_label, t_chr *curr)
 	i = 0;
 	str = curr->str;
 	if (!(inst = create_inst()))
-		exit_serror(sfile);
+		exit_serror(sfile, ERROR_ALLOC);
 	while (ft_strchr(LABEL_CHARS, str[i]) && str[i] != LABEL_CHAR)
 		i++;
 	label = ft_strsub(str, 0, i);
@@ -370,7 +370,7 @@ void			get_insts_basic(t_sfile *sfile, t_chr *begin)
 	if (list_label)
 	{
 		if (!(inst = create_inst()))
-			exit_serror(sfile);
+			exit_serror(sfile, ERROR_ALLOC);
 		inst->labels = list_label;
 		node = ft_lstnew_sm(inst, sizeof(inst));
 		ft_lstadd_last(&sfile->insts, node);
@@ -407,22 +407,27 @@ void		get_instructs(t_sfile *sfile, t_chr *begin)
 	check_exec_size(sfile);
 }
 
-void			encode_asm(t_sfile *sfile)
+void			encode_asm(char *file_name, int fd)
 {
+	t_sfile		sfile;
 	t_chr		*curr;
 	int			error;
 
-	curr = sfile->sf;
+	if (!init_sfile(&sfile, fd))
+		exit_serror(&sfile, ERROR_ALLOC);
+	curr = sfile.sf;
 	while (curr)
 	{
-		if (get_name_comment(sfile, &curr, curr->str))
+		if (get_name_comment(&sfile, &curr, curr->str))
 			break ;
 		curr = curr->next;
 	}
-	if (sfile->name && sfile->comment)
-		get_instructs(sfile, curr);
+	if (sfile.name && sfile.comment)
+		get_instructs(&sfile, curr);
 	else
-		exit_error(sfile, curr, ERROR_NC_NAME_CMT);
+		exit_error(&sfile, curr, ERROR_NC_NAME_CMT);
+	write_bin(sfile, file_name);
+	free_sfile(&sfile);
 }
 
 char		*decode_asm(t_sfile *sfile)
@@ -431,173 +436,14 @@ char		*decode_asm(t_sfile *sfile)
 
 	code = ft_strdup("Decode time!\n");
 	return (code);
-}
-
-static void		write_short(short n, int fd)
-{
-	char		c[2];
-
-	if (n < 0)
-	{
-		n = ~(n * -1);
-		n += 0x1;
-	}
-	c[0] = (n >> 8) & 0xff;
-	c[1] = n & 0xff;
-	ft_putchar_fd(c[0], fd);
-	ft_putchar_fd(c[1], fd);
-}
-
-static void		write_int(int n, int fd)
-{
-	char		c[4];
-
-	if (n < 0)
-	{
-		n = ~(n * -1);
-		n += 1;
-	}
-	c[0] = (n >> 24) & 0xff;
-	c[1] = (n >> 16) & 0xff;
-	c[2] = (n >> 8) & 0xff;
-	c[3] = n & 0xff;
-	ft_putchar_fd(c[0], fd);
-	ft_putchar_fd(c[1], fd);
-	ft_putchar_fd(c[2], fd);
-	ft_putchar_fd(c[3], fd);
-}
-
-void			write_champ_name(char *name, int fd)
-{
-	int			nbr_zero;
-	int			i;
-
-	nbr_zero = PROG_NAME_LENGTH - ft_strlen(name);
-	ft_putstr_fd(name, fd);
-	i = 0;
-	while (i++ < nbr_zero)
-		ft_putchar_fd(0, fd);
-}
-
-void			write_champ_comment(char *comment, int fd)
-{
-	int			nbr_zero;
-	int			i;
-
-	nbr_zero = COMMENT_LENGTH - ft_strlen(comment);
-	ft_putstr_fd(comment, fd);
-	i = 0;
-	while (i++ < nbr_zero)
-		ft_putchar_fd(0, fd);
-}
-
-void			write_null(int fd)
-{
-	int			i;
-
-	i = 0;
-	while (i++ < 4)
-		ft_putchar_fd(0, fd);
-}
-
-static void		write_inst_atc(t_inst *inst, int fd)
-{
-	char		arg[3];
-	char		res;
-	int			i;
-
-	res = 0;
-	i = 0;
-	while (i < 3)
-	{
-		if (inst->args[i].type == T_REG)
-			arg[i] = 0x1;
-		else if (inst->args[i].type == T_DIR)
-			arg[i] = 0x2;
-		else if (inst->args[i].type == T_IND)
-			arg[i] = 0x3;
-		i++;
-	}
-	arg[0] <<= 6;
-	arg[1] <<= 4;
-	arg[2] <<= 2;
-	res = arg[0] | arg[1] | arg[2];
-	ft_putchar_fd(res, fd);
-}
-
-static void		write_inst_arg(t_op op_infos, t_arg arg, int fd)
-{
-	if (arg.type == T_REG)
-		ft_putchar_fd((char)arg.value, fd);
-	else if (arg.type == T_DIR && op_infos.tdir_size == 4)
-		write_int(arg.value, fd);
-	else
-		write_short((short)arg.value, fd);
-}
-
-static void		write_instruct(t_op op_infos, t_inst *inst, int fd)
-{
-	int			i;
-
-	i = 0;
-	ft_putchar_fd((char)inst->op_nbr, fd);
-	if (op_infos.atc)
-		write_inst_atc(inst, fd);
-	while (i < op_infos.args_nbr)
-		write_inst_arg(op_infos, inst->args[i++], fd);
-}
-
-void			write_exec_code(t_sfile sfile, int fd)
-{
-	t_list		*curr;
-	t_inst		*inst;
-
-	curr = sfile.insts;
-	while (curr)
-	{
-		inst = (t_inst*)curr->content;
-		if (inst->op_nbr)
-			write_instruct(sfile.op_tab[inst->op_nbr - 1], inst, fd);
-		curr = curr->next;
-	}
-}
-
-void			write_bin(t_sfile sfile, int fd)
-{
-	write_int(COREWAR_EXEC_MAGIC, fd);
-	write_champ_name(sfile.name, fd);
-	write_null(fd);
-	write_int(sfile.exec_size, fd);
-	write_champ_comment(sfile.comment, fd);
-	write_null(fd);
-	write_exec_code(sfile, fd);
-}
-
-static void		treate_correct_asm(char *file_name, int fd, int mode)
-{
-	t_sfile		sfile;
-	char		*cor_file;
-	char		*code;
-	int			cor_fd;
-
-	if (!init_sfile(&sfile, fd))
-		exit_serror(&sfile);
-	if (mode)
-		encode_asm(&sfile);
-	//else
-	//	decode_asm(&sfile);
-	cor_file = ft_strjoin(file_name, ".cor");
-	cor_fd = open(cor_file, O_CREAT | O_WRONLY, S_IROTH | S_IRUSR);
-	write_bin(sfile, cor_fd);
-	free(cor_file);
-	close(cor_fd);
-	ft_putendl("------------------");    ////////////////
-	chr_print(sfile.sf);
-	ft_putendl("------------------");
-	print_insts(sfile.insts); /////////////////////
-	//print_op_tab(sfile.op_tab);*/
-	//print_insts(sfile, sfile.insts);    /////////////////////
-	free_sfile(&sfile);
+	/*file = ft_strjoin(file_name, ".s");
+		src_fd = open(file, O_CREAT | O_WRONLY, S_IROTH | S_IRUSR);
+		free(file);
+		if (src_fd < 0)
+			exit_serror(&sfile, ERROR_FD);
+		write_src(sfile, src_fd);
+		close(src_fd);
+	}*/
 }
 
 void	treate_asm(char *file, int mode)
@@ -615,7 +461,10 @@ void	treate_asm(char *file, int mode)
 		else
 		{
 			file_name = ft_strndup(file, ft_strlen(file) - 2);
-			treate_correct_asm(file_name, fd, mode);
+			if (mode)
+				encode_asm(file_name, fd);
+			//else
+			//	decode_asm(&sfile);
 			free(file_name);
 		}
 		close(fd);

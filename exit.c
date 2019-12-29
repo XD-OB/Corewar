@@ -1,9 +1,12 @@
 #include "./includes/asm.h"
 
-void	exit_serror(t_sfile *sfile)
+void	exit_serror(t_sfile *sfile, int type)
 {
 	free_sfile(sfile);
-	ft_printf("Error Will Allocating Memory\n");
+	if (type == ERROR_FD)
+		ft_printf("Error While Creating the .cor File!\n");
+	else
+		ft_printf("Error Will Allocating Memory\n");
 	exit(1);
 }
 
