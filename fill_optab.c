@@ -8,7 +8,7 @@ static void		fill_op_tab_13(t_op *op_case)
 	op_case->args_type[0] = T_DIR | T_IND;
 	op_case->args_type[1] = T_REG;
 	op_case->args_type[2] = 0;
-	op_case->args_type_code = 1;
+	op_case->atc = 1;
 	op_case->tdir_size = REG_SIZE;
 }
 
@@ -20,7 +20,7 @@ static void		fill_op_tab_14(t_op *op_case)
 	op_case->args_type[0] = T_REG | T_DIR | T_IND;
 	op_case->args_type[1] = T_REG | T_DIR;
 	op_case->args_type[2] = T_REG;
-	op_case->args_type_code = 1;
+	op_case->atc = 1;
 	op_case->tdir_size = IND_SIZE;
 }
 
@@ -32,7 +32,7 @@ static void		fill_op_tab_15(t_op *op_case)
 	op_case->args_type[0] = T_DIR;
 	op_case->args_type[1] = 0;
 	op_case->args_type[2] = 0;
-	op_case->args_type_code = 0;
+	op_case->atc = 0;
 	op_case->tdir_size = IND_SIZE;
 }
 
@@ -44,7 +44,7 @@ static void		fill_op_tab_16(t_op *op_case)
 	op_case->args_type[0] = T_REG;
 	op_case->args_type[1] = 0;
 	op_case->args_type[2] = 0;
-	op_case->args_type_code = 1;
+	op_case->atc = 1;
 	op_case->tdir_size = REG_SIZE;
 }
 

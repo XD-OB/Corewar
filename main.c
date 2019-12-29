@@ -200,88 +200,132 @@ void	chr_addnode_sm(t_chr **list, char *str, int len)
 	curr->next = node;
 }
 
-t_cmd		*create_cmd()
+t_inst		*create_inst(void)
 {
-	t_cmd	*cmd;
+	t_inst	*inst;
+	int		i;
 
-	if (!(cmd = (t_cmd*)malloc(sizeof(t_cmd))))
+	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
 		return NULL;
-	cmd->op = NULL;
-	cmd->labels = NULL;
-	cmd->args[0] = NULL;
-	cmd->args[1] = NULL;
-	cmd->args[2] = NULL;
-	return (cmd);
+	inst->op_name = NULL;
+	inst->labels = NULL;
+	inst->op_nbr = 0;
+	inst->nbr_bytes = 0;
+	i = 0;
+	while (i < 3)
+	{
+		inst->args[i].str = NULL;
+		inst->args[i].type = 0;
+		inst->args[i].value = 0;
+		i++;
+	}
+	return (inst);
 }
 
-t_cmd		*fill_cmd_aloneinst(t_sfile *sfile, t_chr **list_label, char *str)
+void		calcul_nbr_bytes(t_op op_infos, t_inst *inst)
+{
+	int		i;
+
+	inst->nbr_bytes = 1;
+	if (op_infos.atc)
+		inst->nbr_bytes++;
+	i = 0;
+	while (i < op_infos.args_nbr)
+	{
+		if (inst->args[i].type == T_REG)
+			inst->nbr_bytes += 1;
+		else if (inst->args[i].type == T_DIR)
+			inst->nbr_bytes += op_infos.tdir_size;
+		else if (inst->args[i].type == T_IND)
+			inst->nbr_bytes += 2;
+		i++;
+	}
+}
+
+t_inst		*fill_inst_aloneinst(t_sfile *sfile, t_chr **list_label, t_chr *curr)
 {
 	char	**tab_args;
-	t_cmd	*cmd;
+	t_inst	*inst;
+	char	*str;
 	int		i;
 	int		j;
 
 	i = 0;
-	if (!(cmd = create_cmd()))
+	str = curr->str;
+	if (!(inst = create_inst()))
 		exit_serror(sfile);
-	cmd->labels = *list_label;
+	inst->labels = *list_label;
 	while (str[i] && !ft_isblank(str[i]))
 		i++;
-	cmd->op = ft_strsub(str, 0, i);
+	inst->op_name = ft_strsub(str, 0, i);
+	inst->op_nbr = is_op(sfile->op_tab, inst->op_name);
+	inst->line = curr->len;
 	while (ft_isblank(str[i]))
 		i++;
 	tab_args = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_args);
-	i = 0;
-	while (i < 3 && i < tabstr_len(tab_args))
+	i = -1;
+	while (++i < tabstr_len(tab_args))
 	{
-		cmd->args[i] = ft_strdup(tab_args[i]);
-		i++;
+		inst->args[i].type = type_arg(tab_args[i]);
+		if (inst->args[i].type == T_IND)
+			inst->args[i].str = ft_strdup(tab_args[i]);
+		else
+			inst->args[i].str = ft_strdup(&tab_args[i][1]);
 	}
+	calcul_nbr_bytes(sfile->op_tab[inst->op_nbr - 1], inst);
 	tabstr_free(&tab_args);
-	return (cmd);
+	return (inst);
 }
 
-t_cmd		*fill_cmd_instlabel(t_sfile *sfile, t_chr **list_label, char *str)
+t_inst		*fill_inst_instlabel(t_sfile *sfile, t_chr **list_label, t_chr *curr)
 {
 	char	**tab_args;
 	char	*label;
-	t_cmd	*cmd;
+	t_inst	*inst;
+	char	*str;
 	int		i;
 	int		j;
 
 	i = 0;
-	if (!(cmd = create_cmd()))
+	str = curr->str;
+	if (!(inst = create_inst()))
 		exit_serror(sfile);
 	while (ft_strchr(LABEL_CHARS, str[i]) && str[i] != LABEL_CHAR)
 		i++;
 	label = ft_strsub(str, 0, i);
 	chr_addnode_sm(list_label, label, 0);
-	cmd->labels = *list_label;
+	inst->labels = *list_label;
 	i++;
 	while (str[i] && ft_isblank(str[i]))
 		i++;
 	j = i;
 	while (str[i] && !ft_isblank(str[i]))
 		i++;
-	cmd->op = ft_strsub(str, j, i - j);
+	inst->op_name = ft_strsub(str, j, i - j);
+	inst->op_nbr = is_op(sfile->op_tab, inst->op_name);
+	inst->line = curr->len;
 	while (ft_isblank(str[i]))
 		i++;
 	tab_args = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_args);
-	i = 0;
-	while (i < 3 && i < tabstr_len(tab_args))
+	i = -1;
+	while (++i < tabstr_len(tab_args))
 	{
-		cmd->args[i] = ft_strdup(tab_args[i]);
-		i++;
+		inst->args[i].type = type_arg(tab_args[i]);
+		if (inst->args[i].type == T_IND)
+			inst->args[i].str = ft_strdup(tab_args[i]);
+		else
+			inst->args[i].str = ft_strdup(&tab_args[i][1]);
 	}
+	calcul_nbr_bytes(sfile->op_tab[inst->op_nbr - 1], inst);
 	tabstr_free(&tab_args);
-	return (cmd);
+	return (inst);
 }
 
-void			get_cmds(t_sfile *sfile, t_chr *begin)
+void			get_insts_basic(t_sfile *sfile, t_chr *begin)
 {
-	t_cmd		*cmd;
+	t_inst		*inst;
 	t_chr		*list_label;
 	t_list		*node;
 	t_chr		*curr;
@@ -302,17 +346,17 @@ void			get_cmds(t_sfile *sfile, t_chr *begin)
 			else if (is_instlabel(sfile->op_tab, curr->str))
 			{
 				ft_printf("|%s| instruction with label\n", curr->str);   /////////////
-				cmd = fill_cmd_instlabel(sfile, &list_label, curr->str);
-				node = ft_lstnew_sm(cmd, sizeof(cmd));
-				ft_lstadd_last(&sfile->cmds, node);
+				inst = fill_inst_instlabel(sfile, &list_label, curr);
+				node = ft_lstnew_sm(inst, sizeof(inst));
+				ft_lstadd_last(&sfile->insts, node);
 				list_label = NULL;
 			}
 			else if (is_aloneinst(sfile->op_tab, curr->str))
 			{
 				ft_printf("|%s| instruction alone\n", curr->str);   /////////////
-				cmd = fill_cmd_aloneinst(sfile, &list_label, curr->str);
-				node = ft_lstnew_sm(cmd, sizeof(cmd));
-				ft_lstadd_last(&sfile->cmds, node);
+				inst = fill_inst_aloneinst(sfile, &list_label, curr);
+				node = ft_lstnew_sm(inst, sizeof(inst));
+				ft_lstadd_last(&sfile->insts, node);
 				list_label = NULL;
 			}
 			else
@@ -325,151 +369,49 @@ void			get_cmds(t_sfile *sfile, t_chr *begin)
 	}
 	if (list_label)
 	{
-		if (!(cmd = create_cmd()))
+		if (!(inst = create_inst()))
 			exit_serror(sfile);
-		cmd->labels = list_label;
-		node = ft_lstnew_sm(cmd, sizeof(cmd));
-		ft_lstadd_last(&sfile->cmds, node);
+		inst->labels = list_label;
+		node = ft_lstnew_sm(inst, sizeof(inst));
+		ft_lstadd_last(&sfile->insts, node);
 	}
 }
 
-t_inst		*create_inst()
-{
-	t_inst	*inst;
-	
-	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
-		return NULL;
-	inst->op = 0;
-	inst->nbr_bytes = 0;
-	inst->args[0].type = 0;
-	inst->args[0].value = 0;
-	inst->args[1].type = 0;
-	inst->args[1].value = 0;
-	inst->args[2].type = 0;
-	inst->args[2].value = 0;
-	return (inst);
-}
-
-t_inst		*cmd_inst(t_sfile *sfile, t_cmd *cmd)
-{
-	t_inst	*inst;
-	int		i;
-
-	if (!(inst = create_inst()))
-		exit_serror(sfile);
-	inst->op = is_op(sfile->op_tab, cmd->op);
-	inst->nbr_bytes = 1;
-	if (sfile->op_tab[inst->op - 1].args_type_code)
-		inst->nbr_bytes++;
-	i = 0;
-	while (i < sfile->op_tab[inst->op - 1].args_nbr)
-	{
-		if (is_reg(cmd->args[i]))
-		{
-			inst->args[i].type = T_REG;
-			inst->nbr_bytes += 1;
-		}
-		else if (is_dir(cmd->args[i]))
-		{
-			inst->args[i].type = T_DIR;
-			inst->nbr_bytes += sfile->op_tab[inst->op - 1].tdir_size;
-		}
-		else if (is_ind(cmd->args[i]))
-		{
-			inst->args[i].type = T_IND;
-			inst->nbr_bytes += 2;
-		}
-		i++;
-	}
-	return (inst);
-}
-
-void		fill_insts_basic(t_sfile *sfile)
+void		check_exec_size(t_sfile *sfile)
 {
 	t_list	*curr;
-	t_list	*node;
 	t_inst	*inst;
-	t_cmd	*cmd;
+	int		bytes;
 
-	curr = sfile->cmds;
+	bytes = 0;
+	curr = sfile->insts;
 	while (curr)
 	{
-		cmd = (t_cmd*)curr->content;
-		if (cmd->op)
-		{
-			inst = cmd_inst(sfile, cmd);
-			node = ft_lstnew_sm(inst, sizeof(inst));
-			ft_lstadd_last(&(sfile->insts), node);
-		}
+		inst = (t_inst*)curr->content;
+		bytes += inst->nbr_bytes;
 		curr = curr->next;
 	}
-}
-
-static t_cmd	*point_in_label()
-{
-}
-
-static int		find_value(t_sfile *sfile, t_cmd *cmd, char *str)
-{
-	t_cmd	*point_label;
-	int		n;
-
-	if (str[0] == LABEL_CHAR)
+	if (bytes > CHAMP_MAX_SIZE)
 	{
-		point_label = point_in_label(cmd, &str[1]);
+		ft_printf("Executable Code Exceed the Max!");
+		ft_printf(" (Max %d)\n", CHAMP_MAX_SIZE);
+		exit(1);
 	}
-	else
-		n = ft_atoi(str);
-	return (n);
+	sfile->exec_size = bytes;
 }
 
-void		inst_values(t_sfile *sfile, t_inst *inst, t_cmd *cmd)
+void		get_instructs(t_sfile *sfile, t_chr *begin)
 {
-	int		i;
-
-	i = 0;
-	while (i < sfile->op_tab[inst->op - 1].args_nbr)
-	{
-		if (inst->args[i].type == T_IND)
-			inst->args[i].value = find_value(inst, cmd, &(cmd->args[i][1]));
-		else
-		{
-		}
-		i++;
-	}
+	get_insts_basic(sfile, begin);
+	get_insts_values(sfile);
+	check_exec_size(sfile);
 }
 
-void		fill_insts_adv(t_sfile *sfile)
-{
-	t_list	*curr_inst;
-	t_list	*curr_cmd;
-	t_inst	*inst;
-
-	curr_inst = sfile->insts;
-	curr_cmd = sfile->cmds;
-	while (curr_inst && curr_cmd)
-	{
-		inst = (t_inst*)curr->content;
-		cmd = (t_cmd*)curr->content;
-		inst_values(sfile, inst, cmd);
-		curr_inst = curr_inst->next;
-		curr_cmd = curr_cmd->next;
-	}
-}
-
-void		get_insts(t_sfile *sfile)
-{
-	fill_insts_basic(sfile);
-	fill_insts_adv(sfile);
-}
-
-char		*encode_asm(t_sfile *sfile)
+void			encode_asm(t_sfile *sfile)
 {
 	t_chr		*curr;
-	char		*code;
 	int			error;
 
-	code = NULL;
 	curr = sfile->sf;
 	while (curr)
 	{
@@ -478,14 +420,9 @@ char		*encode_asm(t_sfile *sfile)
 		curr = curr->next;
 	}
 	if (sfile->name && sfile->comment)
-	{
-		get_cmds(sfile, curr);
-		get_insts(sfile);
-		code = ft_strdup("Encode time!\n");
-	}
+		get_instructs(sfile, curr);
 	else
 		exit_error(sfile, curr, ERROR_NC_NAME_CMT);
-	return (code);
 }
 
 char		*decode_asm(t_sfile *sfile)
@@ -494,6 +431,146 @@ char		*decode_asm(t_sfile *sfile)
 
 	code = ft_strdup("Decode time!\n");
 	return (code);
+}
+
+static void		write_short(short n, int fd)
+{
+	char		c[2];
+
+	if (n < 0)
+	{
+		n = ~(n * -1);
+		n += 0x1;
+	}
+	c[0] = (n >> 8) & 0xff;
+	c[1] = n & 0xff;
+	ft_putchar_fd(c[0], fd);
+	ft_putchar_fd(c[1], fd);
+}
+
+static void		write_int(int n, int fd)
+{
+	char		c[4];
+
+	if (n < 0)
+	{
+		n = ~(n * -1);
+		n += 1;
+	}
+	c[0] = (n >> 24) & 0xff;
+	c[1] = (n >> 16) & 0xff;
+	c[2] = (n >> 8) & 0xff;
+	c[3] = n & 0xff;
+	ft_putchar_fd(c[0], fd);
+	ft_putchar_fd(c[1], fd);
+	ft_putchar_fd(c[2], fd);
+	ft_putchar_fd(c[3], fd);
+}
+
+void			write_champ_name(char *name, int fd)
+{
+	int			nbr_zero;
+	int			i;
+
+	nbr_zero = PROG_NAME_LENGTH - ft_strlen(name);
+	ft_putstr_fd(name, fd);
+	i = 0;
+	while (i++ < nbr_zero)
+		ft_putchar_fd(0, fd);
+}
+
+void			write_champ_comment(char *comment, int fd)
+{
+	int			nbr_zero;
+	int			i;
+
+	nbr_zero = COMMENT_LENGTH - ft_strlen(comment);
+	ft_putstr_fd(comment, fd);
+	i = 0;
+	while (i++ < nbr_zero)
+		ft_putchar_fd(0, fd);
+}
+
+void			write_null(int fd)
+{
+	int			i;
+
+	i = 0;
+	while (i++ < 4)
+		ft_putchar_fd(0, fd);
+}
+
+static void		write_inst_atc(t_inst *inst, int fd)
+{
+	char		arg[3];
+	char		res;
+	int			i;
+
+	res = 0;
+	i = 0;
+	while (i < 3)
+	{
+		if (inst->args[i].type == T_REG)
+			arg[i] = 0x1;
+		else if (inst->args[i].type == T_DIR)
+			arg[i] = 0x2;
+		else if (inst->args[i].type == T_IND)
+			arg[i] = 0x3;
+		i++;
+	}
+	arg[0] <<= 6;
+	arg[1] <<= 4;
+	arg[2] <<= 2;
+	res = arg[0] | arg[1] | arg[2];
+	ft_putchar_fd(res, fd);
+}
+
+static void		write_inst_arg(t_op op_infos, t_arg arg, int fd)
+{
+	if (arg.type == T_REG)
+		ft_putchar_fd((char)arg.value, fd);
+	else if (arg.type == T_DIR && op_infos.tdir_size == 4)
+		write_int(arg.value, fd);
+	else
+		write_short((short)arg.value, fd);
+}
+
+static void		write_instruct(t_op op_infos, t_inst *inst, int fd)
+{
+	int			i;
+
+	i = 0;
+	ft_putchar_fd((char)inst->op_nbr, fd);
+	if (op_infos.atc)
+		write_inst_atc(inst, fd);
+	while (i < op_infos.args_nbr)
+		write_inst_arg(op_infos, inst->args[i++], fd);
+}
+
+void			write_exec_code(t_sfile sfile, int fd)
+{
+	t_list		*curr;
+	t_inst		*inst;
+
+	curr = sfile.insts;
+	while (curr)
+	{
+		inst = (t_inst*)curr->content;
+		if (inst->op_nbr)
+			write_instruct(sfile.op_tab[inst->op_nbr - 1], inst, fd);
+		curr = curr->next;
+	}
+}
+
+void			write_bin(t_sfile sfile, int fd)
+{
+	write_int(COREWAR_EXEC_MAGIC, fd);
+	write_champ_name(sfile.name, fd);
+	write_null(fd);
+	write_int(sfile.exec_size, fd);
+	write_champ_comment(sfile.comment, fd);
+	write_null(fd);
+	write_exec_code(sfile, fd);
 }
 
 static void		treate_correct_asm(char *file_name, int fd, int mode)
@@ -505,22 +582,21 @@ static void		treate_correct_asm(char *file_name, int fd, int mode)
 
 	if (!init_sfile(&sfile, fd))
 		exit_serror(&sfile);
-	code = (mode) ? encode_asm(&sfile) : decode_asm(&sfile);
-	if (code)
-	{
-		cor_file = ft_strjoin(file_name, ".cor");
-		cor_fd = open(cor_file, O_CREAT | O_WRONLY);
-		ft_putstr_fd(code, cor_fd);
-		free(cor_file);
-		close(cor_fd);
-		free(code);
-	}
+	if (mode)
+		encode_asm(&sfile);
+	//else
+	//	decode_asm(&sfile);
+	cor_file = ft_strjoin(file_name, ".cor");
+	cor_fd = open(cor_file, O_CREAT | O_WRONLY, S_IROTH | S_IRUSR);
+	write_bin(sfile, cor_fd);
+	free(cor_file);
+	close(cor_fd);
 	ft_putendl("------------------");    ////////////////
 	chr_print(sfile.sf);
 	ft_putendl("------------------");
-	//print_cmds(sfile.cmds); /////////////////////
+	print_insts(sfile.insts); /////////////////////
 	//print_op_tab(sfile.op_tab);*/
-	print_insts(sfile, sfile.insts);    /////////////////////
+	//print_insts(sfile, sfile.insts);    /////////////////////
 	free_sfile(&sfile);
 }
 

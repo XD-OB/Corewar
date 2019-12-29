@@ -27,6 +27,7 @@ t_chr			*file_save_chr(int fd)
 
 	i = 1;
 	input = NULL;
+	line = NULL;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		delete_comment(&line);
@@ -36,7 +37,8 @@ t_chr			*file_save_chr(int fd)
 		free(str);
 		i++;
 	}
-	free(line);
+	if (line)
+		free(line);
 	if (ret == 0)
 		return (input);
 	if (input)

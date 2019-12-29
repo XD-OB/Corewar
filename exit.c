@@ -43,7 +43,17 @@ void	exit_error(t_sfile *sfile, t_chr *def, int type)
 		ft_printf("%{green}[%{eoc}%s%{green}]%{eoc}\n", def->str);
 	}
 	free_sfile(sfile);
-	exit(1);
+	exit(EXIT_FAILURE);
+}
+
+void		exit_error_label(t_sfile *sfile, t_inst *inst, char *label)
+{
+	int		line;
+
+	ft_printf("line %{red}%d%{eoc}:", inst->line);
+	ft_printf("Invalid Label [%s] As Argument!\n", label);
+	free_sfile(sfile);
+	exit(EXIT_FAILURE);
 }
 
 int			check_tabargs(char **tab_arg, t_op op_ref)
@@ -139,11 +149,11 @@ void		check_instlabel(t_op *op_tab, char *str)
 
 void	exit_instruct_error(t_sfile *sfile, t_chr *curr)
 {
-	ft_printf("line %d: ", curr->len);
+	ft_printf("line %{red}%d%{eoc}: ", curr->len);
 	if (there_islabel(sfile->op_tab, curr->str))
 		check_instlabel(sfile->op_tab, curr->str);
 	else
 		check_aloneinst(sfile->op_tab, curr->str);
 	free_sfile(sfile);
-	exit(1);
+	exit(EXIT_FAILURE);
 }

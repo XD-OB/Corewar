@@ -5,12 +5,11 @@ int			init_sfile(t_sfile *sfile, int fd)
 	sfile->name = NULL;
 	sfile->comment = NULL;
 	sfile->insts = NULL;
-	sfile->cmds = NULL;
-	if (!(sfile->sf = file_save_chr(fd)))
-		return (0);
 	if (!(sfile->op_tab = (t_op*)malloc(sizeof(t_op) * 16)))
 		return (0);
 	fill_op_tab(sfile->op_tab);
+	if (!(sfile->sf = file_save_chr(fd)))
+		return (0);
 	return (1);
 }
 
@@ -24,41 +23,25 @@ static void		free_op_tab(t_op **op_tab)
 	free(*op_tab);
 }
 
-static void		free_cmds(t_list **list_cmds)
-{
-	t_list		*curr;
-	t_cmd		*cmd;
-
-	curr = *list_cmds;
-	while (curr)
-	{
-		cmd = (t_cmd*)curr->content;
-		if (cmd->op)
-			free(cmd->op);
-		if (cmd->labels)
-			chr_free(&(cmd->labels));
-		if (cmd->args[0])
-			free(cmd->args[0]);
-		if (cmd->args[1])
-			free(cmd->args[1]);
-		if (cmd->args[2])
-			free(cmd->args[2]);
-		free(cmd);
-		*list_cmds = curr;	
-		curr = curr->next;
-		free(*list_cmds);
-	}
-}
-
 static void		free_insts(t_list **list_insts)
 {
 	t_list		*curr;
 	t_inst		*inst;
+	int			i;
 
 	curr = *list_insts;
 	while (curr)
 	{
-		free(curr->content);
+		inst = (t_inst*)curr->content;
+		if (inst->op_name)
+			free(inst->op_name);
+		if (inst->labels)
+			chr_free(&(inst->labels));
+		i = -1;
+		while (++i < 3)
+			if (inst->args[i].str)
+				free(inst->args[i].str);
+		free(inst);
 		*list_insts = curr;	
 		curr = curr->next;
 		free(*list_insts);
@@ -73,9 +56,8 @@ void			free_sfile(t_sfile *sfile)
 		free(sfile->comment);
 	if (sfile->sf)
 		chr_free(&(sfile->sf));
-	free_op_tab(&(sfile->op_tab));
-	if (sfile->cmds)
-		free_cmds(&(sfile->cmds));
+	if (sfile->op_tab)
+		free_op_tab(&(sfile->op_tab));
 	if (sfile->insts)
 		free_insts(&(sfile->insts));
 }

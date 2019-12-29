@@ -18,6 +18,7 @@
 typedef struct		s_arg
 {
 	int				type;
+	char			*str;
 	int				value;
 }					t_arg;
 
@@ -25,19 +26,19 @@ typedef struct		s_arg
 **	inst = instruction
 */
 
-typedef struct		s_cmd
-{
-	char			*op;
-	t_chr			*labels;
-	char			*args[3];
-}					t_cmd;
-
 typedef struct		s_inst
 {
-	int				op;
+	char			*op_name;
+	int				op_nbr;
+	t_chr			*labels;
 	t_arg			args[3];
 	int				nbr_bytes;
+	int				line;
 }					t_inst;
+
+/*
+**	atc: argument type code
+*/
 
 typedef struct		s_op
 {
@@ -45,7 +46,7 @@ typedef struct		s_op
 	int				nbr;
 	int				args_nbr;
 	int				args_type[3];
-	int				args_type_code;
+	int				atc;
 	int				tdir_size;
 }					t_op;
 
@@ -53,10 +54,10 @@ typedef struct		s_sfile
 {
 	char			*name;
 	char			*comment;
-	t_list			*cmds;
 	t_list			*insts;
 	t_chr			*sf;
 	t_op			*op_tab;
+	int				exec_size;
 }					t_sfile;
 
 void		fill_op_tab(t_op *op_tab);
@@ -71,14 +72,17 @@ void		exit_serror(t_sfile *sfile);
 t_chr		*file_save_chr(int fd);
 void		tabstr_trim(char **tab);
 void		exit_instruct_error(t_sfile *sfile, t_chr *curr);
+void		exit_error_label(t_sfile *sfile, t_inst *inst, char *label);
 int			type_arg(char *str);
 int			is_op(t_op *op_tab, char *str);
 int			is_reg(char *str);
 int			is_dir(char *str);
 int			is_ind(char *str);
+int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos);
+void		get_insts_values(t_sfile *sfile);
 
-void		print_insts(t_sfile sfile, t_list *insts);
-void		print_cmds(t_list *cmds);
+
+void		print_insts(t_list *cmds);
 void		print_op_tab(t_op *op_tab);
 
 
