@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 01:07:21 by obelouch          #+#    #+#             */
-/*   Updated: 2019/07/01 07:35:22 by ishaimou         ###   ########.fr       */
+/*   Updated: 2019/12/29 21:08:21 by vegeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void				chr_free(t_chr **chr);
 void				chr_print(t_chr *list);
 void				chr_revprint(t_chr *list);
 void				chr_addnode(t_chr **list, char *str, int len);
+void				chr_addnode_sm(t_chr **list, char *str, int len);
 void				chr_pushfront(t_chr **list, char *str, int len);
 t_chr				*gnl_nsave_chr(int fd, int nbr_lines);
 t_chr				*gnl_save_chr(int fd);

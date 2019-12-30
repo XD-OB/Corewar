@@ -1,9 +1,8 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 int			is_reg(char *str)
 {
 	int		n;
-	int		i;
 
 	if (str[0] != 'r')
 		return (0);
@@ -18,7 +17,7 @@ int			is_reg(char *str)
 	}
 	else if (ft_strlen(str) == 3)
 	{
-		if (!ft_isdigit(str[i]) || !ft_isdigit(str[i]))
+		if (!ft_isdigit(str[1]) || !ft_isdigit(str[2]))
 			return (0);
 		n = ft_atoi(&str[1]);
 		if (n == 0 || n > REG_NUMBER)

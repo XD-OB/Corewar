@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 static void		print_op_case(t_op op)
 {

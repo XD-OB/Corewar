@@ -1,99 +1,4 @@
-#include "./includes/asm.h"
-
-char		*complete_line(t_sfile *sfile, t_chr **curr, char *str)
-{
-	char	*complete;
-	int		q;
-	int		i;
-
-	q = 0;
-	i = -1;
-	complete = ft_strdup(str);
-	while (str[++i])
-		if (str[i] == '"')
-			q++;
-	if (q < 2)
-	{
-		if (q > 0)
-		{
-			*curr = (*curr)->next;
-			while (*curr)
-			{
-				ft_strcombin(&complete, "\n");
-				ft_strcombin(&complete, (*curr)->str);
-				if (ft_strchr((*curr)->str, '"'))
-					return (complete);
-				(*curr) = (*curr)->next;
-			}
-		}
-		free(complete);
-		exit_error(sfile, *curr, ERROR_LESS_QUOTES);
-	}
-	return (complete);
-}
-
-void		find_start_end_q(char *str, int *start, int *end)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (str[i] != '"')
-		i++;
-	i++;
-	j = i;
-	while (str[j] != '"')
-		j++;
-	j--;
-	*start = i;
-	*end = j;
-}
-
-char		*get_q_text_q(t_sfile *sfile, t_chr **curr, char *str)
-{
-	char	*complete;
-	char	*text;
-	int		start;
-	int		end;
-	int		i;
-
-	i = 0;
-	text = NULL;
-	complete = complete_line(sfile, curr, str);
-	find_start_end_q(complete, &start, &end);
-	i = end + 2;
-	while (ft_isblank(complete[i]))
-		i++;
-	if (complete[i] == '\0' || complete[i] == COMMENT_CHAR)
-		text = ft_strsub(complete, start, end - start + 1);
-	free(complete);
-	if (!text)
-		exit_error(sfile, *curr, ERROR_LEXICAL);
-	return (text);
-}
-
-int		get_name_comment(t_sfile *sfile, t_chr **curr, char *str)
-{
-	if (str[0] == COMMENT_CHAR || str[0] == '\0')
-		return (0);
-	if (!ft_strncmp(str, NAME_CMD_STRING,
-				ft_strlen(NAME_CMD_STRING)) && !sfile->name)
-	{
-		sfile->name = get_q_text_q(sfile, curr, str);
-		if (ft_strlen(sfile->name) > PROG_NAME_LENGTH)
-			exit_error(sfile, *curr, ERROR_NAME_LENGTH);
-	}
-	else if (!ft_strncmp(str, COMMENT_CMD_STRING,
-				ft_strlen(COMMENT_CMD_STRING)) && !sfile->comment)
-	{
-		sfile->comment = get_q_text_q(sfile, curr, str);
-		if (ft_strlen(sfile->comment) > COMMENT_LENGTH)
-			exit_error(sfile, *curr, ERROR_COMMENT_LENGTH);
-	}
-	else
-		return (1);
-	return (0);
-}
+#include "asm.h"
 
 int			is_alonelabel(char *str)
 {
@@ -179,27 +84,6 @@ int			is_instlabel(t_op *op_tab, char *str)
 	return (ret);
 }
 
-void	chr_addnode_sm(t_chr **list, char *str, int len)
-{
-	t_chr	*curr;
-	t_chr	*node;
-
-	if(!(node = (t_chr*)malloc(sizeof(t_chr))))
-		return ;
-	node->str = str;
-	node->len = len;
-	node->next = NULL;
-	if (!*list)
-	{
-		*list = node;
-		return ;
-	}
-	curr = *list;
-	while (curr->next)
-		curr = curr->next;
-	curr->next = node;
-}
-
 t_inst		*create_inst(void)
 {
 	t_inst	*inst;
@@ -248,7 +132,6 @@ t_inst		*fill_inst_aloneinst(t_sfile *sfile, t_chr **list_label, t_chr *curr)
 	t_inst	*inst;
 	char	*str;
 	int		i;
-	int		j;
 
 	i = 0;
 	str = curr->str;
@@ -392,11 +275,7 @@ void		check_exec_size(t_sfile *sfile)
 		curr = curr->next;
 	}
 	if (bytes > CHAMP_MAX_SIZE)
-	{
-		ft_printf("Executable Code Exceed the Max!");
-		ft_printf(" (Max %d)\n", CHAMP_MAX_SIZE);
-		exit(1);
-	}
+		exit_serror(sfile, ERROR_EXEC_SIZE);
 	sfile->exec_size = bytes;
 }
 
@@ -411,14 +290,13 @@ void			encode_asm(char *file_name, int fd)
 {
 	t_sfile		sfile;
 	t_chr		*curr;
-	int			error;
 
 	if (!init_sfile(&sfile, fd))
 		exit_serror(&sfile, ERROR_ALLOC);
 	curr = sfile.sf;
 	while (curr)
 	{
-		if (get_name_comment(&sfile, &curr, curr->str))
+		if (get_name_cmt(&sfile, &curr, curr->str))
 			break ;
 		curr = curr->next;
 	}
@@ -429,22 +307,23 @@ void			encode_asm(char *file_name, int fd)
 	write_bin(sfile, file_name);
 	free_sfile(&sfile);
 }
-
+/*
 char		*decode_asm(t_sfile *sfile)
 {
 	char	*code;
 
 	code = ft_strdup("Decode time!\n");
 	return (code);
-	/*file = ft_strjoin(file_name, ".s");
-		src_fd = open(file, O_CREAT | O_WRONLY, S_IROTH | S_IRUSR);
-		free(file);
-		if (src_fd < 0)
-			exit_serror(&sfile, ERROR_FD);
-		write_src(sfile, src_fd);
-		close(src_fd);
-	}*/
+	//file = ft_strjoin(file_name, ".s");
+	//	src_fd = open(file, O_CREAT | O_WRONLY, S_IROTH | S_IRUSR);
+	//	free(file);
+	//	if (src_fd < 0)
+	//		exit_serror(&sfile, ERROR_FD);
+	//	write_src(sfile, src_fd);
+	//	close(src_fd);
+	//}
 }
+*/
 
 void	treate_asm(char *file, int mode)
 {

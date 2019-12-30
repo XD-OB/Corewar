@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 static t_inst	*find_label_pos(t_list *list_insts, char *label)
 {
@@ -24,7 +24,6 @@ static t_inst	*find_label_pos(t_list *list_insts, char *label)
 
 static void		fill_inst_values(t_sfile *sfile, t_inst *inst)
 {
-	t_list		*curr;
 	char		*label;
 	t_inst		*label_pos;
 	int			i;
@@ -55,7 +54,8 @@ void			get_insts_values(t_sfile *sfile)
 	while (curr)
 	{
 		inst = (t_inst*)curr->content;
-		fill_inst_values(sfile, inst);
+		if (inst->op_nbr)
+			fill_inst_values(sfile, inst);
 		curr = curr->next;
 	}
 }

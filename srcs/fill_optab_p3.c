@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 static void		fill_op_tab_9(t_op *op_case)
 {

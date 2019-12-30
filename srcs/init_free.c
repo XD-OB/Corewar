@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 int			init_sfile(t_sfile *sfile, int fd)
 {

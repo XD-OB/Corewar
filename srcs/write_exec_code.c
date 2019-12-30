@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 static void		write_inst_atc(t_inst *inst, int fd)
 {

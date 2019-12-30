@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 static int	calcul_label_val_pos(t_list *begin, t_inst *label_pos)
 {
@@ -49,6 +49,7 @@ int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos)
 	int		sign;
 
 	sign = 0;
+	begin = NULL;
 	curr = list_insts;
 	while (curr)
 	{

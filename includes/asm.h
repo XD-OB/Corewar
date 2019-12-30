@@ -10,12 +10,16 @@
 
 # define ERROR_NAME_LENGTH 1
 # define ERROR_COMMENT_LENGTH 2
-# define ERROR_LESS_QUOTES 3
-# define ERROR_LEXICAL 4
-# define ERROR_NC_NAME_CMT 5
-# define ERROR_BAD_INSTRUCT 6
+# define ERROR_LEXICAL 3
+# define ERROR_NC_NAME_CMT 4
+# define ERROR_BAD_INSTRUCT 5
+# define ERROR_EXEC_SIZE 6
 # define ERROR_ALLOC 7
 # define ERROR_FD 8
+# define ERROR_LESS_QUOTES 9
+# define ERROR_CHAR_QUOTES 10
+# define ERROR_NO_QUOTES 11
+# define ERROR_NO_STR 12
 
 typedef struct		s_arg
 {
@@ -70,6 +74,7 @@ void		free_sfile(t_sfile *sfile);
 int			init_sfile(t_sfile *sfile, int fd);
 void		exit_usage(char *exe);
 void		exit_error(t_sfile *sfile, t_chr *def, int type);
+void		exit_qerror(t_sfile *sfile, t_chr *def, int type);
 void		exit_serror(t_sfile *sfile, int type);
 t_chr		*file_save_chr(int fd);
 void		tabstr_trim(char **tab);
@@ -82,6 +87,7 @@ int			is_dir(char *str);
 int			is_ind(char *str);
 int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos);
 void		get_insts_values(t_sfile *sfile);
+int			get_name_cmt(t_sfile *sfile, t_chr **curr, char *str);
 void		write_exec_code(t_sfile sfile, int fd);
 void		write_bin(t_sfile sfile, char *file_name);
 void		write_short(short n, int fd);

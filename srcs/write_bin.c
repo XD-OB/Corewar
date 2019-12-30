@@ -1,4 +1,4 @@
-#include "./includes/asm.h"
+#include "asm.h"
 
 void			write_short(short n, int fd)
 {
