@@ -68,6 +68,26 @@ typedef struct		s_sfile
 	int				exec_size;
 }					t_sfile;
 
+typedef struct		s_bin
+{
+	unsigned char	header[4];
+	unsigned char	name[PROG_NAME_LENGTH + 1];
+	unsigned char	exec_size[4];
+	unsigned char	comment[COMMENT_LENGTH + 1];
+	unsigned char	null[4];
+	unsigned char	exec_code[CHAMP_MAX_SIZE];
+}					t_bin;
+
+typedef struct		s_bfile
+{
+	t_bin			bf;
+	char			*name;
+	char			*comment;
+	t_list			*insts;
+	t_op			*op_tab;
+	int				exec_size;
+}					t_bfile;
+
 /*
 **	r: (reverse ) 0 = Assembler
 **				  1 = Disassembler
@@ -88,6 +108,7 @@ void		fill_optab_p1(t_op *op_case);
 void		fill_optab_p2(t_op *op_case);
 void		fill_optab_p3(t_op *op_case);
 void		free_sfile(t_sfile *sfile);
+void		free_bfile(t_bfile *bfile);
 int			init_sfile(t_sfile *sfile, int fd);
 t_inst		*create_inst(void);
 t_chr		*file_save_chr(int fd);
@@ -96,6 +117,7 @@ void		exit_usage(char *exe);
 void		exit_error(t_sfile *sfile, t_chr *def, int type);
 void		exit_qerror(t_sfile *sfile, t_chr *def, int type);
 void		exit_serror(t_sfile *sfile, int type);
+void		exit_ferror(char *file, int type);
 void		exit_inst_error(t_sfile *sfile, t_chr *curr);
 void		exit_error_label(t_sfile *sfile, t_inst *inst, char *label);
 int			is_alonelabel(char *str);
@@ -116,6 +138,9 @@ void		write_exec_code(t_sfile sfile, int fd);
 void		write_cor(t_sfile sfile, char *file_name);
 void		write_short(short n, int fd);
 void		write_int(int n, int fd);
+void		write_inst_advinfos(t_op op_infos, t_inst *inst);
+void		write_stdout(t_sfile sfile);
+int			int_atc(t_inst *inst);
 
 
 void		print_insts(t_list *cmds);

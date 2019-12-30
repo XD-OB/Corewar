@@ -13,7 +13,7 @@ FLAGS = -Wall -Wextra -Werror
 ASM = main init_free fill_optab fill_optab_p1 fill_optab_p2 fill_optab_p3\
 	  get_insts_values get_instructs get_name_cmt replace_label types\
 	  tools exit inst_error type_inst add_inst write_exec_code write_cor\
-	  save_options delete_me\
+	  write_advinfos write_stdout save_options delete_me\
 
 SRC = $(addprefix srcs/, $(addsuffix .c, $(ASM)))
 

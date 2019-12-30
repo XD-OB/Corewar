@@ -39,6 +39,15 @@ void	exit_qerror(t_sfile *sfile, t_chr *def, int type)
 	exit(EXIT_FAILURE);
 }
 
+void	exit_ferror(char *file, int type)
+{
+	if (type == ERROR_FILE_NF)
+		ft_printf("%{red}%s%{eoc}: File not found!\n", file);
+	else if (type == ERROR_FILE_BE)
+		ft_printf("%{red}%s%{eoc}: File with Bad extension!\n", file);
+	exit(EXIT_FAILURE);
+}
+
 void	exit_error(t_sfile *sfile, t_chr *def, int type)
 {
 	ft_printf("line %{red}%d%{eoc}:", def->len);

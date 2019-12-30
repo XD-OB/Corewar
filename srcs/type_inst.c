@@ -35,7 +35,6 @@ int			is_aloneinst(t_op *op_tab, char *str)
 		return (0);
 	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);
-	tabstr_print(tab_arg);			////////////
 	if (!corr_tabargs(tab_arg, op_tab[op_nbr - 1]))
 	{
 		tabstr_free(&tab_arg);

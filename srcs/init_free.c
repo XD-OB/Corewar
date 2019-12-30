@@ -61,3 +61,15 @@ void			free_sfile(t_sfile *sfile)
 	if (sfile->insts)
 		free_insts(&(sfile->insts));
 }
+
+void			free_bfile(t_bfile *bfile)
+{
+	if (bfile->name)
+		free(bfile->name);
+	if (bfile->comment)
+		free(bfile->comment);
+	if (bfile->op_tab)
+		free_op_tab(&(bfile->op_tab));
+	if (bfile->insts)
+		free_insts(&(bfile->insts));
+}
