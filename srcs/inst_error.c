@@ -1,6 +1,6 @@
 #include "asm.h"
 
-static int		check_tabargs(char **tab_arg, t_op op_ref)
+static void		check_tabargs(char **tab_arg, t_op op_ref)
 {
 	int			i;
 
@@ -8,7 +8,7 @@ static int		check_tabargs(char **tab_arg, t_op op_ref)
 	{
 		ft_printf("Wrong Number of Arguments! ");
 		ft_printf("%s need %d arguments\n", op_ref.name, op_ref.args_nbr);
-		return (0);
+		return ;
 	}
 	i = 0;
 	while (i < op_ref.args_nbr)
@@ -17,11 +17,11 @@ static int		check_tabargs(char **tab_arg, t_op op_ref)
 		{
 			ft_printf("Invalid Argument %s ", tab_arg[i]);
 			ft_printf("for the operation: %s/n", op_ref.name);
-			return (0);
+			return ;
 		}
 		i++;
 	}
-	return (1);
+	return ;
 }
 
 static void		check_aloneinst(t_op *op_tab, char *str)
@@ -50,11 +50,7 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 	free(op);
 	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);
-	if (!check_tabargs(tab_arg, op_tab[op_nbr - 1]))
-	{
-		tabstr_free(&tab_arg);
-		return ;
-	}
+	check_tabargs(tab_arg, op_tab[op_nbr - 1]);
 	tabstr_free(&tab_arg);
 }
 
@@ -84,13 +80,16 @@ static void		check_instlabel(t_op *op_tab, char *str)
 	while (ft_isblank(str[i]))
 		i++;
 	if (str[i] == '\0')
+	{
+		ft_printf("Cant take it as label without [%c]\n", LABEL_CHAR);
 		return ;
+	}
 	instruct = ft_strtrim(&str[i]);
 	check_aloneinst(op_tab, instruct);
 	free(instruct);
 }
 
-void			exit_instruct_error(t_sfile *sfile, t_chr *curr)
+void			exit_inst_error(t_sfile *sfile, t_chr *curr)
 {
 	ft_printf("line %{red}%d%{eoc}: ", curr->len);
 	if (there_islabel(curr->str))

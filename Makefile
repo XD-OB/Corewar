@@ -11,8 +11,9 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 ASM = main init_free fill_optab fill_optab_p1 fill_optab_p2 fill_optab_p3\
-	  get_insts_values replace_label tools types write_exec_code write_bin\
-	  inst_error exit get_name_cmt delete_me\
+	  get_insts_values get_instructs get_name_cmt replace_label types\
+	  tools exit inst_error type_inst add_inst write_exec_code write_cor\
+	  save_options delete_me\
 
 SRC = $(addprefix srcs/, $(addsuffix .c, $(ASM)))
 
@@ -26,7 +27,7 @@ $(NAME) : $(OBJ)
 	@echo "$(YELLOW)  __  _  __  $(RED) $(YELLOW)   _   __  __  ___  _   _  ___ _    ___  ___   "
 	@echo "$(YELLOW) |  \| |/ _| $(RED)|$(YELLOW)  / \ / _|/ _|| __|| \_/ || o ) |  | __|| o \  "
 	@echo "$(YELLOW) | o ) |\_ \ $(RED)|$(YELLOW) | o |\_ \|_ \| _| | \_/ || o \ |_ | _| |   /  "
-	@echo "$(YELLOW) |__/|_||__/ $(RED)|$(YELLOW) |_n_||__/|__/|___||_| |_||___/___||___||_|\ \ "
+	@echo "$(YELLOW) |__/|_||__/ $(RED)|$(YELLOW) |_n_||__/|__/|___||_| |_||___/___||___||_|\_\ "
 	@echo "$(EOC)"
 	@echo "   Assembler & Disassembler    by:$(GREEN) MEMORY-RAPISTS\n$(EOC)"
 

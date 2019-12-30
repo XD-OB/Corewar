@@ -2,9 +2,9 @@
 
 static void		write_inst_atc(t_inst *inst, int fd)
 {
-	char		arg[3];
-	char		res;
-	int			i;
+	unsigned char	arg[3];
+	unsigned char	res;
+	int				i;
 
 	res = 0;
 	i = 0;

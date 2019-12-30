@@ -58,7 +58,7 @@ static void		write_champ_comment(char *comment, int fd)
 		ft_putchar_fd(0, fd);
 }
 
-void			write_bin(t_sfile sfile, char *file_name)
+void			write_cor(t_sfile sfile, char *file_name)
 {
 	char		*file;
 	int			fd;

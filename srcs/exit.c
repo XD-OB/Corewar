@@ -18,8 +18,9 @@ void	exit_serror(t_sfile *sfile, int type)
 void	exit_usage(char *exe)
 {
 	ft_printf("%{red}Usage:%{eoc} %s", exe);
-	ft_printf(" [-r | --reverse] <sourcefile.s> ...\n");
-	ft_printf("       -r : deassembler mode\n");
+	ft_printf(" [-ra] <sourcefile.s> ...\n");
+	ft_printf("  --reverse   -r : deassembler mode\n");
+	ft_printf("  --annotated -a : annotated mode\n");
 	exit(EXIT_FAILURE);
 }
 

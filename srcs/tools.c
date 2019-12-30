@@ -1,6 +1,6 @@
 #include "asm.h"
 
-void			delete_comment(char **str)
+static void		delete_comment(char **str)
 {
 	char		*new;
 	int			i;
@@ -46,10 +46,32 @@ t_chr			*file_save_chr(int fd)
 	return (NULL);
 }
 
-void		tabstr_trim(char **tab)
+t_inst			*create_inst(void)
 {
-	char	*tmp;
-	int		i;
+	t_inst		*inst;
+	int			i;
+
+	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
+		return NULL;
+	inst->op_name = NULL;
+	inst->labels = NULL;
+	inst->op_nbr = 0;
+	inst->nbr_bytes = 0;
+	i = 0;
+	while (i < 3)
+	{
+		inst->args[i].str = NULL;
+		inst->args[i].type = 0;
+		inst->args[i].value = 0;
+		i++;
+	}
+	return (inst);
+}
+
+void			tabstr_trim(char **tab)
+{
+	char		*tmp;
+	int			i;
 
 	i = 0;
 	while (tab[i])
