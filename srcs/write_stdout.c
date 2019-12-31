@@ -26,7 +26,7 @@ static void		write_inst_oparg(t_op op_infos, t_inst *inst, int bytes)
 
 	ft_printf("%-5d", bytes);
 	ft_printf("(%3d) :      ", inst->nbr_bytes);
-	ft_printf("%-5s", inst->op_name);
+	ft_printf("%-5s", op_infos.name);
 	i = 0;
 	while (i < op_infos.args_nbr)
 	{

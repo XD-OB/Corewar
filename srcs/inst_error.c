@@ -6,8 +6,8 @@ static void		check_tabargs(char **tab_arg, t_op op_ref)
 
 	if (tabstr_len(tab_arg) != op_ref.args_nbr)
 	{
-		ft_printf("Wrong Number of Arguments! ");
-		ft_printf("%s need %d arguments\n", op_ref.name, op_ref.args_nbr);
+		ft_printf("Wrong Number of Arguments! %{green}%s%{eoc}", op_ref.name);
+		ft_printf(" need %{green}%d%{eoc} argument(s)\n", op_ref.args_nbr);
 		return ;
 	}
 	i = 0;
@@ -15,8 +15,8 @@ static void		check_tabargs(char **tab_arg, t_op op_ref)
 	{
 		if (!(type_arg(tab_arg[i]) & op_ref.args_type[i]))
 		{
-			ft_printf("Invalid Argument %s ", tab_arg[i]);
-			ft_printf("for the operation: %s/n", op_ref.name);
+			ft_printf("Invalid Type of Argument %{red}%s%{eoc} ", tab_arg[i]);
+			ft_printf("for the operation %{green}%s%{eoc}\n", op_ref.name);
 			return ;
 		}
 		i++;

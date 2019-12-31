@@ -41,9 +41,11 @@ int			is_dir(char *str)
 				return (0);
 		return (1);
 	}
-	i = 0;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
+	i = 1;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+		if (!ft_isdigit(str[i++]))
 			return (0);
 	return (1);
 }
@@ -60,9 +62,11 @@ int			is_ind(char *str)
 				return (0);
 		return (1);
 	}
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+		if (!ft_isdigit(str[i++]))
 			return (0);
 	return (1);
 }

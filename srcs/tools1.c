@@ -53,7 +53,6 @@ t_inst			*create_inst(void)
 
 	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
 		return NULL;
-	inst->op_name = NULL;
 	inst->labels = NULL;
 	inst->op_nbr = 0;
 	inst->nbr_bytes = 0;

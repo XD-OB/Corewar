@@ -85,7 +85,7 @@ static char		*get_q_text_q(t_sfile *sfile, t_chr **curr, char *str)
 		text = ft_strsub(complete, start, end - start + 1);
 	free(complete);
 	if (!text)
-		exit_error(sfile, *curr, ERROR_LEXICAL);
+		exit_ass_error(sfile, *curr, ERROR_LEXICAL);
 	return (text);
 }
 
@@ -102,7 +102,7 @@ int				get_name_cmt(t_sfile *sfile, t_chr **curr, char *str)
 		sfile->name = get_q_text_q(sfile, curr, s);
 		free(s);
 		if (ft_strlen(sfile->name) > PROG_NAME_LENGTH)
-			exit_error(sfile, *curr, ERROR_NAME_LENGTH);
+			exit_ass_error(sfile, *curr, ERROR_NAME_LENGTH);
 	}
 	else if (!ft_strncmp(str, COMMENT_CMD_STRING,
 				ft_strlen(COMMENT_CMD_STRING)) && !sfile->comment)
@@ -111,7 +111,7 @@ int				get_name_cmt(t_sfile *sfile, t_chr **curr, char *str)
 		sfile->comment = get_q_text_q(sfile, curr, s);
 		free(s);
 		if (ft_strlen(sfile->comment) > COMMENT_LENGTH)
-			exit_error(sfile, *curr, ERROR_COMMENT_LENGTH);
+			exit_ass_error(sfile, *curr, ERROR_COMMENT_LENGTH);
 	}
 	else
 		return (1);

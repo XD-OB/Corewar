@@ -76,7 +76,7 @@ void			write_cor(t_sfile sfile, char *file_name)
 	ft_putendl("------------------");    ////////////////
 	chr_print(sfile.sf);
 	ft_putendl("------------------");
-	print_insts(sfile.insts); /////////////////////
+	print_insts(sfile.op_tab, sfile.insts); /////////////////////
 	close(fd);
 	//print_op_tab(sfile.op_tab);
 }

@@ -39,7 +39,7 @@ void			print_op_tab(t_op *op_tab)
 		print_op_case(op_tab[i++]);
 }
 
-void			print_insts(t_list *insts)
+void			print_insts(t_op *op_tab, t_list *insts)
 {
 	t_list		*curr;
 	t_chr		*tmp;
@@ -51,7 +51,7 @@ void			print_insts(t_list *insts)
 	{
 		inst = curr->content;
 		ft_printf("===============\n");
-		ft_printf("op = [%s][%d]\n", inst->op_name, inst->op_nbr);
+		ft_printf("op = [%s][%d]\n", op_tab[inst->op_nbr - 1].name, inst->op_nbr);
 		tmp = inst->labels;
 		ft_printf(" label: ");
 		while (tmp)

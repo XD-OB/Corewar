@@ -4,7 +4,7 @@ static void		add_to_listlabel(t_chr **list_label, char *str)
 {
 	char		*label;
 
-	ft_printf("|%s| label only\n", str);			////////////////
+	//ft_printf("|%s| label only\n", str);			////////////////
 	label = ft_strsub(str, 0, ft_strlen(str) - 1);
 	chr_addnode_sm(list_label, label, 0);
 }

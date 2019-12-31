@@ -44,6 +44,7 @@ void			add_aloneinst(t_sfile *sfile, t_chr **list_label, char *str, int len)
 {
 	t_list		*node;
 	t_inst		*inst;
+	char		*op_name;
 	int			i;
 
 	i = 0;
@@ -55,8 +56,9 @@ void			add_aloneinst(t_sfile *sfile, t_chr **list_label, char *str, int len)
 	inst->labels = *list_label;
 	while (str[i] && !ft_isblank(str[i]))
 		i++;
-	inst->op_name = ft_strsub(str, 0, i);
-	inst->op_nbr = is_op(sfile->op_tab, inst->op_name);
+	op_name = ft_strsub(str, 0, i);
+	inst->op_nbr = is_op(sfile->op_tab, op_name);
+	free(op_name);
 	inst->line = len;
 	while (ft_isblank(str[i]))
 		i++;
