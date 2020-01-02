@@ -10,6 +10,6 @@ int		main(int ac, char **av)
 	init_asmbl(&asmbl);
 	i = save_options(&asmbl, ac, av);
 	while (i < ac)
-		treate_file(av[i++], &asmbl);			//!!!!!!
+		treate_file(av[i++], &asmbl);
 	return (EXIT_SUCCESS);
 }

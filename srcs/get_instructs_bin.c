@@ -1,6 +1,7 @@
 #include "asm.h"
 
-static void		fill_args_no_atc(t_bfile *bfile, unsigned char *binary, t_inst *inst)
+static void		fill_args_no_atc(t_bfile *bfile, unsigned char *binary,
+									t_inst *inst)
 {
 	int			tdir_size;
 
@@ -85,5 +86,5 @@ void			get_instructs_bin(t_bfile *bfile)
 		ft_lstadd_last(&bfile->insts, node);
 		bfile->index += inst->nbr_bytes;
 	}
-	print_insts(bfile->op_tab, bfile->insts);						///////////////////////
+	print_insts(bfile->op_tab, bfile->insts);		////////////////
 }

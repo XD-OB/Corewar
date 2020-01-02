@@ -4,7 +4,6 @@ static void		add_to_listlabel(t_chr **list_label, char *str)
 {
 	char		*label;
 
-	//ft_printf("|%s| label only\n", str);			////////////////
 	label = ft_strsub(str, 0, ft_strlen(str) - 1);
 	chr_addnode_sm(list_label, label, 0);
 }
@@ -67,8 +66,6 @@ static void		check_exec_size(t_sfile *sfile)
 		bytes += inst->nbr_bytes;
 		curr = curr->next;
 	}
-	if (bytes > CHAMP_MAX_SIZE)
-		exit_serror(sfile, ERROR_EXEC_SIZE);
 	sfile->exec_size = bytes;
 }
 

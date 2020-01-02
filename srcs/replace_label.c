@@ -34,14 +34,16 @@ static int	calcul_label_val_neg(t_list *begin, t_inst *inst)
 	return (bytes);
 }
 
-static int	calcul_label_value(t_list *begin, t_inst *inst, t_inst *label_pos, int sign)
+static int	calcul_label_value(t_list *begin, t_inst *inst,
+								t_inst *label_pos, int sign)
 {
 	if (sign == 1)
 		return (calcul_label_val_pos(begin, label_pos));
 	return (calcul_label_val_neg(begin, inst));
 }
 
-int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos)
+int			replace_label(t_list *list_insts, t_inst *inst,
+								t_inst *label_pos)
 {
 	t_list	*curr;
 	t_list	*begin;
@@ -54,16 +56,10 @@ int			replace_label(t_list *list_insts, t_inst *inst, t_inst *label_pos)
 	while (curr)
 	{
 		tmp = (t_inst*)curr->content;
-		if (tmp == inst)
+		if (tmp == inst || tmp == label_pos)
 		{
 			begin = curr;
-			sign = 1;
-			break ;
-		}
-		if (tmp == label_pos)
-		{
-			begin = curr;
-			sign = -1;
+			sign = (tmp == inst) ? 1 : -1;
 			break ;
 		}
 		curr = curr->next;

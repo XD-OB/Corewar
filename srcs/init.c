@@ -18,7 +18,7 @@ int		init_bfile(t_bfile *bfile)
 	return (1);
 }
 
-int			init_sfile(t_sfile *sfile, int fd)
+int		init_sfile(t_sfile *sfile, int fd)
 {
 	sfile->name = NULL;
 	sfile->comment = NULL;

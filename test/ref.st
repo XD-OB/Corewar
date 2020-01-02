@@ -1,6 +1,6 @@
 #This file Was Disassembled by: Memory_Rapists
-.name          Batman
-.comment       This city needs me
+.name          "Batman"
+.comment       "This city needs me"
 
   sti       r1,   %7,   %1
   live      %0

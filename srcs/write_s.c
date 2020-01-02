@@ -30,9 +30,9 @@ static void		write_s_namecmt(t_bfile bfile, int fd)
 	ft_dprintf(fd, "%cThis file Was ", COMMENT_CHAR);
 	ft_putstr_fd("Disassembled by: Memory_Rapists\n", fd);
 	ft_dprintf(fd, "%-15s", NAME_CMD_STRING);
-	ft_dprintf(fd, "%s\n", (char*)bfile.name);
+	ft_dprintf(fd, "\"%s\"\n", (char*)bfile.name);
 	ft_dprintf(fd, "%-15s", COMMENT_CMD_STRING);
-	ft_dprintf(fd, "%s\n\n", bfile.comment);
+	ft_dprintf(fd, "\"%s\"\n\n", bfile.comment);
 }
 
 void			write_s(t_bfile bfile, char *file_name)
@@ -40,7 +40,7 @@ void			write_s(t_bfile bfile, char *file_name)
 	char		*file;
 	int			fd;
 
-	file = ft_strjoin(file_name, ".st");					/////////!!!!!! .s
+	file = ft_strjoin(file_name, ".st");      /////////!!!!!! .s
 	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	free(file);
 	if (fd < 0)

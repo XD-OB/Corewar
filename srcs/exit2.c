@@ -1,20 +1,5 @@
 #include "asm.h"
 
-void	exit_serror(t_sfile *sfile, int type)
-{
-	free_sfile(sfile);
-	if (type == ERROR_FD)
-		ft_printf("Error While Creating the .cor File!\n");
-	else if (type == ERROR_ALLOC)
-		ft_printf("Can't Allocate Memory\n");
-	else if (type == ERROR_EXEC_SIZE)
-	{
-		ft_printf("Executable Code Exceed the Max!");
-		ft_printf(" (Max %d)\n", CHAMP_MAX_SIZE);
-	}
-	exit(EXIT_FAILURE);
-}
-
 void	exit_usage(char *exe)
 {
 	ft_printf("%{red}Usage:%{eoc} %s", exe);
@@ -24,42 +9,11 @@ void	exit_usage(char *exe)
 	exit(EXIT_FAILURE);
 }
 
-void	exit_berror(t_bfile *bfile, int type)
+void	exit_error_label(t_sfile *sfile, t_inst *inst, char *label)
 {
-	free_bfile(bfile);
-	if (type == ERROR_FD)
-		ft_printf("Error While Creating the .s File!\n");
-	else if (type == ERROR_ALLOC)
-		ft_printf("Error Will Allocating Memory\n");
-	else if (type == ERROR_EXEC_SIZE)
-	{
-		ft_printf("Executable Code Exceed the Max!");
-		ft_printf(" (Max %d)\n", CHAMP_MAX_SIZE);
-	}
-	exit(EXIT_FAILURE);
-}
-
-void	exit_qerror(t_sfile *sfile, t_chr *def, int type)
-{
-	ft_printf("line %{red}%d%{eoc}:", def->len);
-	if (type == ERROR_LESS_QUOTES)
-		ft_printf(" Closing quote not found!\n");
-	else if (type == ERROR_CHAR_QUOTES)
-		ft_printf(" Character before the quote!\n");
-	else if (type == ERROR_NO_STR)
-		ft_printf(" No string after the parameter!\n");
-	else if (type == ERROR_NO_QUOTES)
-		ft_printf(" No Quotes for the string!\n");
+	ft_printf("line %{red}%d%{eoc}:", inst->line);
+	ft_printf("Invalid Label [%s] As Argument!\n", label);
 	free_sfile(sfile);
-	exit(EXIT_FAILURE);
-}
-
-void	exit_ferror(char *file, int type)
-{
-	if (type == ERROR_FILE_NF)
-		ft_printf("%{red}%s%{eoc}: File not found!\n", file);
-	else if (type == ERROR_FILE_BE)
-		ft_printf("%{red}%s%{eoc}: File with Bad extension!\n", file);
 	exit(EXIT_FAILURE);
 }
 
@@ -104,14 +58,6 @@ void	exit_ass_error(t_sfile *sfile, t_chr *def, int type)
 		ft_printf(" Syntax Error! Bad Instruction! ");
 		ft_printf("%{green}[%{eoc}%s%{green}]%{eoc}\n", def->str);
 	}
-	free_sfile(sfile);
-	exit(EXIT_FAILURE);
-}
-
-void		exit_error_label(t_sfile *sfile, t_inst *inst, char *label)
-{
-	ft_printf("line %{red}%d%{eoc}:", inst->line);
-	ft_printf("Invalid Label [%s] As Argument!\n", label);
 	free_sfile(sfile);
 	exit(EXIT_FAILURE);
 }

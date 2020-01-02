@@ -79,8 +79,8 @@ void			write_stdout(t_sfile sfile)
 	ft_putendl("       Annotated program:");
 	ft_printf("%{green}==========================================");
 	ft_printf("===========================================%{eoc}\n");
-	ft_printf("Name    : %{CYAN}%s%{eoc}\n", sfile.name);
-	ft_printf("Comment : %{CYAN}%s%{eoc}\n", sfile.comment);
+	ft_printf("Name    : \"%{CYAN}%s%{eoc}\"\n", sfile.name);
+	ft_printf("Comment : \"%{CYAN}%s%{eoc}\"\n", sfile.comment);
 	ft_printf("Program size : %{CYAN}%d%{eoc}\n\n", sfile.exec_size);
 	curr = sfile.insts;
 	while (curr)

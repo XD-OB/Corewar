@@ -40,7 +40,8 @@ static void		fill_inst_args(t_inst *inst, char *str)
 	tabstr_free(&tab_args);
 }
 
-void			add_aloneinst(t_sfile *sfile, t_chr **list_label, char *str, int len)
+void			add_aloneinst(t_sfile *sfile, t_chr **list_label,
+								char *str, int len)
 {
 	t_list		*node;
 	t_inst		*inst;
@@ -69,7 +70,8 @@ void			add_aloneinst(t_sfile *sfile, t_chr **list_label, char *str, int len)
 	*list_label = NULL;
 }
 
-void			add_instlabel(t_sfile *sfile, t_chr **list_label, char *str, int len)
+void			add_instlabel(t_sfile *sfile, t_chr **list_label,
+								char *str, int len)
 {
 	char		*label;
 	int			i;

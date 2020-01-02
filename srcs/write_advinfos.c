@@ -1,6 +1,6 @@
 #include "asm.h"
 
-static void		write_4_bit(int n)
+static void			write_4_bit(int n)
 {
 	unsigned char	c[4];
 	char			*str;
@@ -25,7 +25,7 @@ static void		write_4_bit(int n)
 	}
 }
 
-static void		write_2_bit(int n)
+static void			write_2_bit(int n)
 {
 	unsigned char	c[2];
 	char			*str;
@@ -46,10 +46,10 @@ static void		write_2_bit(int n)
 	free(str);
 }
 
-static void		write_advargs(t_op op_infos, t_inst *inst)
+static void			write_advargs(t_op op_infos, t_inst *inst)
 {
-	char		*str;
-	int			i;
+	char			*str;
+	int				i;
 
 	i = 0;
 	ft_printf(" ");
@@ -73,9 +73,9 @@ static void		write_advargs(t_op op_infos, t_inst *inst)
 	}
 }
 
-void			write_inst_advinfos(t_op op_infos, t_inst *inst)
+void				write_inst_advinfos(t_op op_infos, t_inst *inst)
 {
-	char		*str;
+	char			*str;
 
 	ft_printf("                  ");
 	str = ft_itoa_base(inst->op_nbr, 16);
@@ -93,7 +93,7 @@ void			write_inst_advinfos(t_op op_infos, t_inst *inst)
 	ft_printf("\n");
 }
 
-int			int_atc(t_inst *inst)
+int					int_atc(t_inst *inst)
 {
 	unsigned char	arg[3];
 	int				res;

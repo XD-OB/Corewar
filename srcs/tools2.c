@@ -1,12 +1,31 @@
 #include "asm.h"
 
-char			*itobin_w8(int n)
+int			int_4_bytes(unsigned char *binary)
 {
-	char		*str;
-	char		*tmp;
-	int			len;
-	int			i;
-	int			j;
+	int		res;
+
+	res = 0;
+	res = (binary[0] << 24) | (binary[1] << 16) |
+		(binary[2] << 8) | binary[3];
+	return (res);
+}
+
+int			int_2_bytes(unsigned char *binary)
+{
+	short	res;
+
+	res = 0;
+	res = (binary[0] << 8) | binary[1];
+	return (res);
+}
+
+char		*itobin_w8(int n)
+{
+	char	*str;
+	char	*tmp;
+	int		len;
+	int		i;
+	int		j;
 
 	tmp = ft_itoa_base(n, 2);
 	len = ft_strlen(tmp);
@@ -21,10 +40,10 @@ char			*itobin_w8(int n)
 	return (str);
 }
 
-char			*itohex_w2(int n)
+char		*itohex_w2(int n)
 {
-	char		*str;
-	char		*tmp;
+	char	*str;
+	char	*tmp;
 
 	tmp = ft_itoa_base(n, 16);
 	if (ft_strlen(tmp) >= 2)

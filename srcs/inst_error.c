@@ -41,13 +41,12 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 	}
 	op = ft_strsub(str, 0, i++);
 	op_nbr = is_op(op_tab, op);
+	free(op);
 	if (!op_nbr)
 	{
 		ft_printf("Invalid Operation: %s\n", op);
-		free(op);
 		return ;
 	}
-	free(op);
 	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);
 	check_tabargs(tab_arg, op_tab[op_nbr - 1]);

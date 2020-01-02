@@ -18,16 +18,14 @@ static void		write_inst_low_dir(t_bfile bfile, t_inst *inst, int *bytes)
 		str = itohex_w2(bfile.exec_code[(*bytes)++]);
 		ft_printf("%s", str);
 		free(str);
+		return ;
 	}
-	else
-	{
-		str = itohex_w2(bfile.exec_code[(*bytes)++]);
-		ft_printf("      %c%s", DIRECT_CHAR, str);
-		free(str);
-		str = itohex_w2(bfile.exec_code[(*bytes)++]);
-		ft_printf("%s", str);
-		free(str);
-	}
+	str = itohex_w2(bfile.exec_code[(*bytes)++]);
+	ft_printf("      %c%s", DIRECT_CHAR, str);
+	free(str);
+	str = itohex_w2(bfile.exec_code[(*bytes)++]);
+	ft_printf("%s", str);
+	free(str);
 }
 
 static void		write_inst_low_ind(t_bfile bfile, int *bytes)

@@ -67,16 +67,12 @@ void				fill_bin(t_bfile *bfile, int fd)
 	bfile->mg_head = read_4_bytes(fd);
 	if (bfile->mg_head != COREWAR_EXEC_MAGIC)
 		exit_check_error(ERROR_MAGIC);
-	ft_printf("%u\n", bfile->mg_head);			////////////////
 	if (!read(fd, bfile->name, PROG_NAME_LENGTH))
 		exit_check_error(ERROR_READ);
-	ft_printf("%s\n", bfile->name);			////////////////
 	check_null(fd);
 	bfile->exec_size = read_4_bytes(fd);
-	ft_printf("%u\n", bfile->exec_size);			///////////////
 	if (!read(fd, bfile->comment, COMMENT_LENGTH))
 		exit_check_error(ERROR_READ);
-	ft_printf("%s\n", bfile->comment);			//////////////
 	check_null(fd);
 	bfile->exec_code = fill_exec_code(fd, bfile->exec_size);
 }

@@ -31,7 +31,7 @@ static void		free_insts(t_list **list_insts)
 	while (curr)
 	{
 		free_inst((t_inst*)curr->content);
-		*list_insts = curr;	
+		*list_insts = curr;
 		curr = curr->next;
 		free(*list_insts);
 	}
