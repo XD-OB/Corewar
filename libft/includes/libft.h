@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 01:07:21 by obelouch          #+#    #+#             */
-/*   Updated: 2019/12/29 21:08:21 by vegeta           ###   ########.fr       */
+/*   Updated: 2020/01/11 11:18:30 by vegeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ char				*tabstr_join(char **tab, char *sep);
 char				**tabstr_ncopy(char **tab, int start, int end);
 char				**tabstr_copy(char **tab);
 void				tabstr_print(char **tab);
+void				tabstr_trim(char **tab);
 
 /*
 **		INT ARRAY:      -----------------------------------------------------
