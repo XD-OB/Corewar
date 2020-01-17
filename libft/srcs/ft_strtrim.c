@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/08 04:00:09 by obelouch          #+#    #+#             */
-/*   Updated: 2018/10/10 08:42:26 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/17 01:23:31 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int		ft_is_blank(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n')
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }
@@ -24,14 +24,13 @@ static	char	*ft_return(int start, int end, const char *s)
 	char	*trim;
 	int		i;
 
-	if (end <= start)
+	if (end < start)
 	{
 		trim = (char*)malloc(sizeof(*trim));
 		trim[0] = '\0';
 		return (trim);
 	}
-	trim = (char*)malloc(sizeof(*trim) * (end - start + 2));
-	if (trim == NULL)
+	if (!(trim = (char*)malloc(sizeof(*trim) * (end - start + 2))))
 		return (NULL);
 	i = start;
 	while (i <= end)

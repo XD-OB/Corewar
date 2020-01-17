@@ -22,7 +22,7 @@ static t_inst	*find_label_pos(t_list *list_insts, char *label)
 	return (NULL);
 }
 
-static void		fill_inst_values(t_sfile *sfile, t_inst *inst)
+void		fill_inst_values(t_sfile *sfile, t_inst *inst)
 {
 	char		*label;
 	t_inst		*label_pos;

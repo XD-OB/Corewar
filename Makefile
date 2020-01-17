@@ -34,7 +34,7 @@ $(NAME) : $(OBJ)
 	@echo "   Assembler & Disassembler    by:$(GREEN) MEMORY-RAPISTS\n$(EOC)"
 
 $(OBJ) :	srcs/%.o : srcs/%.c
-	@$(CC) -c $< $(FLAGS) -o $@ -I ./includes
+	@$(CC) -c $< $(FLAGS) -o $@ -I ./includes -I ./libft/includes
 
 clean :
 	@/bin/rm -f $(OBJ)

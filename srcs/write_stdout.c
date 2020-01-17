@@ -32,8 +32,10 @@ static void		write_inst_oparg(t_op op_infos, t_inst *inst, int bytes)
 	{
 		if (inst->args[i].type == T_REG)
 			str = ft_strjoin("r", inst->args[i].str);
-		if (inst->args[i].type == T_DIR)
+		else if (inst->args[i].type == T_DIR)
 			str = ft_strjoin("%", inst->args[i].str);
+		else
+			str = ft_strdup(inst->args[i].str);
 		ft_printf("%21s", str);
 		free(str);
 		i++;
