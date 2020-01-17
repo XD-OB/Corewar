@@ -1,3 +1,6 @@
+#ifndef ERRORS_H
+# define ERRORS_H
+
 # define ERROR_NAME_LENGTH 1
 # define ERROR_COMMENT_LENGTH 2
 # define ERROR_LEXICAL 3
@@ -19,3 +22,5 @@
 # define ERROR_INCOMPLET_OP 19
 # define ERROR_WRONG_ATC 20
 # define ERROR_WRONG_OP 21
+
+#endif

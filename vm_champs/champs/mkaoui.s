@@ -3,9 +3,9 @@
 .comment "glab rbbha waa lmkkawi haw haa ha"
 
 ld %1024, r8
-ld %5, r1
+ld %-5, r1
 ld %12, r2
-st r8, 5
+st r8, -5
 #sti r8, %5, r2
 #and %4, %6, r8
 #aff r8

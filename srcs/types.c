@@ -1,5 +1,18 @@
 #include "asm.h"
 
+int			is_strdigit(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+		if (!ft_isdigit(str[i++]))
+			return (0);
+	return (1);
+}
+
 int			is_reg(char *str)
 {
 	int		n;
@@ -27,6 +40,36 @@ int			is_reg(char *str)
 	return (0);
 }
 
+static int	is_arithm(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (str[i++] != '(')
+		return (0);
+	if (!ft_isdigit(str[i++]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (str[i] == ' ')
+		i++;
+	if (str[i] != '+' && str[i] != '-' &&
+		str[i] != '*' && str[i] != '/')
+		return (0);;
+	i++;
+	if (str[i] == ' ')
+		i++;
+	if (!ft_isdigit(str[i++]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (str[i++] != ')')
+		return (0);
+	if (str[i])
+		return (0);
+	return (1);
+}
+
 int			is_dir(char *str)
 {
 	int		i;
@@ -41,13 +84,9 @@ int			is_dir(char *str)
 				return (0);
 		return (1);
 	}
-	i = 1;
-	if (str[i] == '-')
-		i++;
-	while (str[i])
-		if (!ft_isdigit(str[i++]))
-			return (0);
-	return (1);
+	if (str[1] == '(')
+		return (is_arithm(&str[1]));
+	return (is_strdigit(&str[1]));
 }
 
 int			is_ind(char *str)
@@ -62,13 +101,9 @@ int			is_ind(char *str)
 				return (0);
 		return (1);
 	}
-	i = 0;
-	if (str[i] == '-')
-		i++;
-	while (str[i])
-		if (!ft_isdigit(str[i++]))
-			return (0);
-	return (1);
+	if (str[0] == '(')
+		return (is_arithm(str));
+	return (is_strdigit(str));
 }
 
 int			type_arg(char *str)

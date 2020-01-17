@@ -69,6 +69,7 @@ static void		write_stdout_inst(t_op op_infos, t_inst *inst, int bytes)
 		write_inst_basinfos(op_infos, inst);
 		write_inst_advinfos(op_infos, inst);
 	}
+	ft_putchar('\n');
 }
 
 void			write_stdout(t_sfile sfile)

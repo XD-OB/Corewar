@@ -22,6 +22,28 @@ static t_inst	*find_label_pos(t_list *list_insts, char *label)
 	return (NULL);
 }
 
+static int		calcul_arithm(char *str)
+{
+	int			n1;
+	int			n2;
+	int			i;
+
+	n1 = ft_atoi(&str[1]);
+	i = 1;
+	while (ft_isdigit(str[i]))
+		i++;
+	if (str[i] == ' ')
+		i++;
+	n2 = ft_atoi(&str[i + 1]);
+	if (str[i] == '+')
+		return (n1 + n2);
+	if (str[i] == '-')
+		return (n1 - n2);
+	if (str[i] == '*')
+		return (n1 * n2);
+	return (n1 / n2);
+}
+
 void		fill_inst_values(t_sfile *sfile, t_inst *inst)
 {
 	char		*label;
@@ -31,8 +53,13 @@ void		fill_inst_values(t_sfile *sfile, t_inst *inst)
 	i = 0;
 	while (i < sfile->op_tab[inst->op_nbr - 1].args_nbr)
 	{
-		if ((inst->args[i].str)[0] != LABEL_CHAR)
-			inst->args[i].value = ft_atoi(inst->args[i].str);
+		if (inst->args[i].str[0] != LABEL_CHAR)
+		{
+			if (inst->args[i].str[0] == '(')
+				inst->args[i].value = calcul_arithm(inst->args[i].str);
+			else
+				inst->args[i].value = ft_atoi(inst->args[i].str);
+		}
 		else
 		{
 			label = &((inst->args[i].str)[1]);
