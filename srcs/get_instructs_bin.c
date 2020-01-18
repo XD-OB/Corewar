@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_instructs_bin.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:42:42 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:53:08 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static void		fill_args_no_atc(t_bfile *bfile, unsigned char *binary,
@@ -14,24 +26,6 @@ static void		fill_args_no_atc(t_bfile *bfile, unsigned char *binary,
 		inst->args[0].value = int_4_bytes(&binary[1]);
 	else
 		inst->args[0].value = int_2_bytes(&binary[1]);
-}
-
-char			*ft_strcjoin(char *str, char c)
-{
-	char		*res;
-	int			len;
-	int			i;
-
-	len = ft_strlen(str);
-	res = ft_strnew(len + 1);
-	res[0] = c;
-	i = 0;
-	while (i < len)
-	{
-		res[i + 1] = str[i];
-		i++;
-	}
-	return (res);
 }
 
 static void		fill_args_str(t_inst *inst)
@@ -86,5 +80,4 @@ void			get_instructs_bin(t_bfile *bfile)
 		ft_lstadd_last(&bfile->insts, node);
 		bfile->index += inst->nbr_bytes;
 	}
-	print_insts(bfile->op_tab, bfile->insts);		////////////////
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write_stdout.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:00:06 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:00:08 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static void		write_inst_lables(t_inst *inst, int bytes)
@@ -84,7 +96,7 @@ void			write_stdout(t_sfile sfile)
 	ft_printf("===========================================%{eoc}\n");
 	ft_printf("Name    : \"%{CYAN}%s%{eoc}\"\n", sfile.name);
 	ft_printf("Comment : \"%{CYAN}%s%{eoc}\"\n", sfile.comment);
-	ft_printf("Program size : %{CYAN}%d%{eoc}\n\n", sfile.exec_size);
+	ft_printf("Program size : %{CYAN}%d%{eoc} byte(s)\n\n", sfile.exec_size);
 	curr = sfile.insts;
 	while (curr)
 	{

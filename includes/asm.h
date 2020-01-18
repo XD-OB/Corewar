@@ -135,8 +135,8 @@ int			int_4_bytes(unsigned char *binary);
 void		fill_bin(t_bfile *bfile, int fd);
 void		fill_args_atc(t_bfile *bfile, unsigned char *binary, t_inst *inst);
 
-void		print_insts(t_op *op_tab, t_list *insts);
-void		print_op_tab(t_op *op_tab);
+//void		print_insts(t_op *op_tab, t_list *insts);
+//void		print_op_tab(t_op *op_tab);
 
 
 #endif

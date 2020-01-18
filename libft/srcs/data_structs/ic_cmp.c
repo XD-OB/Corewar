@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ic_cmp.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 09:19:02 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 09:19:13 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int		ic_cmp(t_icase *list1, t_icase *list2)
+int				ic_cmp(t_icase *list1, t_icase *list2)
 {
-	t_icase	*ptr1;
-	t_icase	*ptr2;
+	t_icase		*ptr1;
+	t_icase		*ptr2;
 
 	ptr1 = list1;
 	ptr2 = list2;

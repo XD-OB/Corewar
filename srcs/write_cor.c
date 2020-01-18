@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write_cor.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:38:29 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:38:47 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void			write_short(short n, int fd)
@@ -73,9 +85,5 @@ void			write_cor(t_sfile sfile, char *file_name)
 	write_int(sfile.exec_size, fd);
 	write_champ_comment(sfile.comment, fd);
 	write_exec_code(sfile, fd);
-	ft_putendl("------------------");    ////////////////
-	chr_print(sfile.sf);
-	ft_putendl("------------------");
-	print_insts(sfile.op_tab, sfile.insts); /////////////////////
 	close(fd);
 }

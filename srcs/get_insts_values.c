@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_insts_values.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:41:25 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:41:38 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static t_inst	*find_label_pos(t_list *list_insts, char *label)
@@ -30,6 +42,8 @@ static int		calcul_arithm(char *str)
 
 	n1 = ft_atoi(&str[1]);
 	i = 1;
+	if (str[i] == '-')
+		i++;
 	while (ft_isdigit(str[i]))
 		i++;
 	if (str[i] == ' ')
@@ -44,7 +58,7 @@ static int		calcul_arithm(char *str)
 	return (n1 / n2);
 }
 
-void		fill_inst_values(t_sfile *sfile, t_inst *inst)
+void			fill_inst_values(t_sfile *sfile, t_inst *inst)
 {
 	char		*label;
 	t_inst		*label_pos;

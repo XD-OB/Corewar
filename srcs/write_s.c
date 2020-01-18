@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   write_s.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:06:17 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:06:19 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static void		write_s_insts(t_bfile bfile, int fd)
@@ -40,7 +52,7 @@ void			write_s(t_bfile bfile, char *file_name)
 	char		*file;
 	int			fd;
 
-	file = ft_strjoin(file_name, ".st");      /////////!!!!!! .s
+	file = ft_strjoin(file_name, ".s");
 	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	free(file);
 	if (fd < 0)

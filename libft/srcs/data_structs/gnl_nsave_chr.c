@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl_nsave_chr.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 09:19:47 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 09:25:21 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 t_chr			*gnl_nsave_chr(int fd, int nbr_lines)
@@ -22,5 +34,5 @@ t_chr			*gnl_nsave_chr(int fd, int nbr_lines)
 		return (input);
 	if (input)
 		chr_free(&input);
-	return (NULL);	
+	return (NULL);
 }

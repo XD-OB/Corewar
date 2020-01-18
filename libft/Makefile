@@ -15,7 +15,8 @@ LIBFT  = ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_printhe
 		 ft_lltoa ft_ulltoa_base ft_strpower ft_strmult ft_strcnew ft_ltoa ft_maxmin\
 		 hash_str hash_filltab hash_findid hash_strtoind hash_putintab hash_freetab\
 		 tabstr_len tabstr_free tabstr_add tabstr_join tabstr_njoin tabstr_copy\
-		 tabstr_ncopy tabstr_print tabstr_trim\
+		 tabstr_ncopy tabstr_print tabstr_trim tabstr_new ft_strccombin ft_strcjoin\
+		 ft_is_strdigit\
 
 LIBFT_SRC = $(addprefix srcs/, $(addsuffix .c, $(LIBFT)))
 LIBFT_OBJ = $(addprefix srcs/, $(addsuffix .o, $(LIBFT)))
@@ -25,13 +26,16 @@ LIBFT_OBJ = $(addprefix srcs/, $(addsuffix .o, $(LIBFT)))
 LIB_STRUCTS = qt_enqueue qt_dequeue qt_isempty qt_free qt_front qt_print qt_new_queue\
 			  bt_apply_infix bt_apply_revinfix bt_apply_prefix bt_apply_suffix bt_free\
 			  bt_create_node bt_insert_item bt_search_item bt_size_count bt_level_count\
-		 	  ft_lstnew ft_lstnew_sm ft_lstdelone ft_lstdel ft_lstadd ft_lstiter\
-			  ft_lstmap ft_lstprint ft_list_size ft_lstadd_last\
+		 	  ft_lstnew ft_lstnew_sm ft_lstdelone ft_lstdel ft_lstadd_last ft_lstadd\
+			  ft_lstmap ft_lstprint ft_lstlen ft_lstiter ft_lstinsert ft_lstremove\
+			  dt_lstnew dt_lstnew_sm dt_lstdelone dt_lstdel dt_lstremove dt_lstadd_last\
+			  dt_lstadd dt_lstinsert dt_lstiter dt_lstmap dt_lstlen\
+			  dct_lstnew dct_lstnew_sm dct_lstadd_last dct_lstremove dct_lstdel\
+			  ct_lstnew ct_lstnew_sm ct_lstadd_last ct_lstremove ct_lstdel\
 			  sk_push sk_pop sk_top sk_free sk_isempty ic_cmp ic_ncmp ic_copy ic_lstfind\
 			  ic_addnode ic_pushnode ic_joinstr ic_free ic_print ic_lstdel ic_size\
-			  chr_pushfront chr_addnode chr_addnode_sm chr_revprint chr_print\
-			  chr_len chr_free chr_init gnl_save_chr gnl_nsave_chr\
-			  pt_new pt_swap pt_linterp\
+			  chr_pushfront chr_addnode chr_addnode_sm chr_revprint chr_print chr_free\
+			  chr_len chr_init gnl_save_chr gnl_nsave_chr pt_new pt_swap pt_linterp\
 
 LIB_STRUCTS_SRC = $(addprefix srcs/data_structs/, $(addsuffix .c, $(LIB_STRUCTS)))
 LIB_STRUCTS_OBJ = $(addprefix srcs/data_structs/, $(addsuffix .o, $(LIB_STRUCTS)))

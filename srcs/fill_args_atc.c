@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_args_atc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/18 20:39:09 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/18 20:45:21 by obelouch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static void		fill_2bits(unsigned char *c, unsigned char byte)
@@ -63,7 +75,7 @@ void			fill_args_atc(t_bfile *bfile, unsigned char *binary,
 	int			j;
 
 	check_atc(bfile, binary, inst);
-	inst->nbr_bytes =  2 + calcul_args_bytes(bfile->op_tab, inst);
+	inst->nbr_bytes = 2 + calcul_args_bytes(bfile->op_tab, inst);
 	if (bfile->index + inst->nbr_bytes > bfile->exec_size)
 		exit_dis_error(bfile, inst, ERROR_INCOMPLET_OP);
 	i = -1;

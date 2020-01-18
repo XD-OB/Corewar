@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 05:58:26 by obelouch          #+#    #+#             */
-/*   Updated: 2019/06/30 05:05:29 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:59:54 by vegeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct		s_bt
 	struct s_bt		*left;
 	struct s_bt		*right;
 }					t_bt;
+
+typedef struct		s_dlist
+{
+	void			*content;
+	size_t			content_size;
+	struct s_dlist	*prev;
+	struct s_dlist	*next;
+}					t_dlist;
 
 typedef struct		s_list
 {
