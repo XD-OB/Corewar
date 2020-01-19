@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:52 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 01:24:41 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 05:27:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exit_error_label(t_sfile *sfile, t_inst *inst, char *label)
 {
 	ft_dprintf(2, "line %{red}%d%{eoc}:", inst->line);
 	ft_dprintf(2, "Invalid Label [%s] As Argument!\n", label);
+	close(sfile->param_asm.fd);
 	free_sfile(sfile);
 	exit(EXIT_FAILURE);
 }
@@ -38,8 +39,9 @@ void	exit_dis_error(t_bfile *bfile, t_inst *inst, int type)
 		ft_dprintf(2, "Invalid Argument Type Code for %{green}%s%{eoc}!\n",
 				bfile->op_tab[inst->op_nbr - 1].name);
 	if (type == ERROR_INCOMPLET_OP)
-		ft_dprintf(2, "Less Bytes to treate The Operations! %{green}%s%{green}\n",
+		ft_dprintf(2, "Less Bytes to treate The Operations! %{green}%s%{eoc}\n",
 				bfile->op_tab[inst->op_nbr - 1].name);
+	close(bfile->param_asm.fd);
 	free_bfile(bfile);
 	free_inst(inst);
 	exit(EXIT_FAILURE);
@@ -49,15 +51,11 @@ void	exit_ass_error(t_sfile *sfile, t_chr *def, int type)
 {
 	ft_dprintf(2, "line %{red}%d%{eoc}:", def->len);
 	if (type == ERROR_NAME_LENGTH)
-	{
-		ft_dprintf(2, " Champion name is too long ");
-		ft_dprintf(2, "(Max length %d)\n", PROG_NAME_LENGTH);
-	}
+		ft_dprintf(2, " Champion name is too long (Max length %d)\n",
+					PROG_NAME_LENGTH);
 	else if (type == ERROR_COMMENT_LENGTH)
-	{
-		ft_dprintf(2, " Champion comment is too long ");
-		ft_dprintf(2, "(Max length %d)\n", COMMENT_LENGTH);
-	}
+		ft_dprintf(2, " Champion comment is too long (Max length %d)\n",
+					COMMENT_LENGTH);
 	else if (type == ERROR_LEXICAL)
 		ft_dprintf(2, " Lexical Error!\n");
 	else if (type == ERROR_NC_NAME_CMT)
@@ -70,6 +68,7 @@ void	exit_ass_error(t_sfile *sfile, t_chr *def, int type)
 		ft_dprintf(2, " Syntax Error! Bad Instruction! ");
 		ft_dprintf(2, "%{green}[%{eoc}%s%{green}]%{eoc}\n", def->str);
 	}
+	close(sfile->param_asm.fd);
 	free_sfile(sfile);
 	exit(EXIT_FAILURE);
 }

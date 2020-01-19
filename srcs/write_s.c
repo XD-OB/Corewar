@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:06:17 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 00:35:09 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 04:23:37 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void			write_s(t_bfile bfile)
 	free(file);
 	if (fd < 0)
 		exit_berror(&bfile, ERROR_FD);
+	ft_printf("Writing output program to ");
+	ft_printf("%{GREEN}%s.s%{eoc}\n", bfile.file_name);
 	write_s_namecmt(bfile, fd);
 	write_s_insts(bfile, fd);
 	close(fd);

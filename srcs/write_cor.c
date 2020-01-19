@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:38:29 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 00:34:56 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 04:18:31 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void			write_cor(t_sfile sfile)
 	free(file);
 	if (fd < 0)
 		exit_serror(&sfile, ERROR_FD);
+	ft_printf("Writing output program to ");
+	ft_printf("%{GREEN}%s.cor%{eoc}\n", sfile.file_name);
 	write_int(COREWAR_EXEC_MAGIC, fd);
 	write_champ_name(sfile.name, fd);
 	write_int(sfile.exec_size, fd);

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:11 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:01:41 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 05:14:50 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		init_sfile(t_sfile *sfile, int fd)
 	sfile->name = NULL;
 	sfile->comment = NULL;
 	sfile->insts = NULL;
+	sfile->sf = NULL;
+	sfile->file_name = NULL;
 	if (!(sfile->op_tab = (t_op*)malloc(sizeof(t_op) * 16)))
 		return (0);
 	fill_op_tab(sfile->op_tab);
