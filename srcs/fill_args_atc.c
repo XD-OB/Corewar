@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:09 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:45:21 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 06:58:02 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		check_atc(t_bfile *bfile, unsigned char *binary,
 	i = -1;
 	while (++i < 3)
 	{
-		if (c[i] & 0x1)
+		if (c[i] == 0x1)
 			inst->args[i].type = T_REG;
 		else if (c[i] == 0x2)
 			inst->args[i].type = T_DIR;
@@ -59,9 +59,9 @@ static int		calcul_args_bytes(t_op *op_tab, t_inst *inst)
 	{
 		if (inst->args[i].type == T_REG)
 			bytes += 1;
-		if (inst->args[i].type == T_DIR)
+		else if (inst->args[i].type == T_DIR)
 			bytes += op_tab[inst->op_nbr - 1].tdir_size;
-		if (inst->args[i].type == T_IND)
+		else if (inst->args[i].type == T_IND)
 			bytes += 2;
 		i++;
 	}

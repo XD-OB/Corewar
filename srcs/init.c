@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:11 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 05:14:50 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 05:44:52 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_asmbl(t_asm *asmbl)
 	asmbl->fd = -1;
 	asmbl->r = 0;
 	asmbl->a = 0;
+	asmbl->multi = 0;
 }
 
 int		init_bfile(t_bfile *bfile)

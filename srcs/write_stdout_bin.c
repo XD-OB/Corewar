@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 19:59:57 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:00:01 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 07:11:03 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		write_inst_high(t_bfile bfile, t_inst *inst, int bytes)
 
 static void		write_stdout_bin_inst(t_bfile bfile, t_inst *inst, int bytes)
 {
-	ft_printf(" (%3d):\n", bytes);
+	ft_printf("%-5d (%3d):\n", bytes, inst->nbr_bytes);
 	write_inst_low(bfile, inst, bytes);
 	write_inst_med(bfile, inst, bytes);
 	write_inst_high(bfile, inst, bytes);
@@ -85,9 +85,9 @@ void			write_stdout_bin(t_bfile bfile)
 	ft_putendl("       Annotated program:");
 	ft_printf("%{green}==========================================");
 	ft_printf("===========================================%{eoc}\n");
-	ft_printf("Name    : %{CYAN}%s%{eoc}\n", bfile.name);
-	ft_printf("Comment : %{CYAN}%s%{eoc}\n", bfile.comment);
-	ft_printf("Program size : %{CYAN}%u%{eoc}\n\n", bfile.exec_size);
+	ft_printf("Name    : \"%{CYAN}%s%{eoc}\"\n", bfile.name);
+	ft_printf("Comment : \"%{CYAN}%s%{eoc}\"\n", bfile.comment);
+	ft_printf("Program size : %{CYAN}%u%{eoc} byte(s)\n\n", bfile.exec_size);
 	bytes = 0;
 	curr = bfile.insts;
 	while (curr)

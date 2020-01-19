@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 04:01:02 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 05:48:48 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 typedef struct		s_asm
 {
+	int				multi:1;
 	int				fd;
 	int				r:1;
 	int				a:1;

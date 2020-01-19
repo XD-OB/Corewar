@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:00:50 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 07:22:41 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 		return ;
 	}
 	op = ft_strsub(str, 0, i++);
-	op_nbr = is_op(op_tab, op);
-	free(op);
-	if (!op_nbr)
+	if (!(op_nbr = is_op(op_tab, op)))
 	{
 		ft_printf("Invalid Operation: %s\n", op);
+		free(op);
 		return ;
 	}
+	free(op);
 	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);
 	check_tabargs(tab_arg, op_tab[op_nbr - 1]);

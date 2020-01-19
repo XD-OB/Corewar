@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:44:56 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 05:20:55 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 05:57:22 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ int		main(int ac, char **av)
 	init_asmbl(&asmbl);
 	i = save_options(&asmbl, ac, av);
 	while (i < ac)
+	{
+		if (asmbl.multi && !asmbl.a)
+			ft_printf("\n%{cyan}%s:%{eoc}\n", av[i]);
 		treate_file(av[i++], &asmbl);
+	}
 	return (EXIT_SUCCESS);
 }

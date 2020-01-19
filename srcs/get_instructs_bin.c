@@ -6,14 +6,14 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:42:42 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:53:08 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 06:58:54 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
 static void		fill_args_no_atc(t_bfile *bfile, unsigned char *binary,
-									t_inst *inst)
+		t_inst *inst)
 {
 	int			tdir_size;
 
