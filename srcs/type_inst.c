@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:00 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:39:02 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 08:28:36 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int			is_aloneinst(t_op *op_tab, char *str)
 	op_nbr = is_op(op_tab, op);
 	free(op);
 	if (str[i] == '\0' || !op_nbr)
+		return (0);
+	if (str[ft_strlen(str) - 1] == SEPARATOR_CHAR)
 		return (0);
 	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);

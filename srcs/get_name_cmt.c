@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:04 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 00:40:36 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 08:06:49 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static int		count_dquotes(t_sfile *sfile, t_chr *curr, char *str)
 	int			q;
 	int			i;
 
-	i = 0;
+	i = 1;
+	q = 1;
 	if (str[0] == '\0')
 		exit_qerror(sfile, curr, ERROR_NO_STR);
 	if (str[0] != '"')
 		exit_qerror(sfile, curr, ERROR_CHAR_QUOTES);
-	q = 1;
 	while (str[i])
 	{
 		if (str[i] == '"')
