@@ -6,17 +6,27 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:41:58 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:26:01 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static void		encode_asm(t_asm *asmbl, char *file_name)
+static void		print_ferror(char *file, int type)
+{
+	if (type == ERROR_FILE_NF)
+		ft_dprintf(2, "%{red}%s%{eoc}: File not found!\n", file);
+	else if (type == ERROR_FILE_BE)
+		ft_dprintf(2, "%{red}%s%{eoc}: File with Bad extension!\n", file);
+}
+
+static void		encode_asm(t_asm *asmbl, char *file)
 {
 	t_sfile		sfile;
 	t_chr		*curr;
 
+	sfile.param_asm = *asmbl;
+	sfile.file_name = ft_strndup(file, ft_strlen(file) - 2);
 	if (!init_sfile(&sfile, asmbl->fd))
 		exit_serror(&sfile, ERROR_ALLOC);
 	curr = sfile.sf;
@@ -33,15 +43,16 @@ static void		encode_asm(t_asm *asmbl, char *file_name)
 	if (asmbl->a)
 		write_stdout(sfile);
 	else
-		write_cor(sfile, file_name);
+		write_cor(sfile);
 	free_sfile(&sfile);
 }
 
-static void		decode_asm(t_asm *asmbl, char *file_name)
+static void		decode_asm(t_asm *asmbl, char *file)
 {
 	t_bfile		bfile;
 
-	(void)file_name;
+	bfile.param_asm = *asmbl;
+	bfile.file_name = ft_strndup(file, ft_strlen(file) - 4);
 	if (!init_bfile(&bfile))
 		exit_berror(&bfile, ERROR_ALLOC);
 	fill_bin(&bfile, asmbl->fd);
@@ -49,32 +60,30 @@ static void		decode_asm(t_asm *asmbl, char *file_name)
 	if (asmbl->a)
 		write_stdout_bin(bfile);
 	else
-		write_s(bfile, file_name);
+		write_s(bfile);
 	free_bfile(&bfile);
 }
 
 void			treate_file(char *file, t_asm *asmbl)
 {
-	char		*file_name;
-
 	asmbl->fd = open(file, O_RDONLY);
 	if (asmbl->fd < 0)
-		exit_ferror(file, ERROR_FILE_NF);
-	if (asmbl->r)
-	{
-		if (ft_strcmp(&file[ft_strlen(file) - 4], ".cor"))
-			exit_ferror(file, ERROR_FILE_BE);
-		file_name = ft_strndup(file, ft_strlen(file) - 4);
-		decode_asm(asmbl, file_name);
-		free(file_name);
-	}
+		print_ferror(file, ERROR_FILE_NF);
 	else
 	{
-		if (ft_strcmp(&file[ft_strlen(file) - 2], ".s"))
-			exit_ferror(file, ERROR_FILE_BE);
-		file_name = ft_strndup(file, ft_strlen(file) - 2);
-		encode_asm(asmbl, file_name);
-		free(file_name);
+		if (asmbl->r)
+		{
+			if (!ft_strcmp(&file[ft_strlen(file) - 4], ".cor"))
+				decode_asm(asmbl, file);
+			else
+				print_ferror(file, ERROR_FILE_BE);
+		}
+		else
+		{
+			if (!ft_strcmp(&file[ft_strlen(file) - 2], ".s"))
+				encode_asm(asmbl, file);
+			else
+				print_ferror(file, ERROR_FILE_BE);
+		}
 	}
-	close(asmbl->fd);
 }

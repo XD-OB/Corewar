@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:26 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:02:28 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:27:07 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void			free_sfile(t_sfile *sfile)
 		free_op_tab(&(sfile->op_tab));
 	if (sfile->insts)
 		free_insts(&(sfile->insts));
+	if (sfile->file_name)
+		free(sfile->file_name);
+	close(sfile->param_asm.fd);
 }
 
 void			free_bfile(t_bfile *bfile)
@@ -71,4 +74,7 @@ void			free_bfile(t_bfile *bfile)
 		free_op_tab(&(bfile->op_tab));
 	if (bfile->insts)
 		free_insts(&(bfile->insts));
+	if (bfile->file_name)
+		free(bfile->file_name);
+	close(bfile->param_asm.fd);
 }

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:38:29 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:38:47 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 00:34:56 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ static void		write_champ_comment(char *comment, int fd)
 		ft_putchar_fd(0, fd);
 }
 
-void			write_cor(t_sfile sfile, char *file_name)
+void			write_cor(t_sfile sfile)
 {
 	char		*file;
 	int			fd;
 
-	file = ft_strjoin(file_name, ".cor");
+	file = ft_strjoin(sfile.file_name, ".cor");
 	fd = open(file, O_CREAT | O_WRONLY, 0666);
 	free(file);
 	if (fd < 0)

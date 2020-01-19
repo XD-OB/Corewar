@@ -9,6 +9,20 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+/*
+**	r: (reverse ) 0 = Assembler
+**				  1 = Disassembler
+**	a: (annotate) 0 = create the binary file
+**				  1 = show the code annotated in stdout
+*/
+
+typedef struct		s_asm
+{
+	int				fd;
+	int				r:1;
+	int				a:1;
+}					t_asm;
+
 typedef struct		s_arg
 {
 	int				type;
@@ -45,16 +59,19 @@ typedef struct		s_op
 
 typedef struct		s_sfile
 {
+	char			*file_name;
 	char			*name;
 	char			*comment;
 	t_list			*insts;
 	t_chr			*sf;
 	t_op			*op_tab;
 	int				exec_size;
+	t_asm			param_asm;
 }					t_sfile;
 
 typedef struct		s_bfile
 {
+	char			*file_name;
 	unsigned int	mg_head;
 	unsigned int	exec_size;
 	unsigned int	index;
@@ -63,21 +80,8 @@ typedef struct		s_bfile
 	unsigned char	*exec_code;
 	t_list			*insts;
 	t_op			*op_tab;
+	t_asm			param_asm;
 }					t_bfile;
-
-/*
-**	r: (reverse ) 0 = Assembler
-**				  1 = Disassembler
-**	a: (annotate) 0 = create the binary file
-**				  1 = show the code annotated in stdout
-*/
-
-typedef struct		s_asm
-{
-	int				fd;
-	int				r:1;
-	int				a:1;
-}					t_asm;
 
 int			save_options(t_asm *asmbl, int ac, char **av);
 void		treate_file(char *file, t_asm *asmbl);
@@ -99,7 +103,6 @@ void		exit_ass_error(t_sfile *sfile, t_chr *def, int type);
 void		exit_dis_error(t_bfile *bfile, t_inst *inst, int type);
 void		exit_qerror(t_sfile *sfile, t_chr *def, int type);
 void		exit_serror(t_sfile *sfile, int type);
-void		exit_ferror(char *file, int type);
 void		exit_berror(t_bfile *bfile, int type);
 void		exit_inst_error(t_sfile *sfile, t_chr *curr);
 void		exit_error_label(t_sfile *sfile, t_inst *inst, char *label);
@@ -119,8 +122,8 @@ void		get_instructs_bin(t_bfile *bfile);
 void		get_instructs(t_sfile *sfile, t_chr *begin);
 int			get_name_cmt(t_sfile *sfile, t_chr **curr, char *str);
 void		write_exec_code(t_sfile sfile, int fd);
-void		write_cor(t_sfile sfile, char *file_name);
-void		write_s(t_bfile bfile, char *file_name);
+void		write_cor(t_sfile sfile);
+void		write_s(t_bfile bfile);
 void		write_short(short n, int fd);
 void		write_int(int n, int fd);
 void		write_inst_advinfos(t_op op_infos, t_inst *inst);

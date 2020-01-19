@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:06:40 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:57:21 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:15:40 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_arithm(char *str)
 		i++;
 	if (str[i] != '+' && str[i] != '-' &&
 		str[i] != '*' && str[i] != '/')
-		return (0);;
+		return (0);
 	i++;
 	if (str[i] == ' ')
 		i++;

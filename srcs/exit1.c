@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:02:50 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:24:57 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,5 @@ void	exit_qerror(t_sfile *sfile, t_chr *def, int type)
 	else if (type == ERROR_NO_QUOTES)
 		ft_printf(" No Quotes for the string!\n");
 	free_sfile(sfile);
-	exit(EXIT_FAILURE);
-}
-
-void	exit_ferror(char *file, int type)
-{
-	if (type == ERROR_FILE_NF)
-		ft_printf("%{red}%s%{eoc}: File not found!\n", file);
-	else if (type == ERROR_FILE_BE)
-		ft_printf("%{red}%s%{eoc}: File with Bad extension!\n", file);
 	exit(EXIT_FAILURE);
 }

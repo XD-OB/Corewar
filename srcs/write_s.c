@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:06:17 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:06:19 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 00:35:09 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static void		write_s_namecmt(t_bfile bfile, int fd)
 	ft_dprintf(fd, "\"%s\"\n\n", bfile.comment);
 }
 
-void			write_s(t_bfile bfile, char *file_name)
+void			write_s(t_bfile bfile)
 {
 	char		*file;
 	int			fd;
 
-	file = ft_strjoin(file_name, ".s");
+	file = ft_strjoin(bfile.file_name, ".s");
 	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	free(file);
 	if (fd < 0)
