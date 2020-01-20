@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 08:48:36 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 23:39:12 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 		free(op);
 		return ;
 	}
+	i = ft_strlen(op);
+	while (ft_isblank(str[i]))
+		i++;
 	free(op);
-	check_args(op_tab, op_nbr, str, i);
+	check_args(op_tab, op_nbr, &str[i], i);
 }
 
 static int		there_islabel(char *str)

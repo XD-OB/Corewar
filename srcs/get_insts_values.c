@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:25 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 06:13:18 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 22:23:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			fill_inst_values(t_sfile *sfile, t_inst *inst)
 			if (inst->args[i].str[0] == '(')
 				inst->args[i].value = calcul_arithm(inst->args[i].str);
 			else
-				inst->args[i].value = ft_atoi(inst->args[i].str);
+				inst->args[i].value = ft_atol(inst->args[i].str);
 		}
 		else
 		{

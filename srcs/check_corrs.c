@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:31:34 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:31:53 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:17:07 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,17 @@ int				check_corr_val(int type, char *arg, t_op op_ref)
 		n = ft_atoi(arg);
 		if (n < SHRT_MIN || n > SHRT_MAX)
 			return (print_val_error(arg, 2));
+		return (1);
 	}
-	else
+	len = (arg[0] == '-') ? 11 : 10;
+	if (ft_strlen(arg) > len)
 	{
-		len = (arg[0] == '-') ? 11 : 10;
-		if (ft_strlen(arg) > len)
-			return (print_val_error(arg, 4));
-		n = ft_atoi(arg);
-		if (n < INT_MIN || n > INT_MAX)
-			return (print_val_error(arg, 4));
+		ft_printf("dsfdsfdsfdsfds\n");
+		return (print_val_error(arg, 4));
 	}
+	n = ft_atoi(arg);
+	if (n < INT_MIN || n > INT_MAX)
+		return (print_val_error(arg, 4));
 	return (1);
 }
 

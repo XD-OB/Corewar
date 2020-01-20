@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:29:43 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:30:09 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 23:39:08 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 static int		check_values(int type, char *arg, t_op op_ref)
 {
-	if (arg[0] == '(')
+	char		*str;
+
+	str = &arg[(type == T_DIR) ? 1 : 0];
+	if (str[0] == '(')
 	{
-		if (!check_corr_arithm(type, arg, op_ref))
+		if (!check_corr_arithm(type, str, op_ref))
 			return (0);
 	}
 	else
 	{
-		if (!check_corr_val(type, arg, op_ref))
-			return (0);
+		if (str[0] != LABEL_CHAR)
+			if (!check_corr_val(type, str, op_ref))
+				return (0);
 	}
 	return (1);
 }
@@ -57,11 +61,12 @@ void			check_args(t_op *op_tab, int op_nbr, char *str, int i)
 {
 	char		**tab_arg;
 
+	(void)i;
 	if (str[ft_strlen(str) - 1] == SEPARATOR_CHAR)
 		ft_printf("The Instruction end with %{red}%c%{eoc}\n", SEPARATOR_CHAR);
 	else
 	{
-		tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
+		tab_arg = ft_strsplit(str, SEPARATOR_CHAR);
 		tabstr_trim(tab_arg);
 		check_tabargs(tab_arg, op_tab[op_nbr - 1]);
 		tabstr_free(&tab_arg);

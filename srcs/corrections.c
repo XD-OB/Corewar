@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   correct_arithm.c                                   :+:      :+:    :+:   */
+/*   corrections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 06:20:37 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:06:58 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:15:30 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,6 @@ void			fill_opts(char **opts, char *arg)
 	opts[2] = ft_strsub(arg, i, j - 1);
 }
 
-long long		ft_strcalcul(char **opts)
-{
-	long		n1;
-	long		n2;
-
-	n1 = ft_atol(opts[0]);
-	n2 = ft_atol(opts[1]);
-	if (n1 < INT_MIN || n1 > INT_MAX ||
-			n2 < INT_MIN || n2 > INT_MAX)
-		return (LONG_MAX);
-	if (!ft_strcmp(opts[1], "+"))
-		return (n1 + n2);
-	else if (!ft_strcmp(opts[1], "-"))
-		return (n1 - n2);
-	else if (!ft_strcmp(opts[1], "*"))
-		return (n1 * n2);
-	else
-		return (n1 / n2);
-}
-
 static int		free_opts(char **opts, int ret)
 {
 	free(opts[0]);
@@ -61,7 +41,7 @@ static int		free_opts(char **opts, int ret)
 	return (ret);
 }
 
-int				correct_arithm(int type, char *arg, t_op op_ref)
+static int		correct_arithm(int type, char *arg, t_op op_ref)
 {
 	size_t		len;
 	char		*opts[3];
@@ -87,7 +67,7 @@ int				correct_arithm(int type, char *arg, t_op op_ref)
 	return (free_opts(opts, 1));
 }
 
-int				correct_value(int type, char *arg, t_op op_ref)
+static int		correct_value(int type, char *arg, t_op op_ref)
 {
 	size_t		len;
 	long		n;
@@ -107,9 +87,25 @@ int				correct_value(int type, char *arg, t_op op_ref)
 		len = (arg[0] == '-') ? 11 : 10;
 		if (ft_strlen(arg) > len)
 			return (0);
-		n = ft_atoi(arg);
+		n = ft_atol(arg);
 		if (n < INT_MIN || n > INT_MAX)
 			return (0);
+	}
+	return (1);
+}
+
+int				corrections(int type, char *str, t_op op_ref)
+{
+	if (str[0] == '(')
+	{
+		if (!correct_arithm(type, str, op_ref))
+			return (0);
+	}
+	else
+	{
+		if (str[0] != LABEL_CHAR)
+			if (!correct_value(type, str, op_ref))
+				return (0);
 	}
 	return (1);
 }

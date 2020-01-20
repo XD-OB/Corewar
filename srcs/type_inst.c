@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:00 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 08:48:41 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:15:06 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,21 @@
 
 static int		corr_tabargs(char **tab_arg, t_op op_ref)
 {
+	char		*str;
 	int			type;
 	int			i;
 
 	if (tabstr_len(tab_arg) != op_ref.args_nbr)
 		return (0);
-	i = 0;
-	while (i < op_ref.args_nbr)
+	i = -1;
+	while (++i < op_ref.args_nbr)
 	{
 		type = type_arg(tab_arg[i]);
+		str = &tab_arg[i][(type == T_IND) ? 0 : 1];
 		if (!(type & op_ref.args_type[i]))
 			return (0);
-		if (tab_arg[i][0] == '(')
-		{
-			if (!correct_arithm(type, tab_arg[i], op_ref))
-				return (0);
-		}
-		else
-		{
-			if (!correct_value(type, tab_arg[i], op_ref))
-				return (0);
-		}
-		i++;
+		if (!corrections(type, str, op_ref))
+			return (0);
 	}
 	return (1);
 }
