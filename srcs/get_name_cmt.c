@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:04 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 08:06:49 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 01:33:18 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int		count_dquotes(t_sfile *sfile, t_chr *curr, char *str)
 	i = 1;
 	q = 1;
 	if (str[0] == '\0')
-		exit_qerror(sfile, curr, ERROR_NO_STR);
+		exit_qerror(sfile, curr->len, ERROR_NO_STR);
 	if (str[0] != '"')
-		exit_qerror(sfile, curr, ERROR_CHAR_QUOTES);
+		exit_qerror(sfile, curr->len, ERROR_CHAR_QUOTES);
 	while (str[i])
 	{
 		if (str[i] == '"')
@@ -32,32 +32,38 @@ static int		count_dquotes(t_sfile *sfile, t_chr *curr, char *str)
 	return (q);
 }
 
+static void		str_n_combin(char **s1, char *s2)
+{
+	ft_strcombin(s1, "\n");
+	ft_strcombin(s1, s2);
+}
+
 static char		*complete_line(t_sfile *sfile, t_chr **curr, char *str)
 {
+	int			line;
 	char		*complete;
 	int			q;
 
 	q = count_dquotes(sfile, *curr, str);
 	complete = ft_strdup(str);
-	if (q < 2)
+	if (q > 1)
+		return (complete);
+	if (q != 0)
 	{
-		if (q != 0)
+		line = (*curr)->len;
+		*curr = (*curr)->next;
+		while (*curr)
 		{
-			*curr = (*curr)->next;
-			while (*curr)
-			{
-				ft_strcombin(&complete, "\n");
-				ft_strcombin(&complete, (*curr)->str);
-				if (ft_strchr((*curr)->str, '"'))
-					return (complete);
-				(*curr) = (*curr)->next;
-			}
-			free(complete);
-			exit_qerror(sfile, *curr, ERROR_LESS_QUOTES);
+			str_n_combin(&complete, (*curr)->str);
+			if (ft_strchr((*curr)->str, '"'))
+				return (complete);
+			(*curr) = (*curr)->next;
 		}
 		free(complete);
-		exit_qerror(sfile, *curr, ERROR_NO_QUOTES);
+		exit_qerror(sfile, line, ERROR_LESS_QUOTES);
 	}
+	free(complete);
+	exit_qerror(sfile, (*curr)->len, ERROR_NO_QUOTES);
 	return (complete);
 }
 
@@ -101,31 +107,80 @@ static char		*get_q_text_q(t_sfile *sfile, t_chr **curr, char *str)
 	return (text);
 }
 
+static int		is_cmd_comment(char *str)
+{
+	size_t		len;
+	size_t		i;
+
+	i = 0;
+	while (ft_isblank(str[i]))
+		i++;
+	len = ft_strlen(COMMENT_CMD_STRING);
+	if (!ft_strncmp(&str[i], COMMENT_CMD_STRING, len))
+		return (1);
+	return (0);
+}
+
+static int		is_cmd_name(char *str)
+{
+	size_t		len;
+	size_t		i;
+
+	i = 0;
+	while (ft_isblank(str[i]))
+		i++;
+	len = ft_strlen(NAME_CMD_STRING);
+	if (!ft_strncmp(&str[i], NAME_CMD_STRING, len))
+		return (1);
+	return (0);
+}
+
+static char		*val_cmd(char *str, char *cmd)
+{
+	char		*new;
+	size_t		i;
+
+	i = 0;
+	while (ft_isblank(str[i]))
+		i++;
+	i += ft_strlen(cmd);
+	while (ft_isblank(str[i]))
+		i++;
+	if (!str[i])
+	{
+		if (!ft_strcmp(cmd, NAME_CMD_STRING))
+			new = ft_strdup("\"Anonym\"");
+		if (!ft_strcmp(cmd, COMMENT_CMD_STRING))
+			new = ft_strdup("\"Nothing to say :(\"");
+	}
+	else
+		new = ft_strdup(&str[i]);
+	return (new);
+}
+
 int				get_name_cmt(t_sfile *sfile, t_chr **curr, char *str)
 {
 	char		*s;
 
-	if (str[0] == COMMENT_CHAR || str[0] == '\0')
+	if (str[0] == '\0')
 		return (0);
-	if (!ft_strncmp(str, NAME_CMD_STRING,
-				ft_strlen(NAME_CMD_STRING)) && !sfile->name)
+	if (is_cmd_name(str) && !sfile->name)
 	{
-		s = ft_strtrim(&str[ft_strlen(NAME_CMD_STRING)]);
+		s = val_cmd(str, NAME_CMD_STRING);
 		sfile->name = get_q_text_q(sfile, curr, s);
 		free(s);
 		if (ft_strlen(sfile->name) > PROG_NAME_LENGTH)
 			exit_ass_error(sfile, *curr, ERROR_NAME_LENGTH);
+		return (0);
 	}
-	else if (!ft_strncmp(str, COMMENT_CMD_STRING,
-				ft_strlen(COMMENT_CMD_STRING)) && !sfile->comment)
+	if (is_cmd_comment(str) && !sfile->comment)
 	{
-		s = ft_strtrim(&str[ft_strlen(COMMENT_CMD_STRING)]);
+		s = val_cmd(str, COMMENT_CMD_STRING);
 		sfile->comment = get_q_text_q(sfile, curr, s);
 		free(s);
 		if (ft_strlen(sfile->comment) > COMMENT_LENGTH)
 			exit_ass_error(sfile, *curr, ERROR_COMMENT_LENGTH);
+		return (0);
 	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }

@@ -1,8 +1,8 @@
-# dsjdjslds  dsad
-.comment "ghir 
-ana ghir ana"
-#fdgdgdfgdfgdfg
-.name      "illl0lyas"
+#djaklsjdklasjdakls
+  .name     "
+   #jdkljfdks
+		#fdjksfhdjkshfdjksfdkls#"
+		.comment  
 
 fork %5       #dksjksd
 live %-1    #dksjsfdlsk

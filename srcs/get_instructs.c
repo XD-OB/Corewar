@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:51 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:01:52 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/19 20:49:53 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,30 @@ static void		get_insts_basic(t_sfile *sfile, t_chr *begin)
 {
 	t_chr		*list_label;
 	t_chr		*curr;
+	char		*str;
 
 	curr = begin;
 	list_label = NULL;
 	while (curr)
 	{
-		if (curr->str[0] != COMMENT_CHAR && curr->str[0] != '\0')
+		str = ft_strtrim(curr->str);
+		if (str[0] != '\0')
 		{
-			if (is_alonelabel(curr->str))
-				add_to_listlabel(&list_label, curr->str);
-			else if (is_instlabel(sfile->op_tab, curr->str))
-				add_instlabel(sfile, &list_label, curr->str, curr->len);
-			else if (is_aloneinst(sfile->op_tab, curr->str))
-				add_aloneinst(sfile, &list_label, curr->str, curr->len);
+			if (is_alonelabel(str))
+				add_to_listlabel(&list_label, str);
+			else if (is_instlabel(sfile->op_tab, str))
+				add_instlabel(sfile, &list_label, str, curr->len);
+			else if (is_aloneinst(sfile->op_tab, str))
+				add_aloneinst(sfile, &list_label, str, curr->len);
 			else
 			{
+				free(str);
 				chr_free(&list_label);
 				exit_inst_error(sfile, curr);
 			}
 		}
 		curr = curr->next;
+		free(str);
 	}
 	if (list_label)
 		add_lonely_labels(sfile, &list_label);

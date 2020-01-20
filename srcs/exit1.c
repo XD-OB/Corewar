@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 04:41:19 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 01:33:24 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	exit_berror(t_bfile *bfile, int type)
 	exit(EXIT_FAILURE);
 }
 
-void	exit_qerror(t_sfile *sfile, t_chr *def, int type)
+void	exit_qerror(t_sfile *sfile, size_t line, int type)
 {
-	ft_dprintf(2, "line %{red}%d%{eoc}:", def->len);
+	ft_dprintf(2, "line %{red}%d%{eoc}:", line);
 	if (type == ERROR_LESS_QUOTES)
 		ft_dprintf(2, " Closing quote not found!\n");
 	else if (type == ERROR_CHAR_QUOTES)

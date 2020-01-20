@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 05:48:48 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 01:33:44 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void				tabstr_trim(char **tab);
 void				exit_usage(char *exe);
 void				exit_ass_error(t_sfile *sfile, t_chr *def, int type);
 void				exit_dis_error(t_bfile *bfile, t_inst *inst, int type);
-void				exit_qerror(t_sfile *sfile, t_chr *def, int type);
+void				exit_qerror(t_sfile *sfile, size_t line, int type);
 void				exit_serror(t_sfile *sfile, int type);
 void				exit_berror(t_bfile *bfile, int type);
 void				exit_inst_error(t_sfile *sfile, t_chr *curr);

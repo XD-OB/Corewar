@@ -6,47 +6,94 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:35 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 05:20:20 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 01:33:21 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static void		delete_comment(char **str)
+static int		is_comment(char *str)
+{
+	size_t		i;
+
+	i = 0;
+	while (ft_isblank(str[i]))
+		i++;
+	if (str[i] == '#')
+		return (1);
+	return (0);
+}
+
+static int		is_strblank(char *str)
+{
+	size_t		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isblank(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void		delete_comment(char **str, int q)
 {
 	char		*new;
 	int			i;
 
-	if ((*str)[0] == COMMENT_CHAR)
+	if (q % 2 != 0)
 		return ;
-	i = 0;
-	while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
-		i++;
-	if (!(*str)[i])
-		return ;
-	new = ft_strsub(*str, 0, i);
+	if (is_strblank(*str) || is_comment(*str))
+		new = ft_strnew(0);
+	else
+	{
+		i = 0;
+		while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
+			i++;
+		if (!(*str)[i])
+			return ;
+		new = ft_strsub(*str, 0, i);
+	}
 	free(*str);
 	*str = new;
+}
+
+int				quotes_nbr(char *str)
+{
+	size_t		i;
+	int			q;
+
+	i = 0;
+	q = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"')
+			q++;
+		i++;
+	}
+	return (q);
 }
 
 t_chr			*file_save_chr(int fd)
 {
 	t_chr		*input;
 	char		*line;
-	char		*str;
 	int			ret;
+	int			q;
 	int			i;
 
 	i = 1;
 	input = NULL;
 	line = NULL;
+	q = 0;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		delete_comment(&line);
-		str = ft_strtrim(line);
-		chr_addnode(&input, str, i);
+		delete_comment(&line, q);
+		chr_addnode(&input, line, i);
 		free(line);
-		free(str);
+		q += quotes_nbr(line);
 		i++;
 	}
 	if (line)
