@@ -1,9 +1,8 @@
 #djaklsjdklasjdakls
-  .name     "
-   #jdkljfdks
-		#fdjksfhdjkshfdjksfdkls#"
-		.comment  
-
+ .name     "apah"
+	 .comment "dasdasd
+	 dasd"
+ 
 fork %5       #dksjksd
 live %-1    #dksjsfdlsk
 ld %1025, r8
@@ -18,7 +17,7 @@ lld %12,     r2
 	st r8, 5
 sti r8, %5, r2
 aff r8
-and %4, %6, r8
+and %5, %6, r5
 lldi 3, r9, r2
 zjmp %-2
 ld 7, r1

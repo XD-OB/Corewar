@@ -6,11 +6,17 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:40 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:00:41 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 07:39:31 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void		str_n_combin(char **s1, char *s2)
+{
+	ft_strcombin(s1, "\n");
+	ft_strcombin(s1, s2);
+}
 
 int			int_4_bytes(unsigned char *binary)
 {

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/04 01:28:50 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 06:19:37 by obelouch         ###   ########.fr       */
+/*   Created: 2020/01/20 06:15:24 by obelouch          #+#    #+#             */
+/*   Updated: 2020/01/20 06:16:20 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	long_verif(unsigned long a, int sign)
+static long		longlong_verif(unsigned long long a, int sign)
 {
-	if (sign == -1 && (a - 1) > INT_MAX)
+	if (sign == -1 && (a - 1) > LONG_MAX)
 		return (0);
-	if (sign == 1 && a > INT_MAX)
+	if (sign == 1 && a > LONG_MAX)
 		return (-1);
-	return ((int)(a * sign));
+	return ((int)a * sign);
 }
 
-int			ft_atoi(const char *str)
+long			ft_atol(const char *str)
 {
-	int				i;
-	unsigned long	a;
-	int				sign;
+	int					i;
+	unsigned long long	a;
+	int					sign;
 
 	i = 0;
 	a = 0;
@@ -47,5 +47,5 @@ int			ft_atoi(const char *str)
 			break ;
 		i++;
 	}
-	return (long_verif(a, sign));
+	return (longlong_verif(a, sign));
 }

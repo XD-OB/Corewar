@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:51 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 20:49:53 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 07:05:53 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ static void		add_lonely_labels(t_sfile *sfile, t_chr **list_label)
 	ft_lstadd_last(&sfile->insts, node);
 }
 
+static int		get_inst(t_sfile *sfile, t_chr **list_label,
+							char *str, int len)
+{
+	if (is_alonelabel(str))
+		add_to_listlabel(list_label, str);
+	else if (is_instlabel(sfile->op_tab, str))
+		add_instlabel(sfile, list_label, str, len);
+	else if (is_aloneinst(sfile->op_tab, str))
+		add_aloneinst(sfile, list_label, str, len);
+	else
+		return (0);
+	return (1);
+}
+
 static void		get_insts_basic(t_sfile *sfile, t_chr *begin)
 {
 	t_chr		*list_label;
@@ -47,20 +61,12 @@ static void		get_insts_basic(t_sfile *sfile, t_chr *begin)
 	{
 		str = ft_strtrim(curr->str);
 		if (str[0] != '\0')
-		{
-			if (is_alonelabel(str))
-				add_to_listlabel(&list_label, str);
-			else if (is_instlabel(sfile->op_tab, str))
-				add_instlabel(sfile, &list_label, str, curr->len);
-			else if (is_aloneinst(sfile->op_tab, str))
-				add_aloneinst(sfile, &list_label, str, curr->len);
-			else
+			if (!get_inst(sfile, &list_label, str, curr->len))
 			{
 				free(str);
 				chr_free(&list_label);
 				exit_inst_error(sfile, curr);
 			}
-		}
 		curr = curr->next;
 		free(str);
 	}
@@ -68,12 +74,14 @@ static void		get_insts_basic(t_sfile *sfile, t_chr *begin)
 		add_lonely_labels(sfile, &list_label);
 }
 
-static void		check_exec_size(t_sfile *sfile)
+void			get_instructs(t_sfile *sfile, t_chr *begin)
 {
 	t_list		*curr;
 	t_inst		*inst;
 	int			bytes;
 
+	get_insts_basic(sfile, begin);
+	get_insts_values(sfile);
 	bytes = 0;
 	curr = sfile->insts;
 	while (curr)
@@ -83,11 +91,4 @@ static void		check_exec_size(t_sfile *sfile)
 		curr = curr->next;
 	}
 	sfile->exec_size = bytes;
-}
-
-void			get_instructs(t_sfile *sfile, t_chr *begin)
-{
-	get_insts_basic(sfile, begin);
-	get_insts_values(sfile);
-	check_exec_size(sfile);
 }

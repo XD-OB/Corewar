@@ -6,37 +6,11 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:04 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 01:33:18 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 07:49:21 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-static int		count_dquotes(t_sfile *sfile, t_chr *curr, char *str)
-{
-	int			q;
-	int			i;
-
-	i = 1;
-	q = 1;
-	if (str[0] == '\0')
-		exit_qerror(sfile, curr->len, ERROR_NO_STR);
-	if (str[0] != '"')
-		exit_qerror(sfile, curr->len, ERROR_CHAR_QUOTES);
-	while (str[i])
-	{
-		if (str[i] == '"')
-			q++;
-		i++;
-	}
-	return (q);
-}
-
-static void		str_n_combin(char **s1, char *s2)
-{
-	ft_strcombin(s1, "\n");
-	ft_strcombin(s1, s2);
-}
 
 static char		*complete_line(t_sfile *sfile, t_chr **curr, char *str)
 {
@@ -105,34 +79,6 @@ static char		*get_q_text_q(t_sfile *sfile, t_chr **curr, char *str)
 	if (!text)
 		exit_ass_error(sfile, *curr, ERROR_LEXICAL);
 	return (text);
-}
-
-static int		is_cmd_comment(char *str)
-{
-	size_t		len;
-	size_t		i;
-
-	i = 0;
-	while (ft_isblank(str[i]))
-		i++;
-	len = ft_strlen(COMMENT_CMD_STRING);
-	if (!ft_strncmp(&str[i], COMMENT_CMD_STRING, len))
-		return (1);
-	return (0);
-}
-
-static int		is_cmd_name(char *str)
-{
-	size_t		len;
-	size_t		i;
-
-	i = 0;
-	while (ft_isblank(str[i]))
-		i++;
-	len = ft_strlen(NAME_CMD_STRING);
-	if (!ft_strncmp(&str[i], NAME_CMD_STRING, len))
-		return (1);
-	return (0);
 }
 
 static char		*val_cmd(char *str, char *cmd)

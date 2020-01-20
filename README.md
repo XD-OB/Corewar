@@ -10,3 +10,9 @@ Corewar is a very peculiar game. It’s about bringing “players” together ar
 [Excel Summary!](https://docs.google.com/spreadsheets/d/13QWDmu6EnSz9ZHSQanRRWV44hpNNjZ5Gd0eIAo8Z2i0/edit#gid=0)
 
 [Cook Book!](https://github.com/VBrazhnik/Corewar/wiki)
+
+## Team: Memory-Rapists
+
+- obelouch
+- ishaimou
+- aaguert

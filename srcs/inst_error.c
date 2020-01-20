@@ -6,39 +6,14 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 08:28:09 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 07:38:00 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static void		check_tabargs(char **tab_arg, t_op op_ref)
-{
-	int			i;
-
-	if (tabstr_len(tab_arg) != op_ref.args_nbr)
-	{
-		ft_printf("Wrong Number of Arguments! %{green}%s%{eoc}", op_ref.name);
-		ft_printf(" need %{green}%d%{eoc} argument(s)\n", op_ref.args_nbr);
-		return ;
-	}
-	i = 0;
-	while (i < op_ref.args_nbr)
-	{
-		if (!(type_arg(tab_arg[i]) & op_ref.args_type[i]))
-		{
-			ft_printf("Invalid Type of Argument %{red}%s%{eoc} ", tab_arg[i]);
-			ft_printf("for the operation %{green}%s%{eoc}\n", op_ref.name);
-			return ;
-		}
-		i++;
-	}
-	return ;
-}
-
 static void		check_aloneinst(t_op *op_tab, char *str)
 {
-	char		**tab_arg;
 	char		*op;
 	int			op_nbr;
 	int			i;
@@ -59,15 +34,7 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 		return ;
 	}
 	free(op);
-	if (str[ft_strlen(str) - 1] == SEPARATOR_CHAR)
-	{
-		ft_printf("The Instruction end with %{red}%c%{eoc}\n", SEPARATOR_CHAR);
-		return ;
-	}
-	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
-	tabstr_trim(tab_arg);
-	check_tabargs(tab_arg, op_tab[op_nbr - 1]);
-	tabstr_free(&tab_arg);
+	check_args(op_tab, op_nbr, str, i);
 }
 
 static int		there_islabel(char *str)

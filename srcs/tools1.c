@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:35 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 01:33:21 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 07:04:45 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ static int		is_comment(char *str)
 	return (0);
 }
 
-static int		is_strblank(char *str)
-{
-	size_t		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isblank(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static void		delete_comment(char **str, int q)
 {
 	char		*new;
@@ -45,7 +31,7 @@ static void		delete_comment(char **str, int q)
 
 	if (q % 2 != 0)
 		return ;
-	if (is_strblank(*str) || is_comment(*str))
+	if (ft_is_strblank(*str) || is_comment(*str))
 		new = ft_strnew(0);
 	else
 	{
