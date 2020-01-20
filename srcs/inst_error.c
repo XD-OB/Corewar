@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:38:00 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 08:48:36 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void		check_instlabel(t_op *op_tab, char *str)
 void			exit_inst_error(t_sfile *sfile, t_chr *curr)
 {
 	ft_printf("line %{red}%d%{eoc}: ", curr->len);
+	ft_trimstr(&curr->str);
 	if (there_islabel(curr->str))
 		check_instlabel(sfile->op_tab, curr->str);
 	else

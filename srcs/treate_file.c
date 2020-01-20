@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 01:24:05 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 08:29:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void		encode_asm(t_asm *asmbl, char *file)
 	else
 		write_cor(sfile);
 	free_sfile(&sfile);
+	exit(1);
 }
 
 static void		decode_asm(t_asm *asmbl, char *file)

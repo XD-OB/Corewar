@@ -6,7 +6,7 @@
 #    By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/18 20:54:17 by obelouch          #+#    #+#              #
-#    Updated: 2020/01/20 07:46:44 by obelouch         ###   ########.fr        #
+#    Updated: 2020/01/20 08:16:11 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = asm
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS =
 
 ASM = main init free fill_optab fill_optab_p1 fill_optab_p2 fill_optab_p3\
 	  fill_bin get_insts_values get_instructs get_name_cmt get_instructs_bin\

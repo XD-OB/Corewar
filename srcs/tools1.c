@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:35 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:04:45 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/20 08:58:27 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ t_chr			*file_save_chr(int fd)
 	{
 		delete_comment(&line, q);
 		chr_addnode(&input, line, i);
-		free(line);
 		q += quotes_nbr(line);
+		free(line);
 		i++;
 	}
 	if (line)
