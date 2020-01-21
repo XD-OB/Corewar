@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 06:20:37 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 00:15:30 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 04:00:34 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		correct_arithm(int type, char *arg, t_op op_ref)
 		if ((ft_strlen(opts[0]) > len) || (ft_strlen(opts[2]) > len))
 			return (free_opts(opts, 0));
 		n = ft_strcalcul(opts);
-		if (n < INT_MIN || n > INT_MAX)
+		if (n < INT_MIN || n > 4294967295)
 			return (free_opts(opts, 0));
 		return (free_opts(opts, 1));
 	}
@@ -62,7 +62,7 @@ static int		correct_arithm(int type, char *arg, t_op op_ref)
 	if ((ft_strlen(opts[0]) > len) || (ft_strlen(opts[2]) > len))
 		return (free_opts(opts, 0));
 	n = ft_strcalcul(opts);
-	if (n < SHRT_MIN || n > SHRT_MAX)
+	if (n < SHRT_MIN || n > 65535)
 		return (free_opts(opts, 0));
 	return (free_opts(opts, 1));
 }
@@ -79,7 +79,7 @@ static int		correct_value(int type, char *arg, t_op op_ref)
 		if (ft_strlen(arg) > len)
 			return (0);
 		n = ft_atoi(arg);
-		if (n < SHRT_MIN || n > SHRT_MAX)
+		if (n < SHRT_MIN || n > 65535)
 			return (0);
 	}
 	else
@@ -88,7 +88,7 @@ static int		correct_value(int type, char *arg, t_op op_ref)
 		if (ft_strlen(arg) > len)
 			return (0);
 		n = ft_atol(arg);
-		if (n < INT_MIN || n > INT_MAX)
+		if (n < INT_MIN || n > 4294967295)
 			return (0);
 	}
 	return (1);

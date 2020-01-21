@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:00 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 00:15:06 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 04:15:49 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int				is_aloneinst(t_op *op_tab, char *str)
 	int			i;
 
 	i = 0;
-	while (str[i] && !ft_isblank(str[i]))
+	while (str[i] && !ft_isblank(str[i]) && str[i] != DIRECT_CHAR)
 		i++;
 	if (str[i] == '\0')
 		return (0);
-	op = ft_strsub(str, 0, i++);
+	op = ft_strsub(str, 0, i);
 	op_nbr = is_op(op_tab, op);
 	free(op);
 	if (str[i] == '\0' || !op_nbr)

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:39:36 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 03:32:27 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void			add_aloneinst(t_sfile *sfile, t_chr **list_label,
 		exit_serror(sfile, ERROR_ALLOC);
 	}
 	inst->labels = *list_label;
-	while (str[i] && !ft_isblank(str[i]))
+	while (str[i] && !ft_isblank(str[i]) && str[i] != DIRECT_CHAR)
 		i++;
 	op_name = ft_strsub(str, 0, i);
 	inst->op_nbr = is_op(sfile->op_tab, op_name);
