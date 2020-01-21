@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 01:07:21 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 06:53:19 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 05:25:37 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+int					ft_is_strhex(char *s);
 int					ft_is_strdigit(char *s);
 int					ft_is_strblank(char *s);
 char				*ft_strnew(size_t size);
@@ -307,5 +308,7 @@ int					ft_min(int a, int b);
 int					ft_sqrt(int nb);
 int					ft_prime(int nb);
 void				ft_epurstr(char **str);
+long				ft_atol_hex(const char *str);
+long				ft_atol(const char *str);
 
 #endif

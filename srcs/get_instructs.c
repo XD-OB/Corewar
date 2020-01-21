@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:51 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 08:39:27 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 07:44:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void		get_insts_basic(t_sfile *sfile, t_chr *begin)
 	char		*str;
 
 	curr = begin;
+	if (!curr)
+		exit_serror(sfile, ERROR_NO_CODE);
 	list_label = NULL;
 	while (curr)
 	{

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:29:43 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 23:39:08 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 06:47:41 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,24 @@ static int		check_values(int type, char *arg, t_op op_ref)
 	str = &arg[(type == T_DIR) ? 1 : 0];
 	if (str[0] == '(')
 	{
-		if (!check_corr_arithm(type, str, op_ref))
+		if (!check_arithm(type, str, op_ref))
 			return (0);
 	}
 	else
 	{
 		if (str[0] != LABEL_CHAR)
-			if (!check_corr_val(type, str, op_ref))
-				return (0);
+		{
+			if (ft_is_strhex(str))
+			{
+				if (!check_hex_val(type, str, op_ref))
+					return (0);
+			}
+			else
+			{
+				if (!check_dec_val(type, str, op_ref))
+					return (0);
+			}
+		}
 	}
 	return (1);
 }

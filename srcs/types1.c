@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:06:40 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 06:12:34 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 05:37:11 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int			is_dir(char *str)
 	}
 	if (str[1] == '(')
 		return (is_arithm(&str[1]));
+	if (ft_is_strhex(&str[1]))
+		return (1);
 	return (ft_is_strdigit(&str[1]));
 }
 
@@ -109,5 +111,7 @@ int			is_ind(char *str)
 	}
 	if (str[0] == '(')
 		return (is_arithm(str));
+	if (ft_is_strhex(str))
+		return (1);
 	return (ft_is_strdigit(str));
 }

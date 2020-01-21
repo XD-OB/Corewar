@@ -6,17 +6,17 @@ fork %5       #dksjksd
 live %-1    #dksjsfdlsk
 ld %1025, r8
 aff r8
-ld %5, r(2 * 3)
+ld %5, r2
 aff r5
 
 st r8, 5
-add r5  , r8, r3
+add r5 , r8, r3
 aff r3
 lld %(8-2),     r2
 	st r8, 5
 sti r8, %5, r2
 aff r8
-and %(2/ 2), %6, r8
+and %(2/1), %6, r8
 lldi 3, r9, r2
 zjmp %-2
 ld 7, r1

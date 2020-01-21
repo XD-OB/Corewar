@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:35 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 00:08:13 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 07:09:56 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ long long		ft_strcalcul(char **opts)
 	long		n2;
 
 	n1 = ft_atol(opts[0]);
-	n2 = ft_atol(opts[1]);
+	n2 = ft_atol(opts[2]);
 	if (n1 < INT_MIN || n1 > INT_MAX ||
 			n2 < INT_MIN || n2 > INT_MAX)
 		return (LONG_MAX);

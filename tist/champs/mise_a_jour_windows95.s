@@ -61,7 +61,7 @@ st      r2, -494
 st      r2, -493
 st      r2, -492
 live2:
-live    %1;
+live    %1
 st      r16, -262
 st      r16, -245
 st      r16, -244
@@ -93,7 +93,7 @@ st              r16, -15
 ld				%1879245026, r4
 ld				%5,r10
 live1:
-live    %1;
+live    %1
 fork    %:live3
 live4:
 live    %1

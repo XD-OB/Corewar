@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 01:33:24 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 07:43:52 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exit_serror(t_sfile *sfile, int type)
 		ft_dprintf(2, "Error While Creating the .cor File!\n");
 	else if (type == ERROR_ALLOC)
 		ft_dprintf(2, "Can't Allocate Memory\n");
+	else if (type == ERROR_NO_CODE)
+		ft_dprintf(2, "No Code in this file\n");
 	else if (type == ERROR_EXEC_SIZE)
 	{
 		ft_dprintf(2, "Executable Code Exceed the Max!");

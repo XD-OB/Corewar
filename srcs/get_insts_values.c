@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:25 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 22:23:04 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 07:58:43 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,21 @@ static int		calcul_arithm(char *str)
 	return (n1 / n2);
 }
 
-void			fill_inst_values(t_sfile *sfile, t_inst *inst)
+static void		fill_inst_values(t_sfile *sfile, t_inst *inst)
 {
 	char		*label;
 	t_inst		*label_pos;
 	int			i;
 
-	i = 0;
-	while (i < sfile->op_tab[inst->op_nbr - 1].args_nbr)
+	i = -1;
+	while (++i < sfile->op_tab[inst->op_nbr - 1].args_nbr)
 	{
 		if (inst->args[i].str[0] != LABEL_CHAR)
 		{
 			if (inst->args[i].str[0] == '(')
 				inst->args[i].value = calcul_arithm(inst->args[i].str);
+			else if (ft_is_strhex(inst->args[i].str))
+				inst->args[i].value = ft_atol_hex(inst->args[i].str);
 			else
 				inst->args[i].value = ft_atol(inst->args[i].str);
 		}
@@ -82,7 +84,6 @@ void			fill_inst_values(t_sfile *sfile, t_inst *inst)
 				exit_error_label(sfile, inst, label);
 			inst->args[i].value = replace_label(sfile->insts, inst, label_pos);
 		}
-		i++;
 	}
 }
 

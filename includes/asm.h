@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 00:19:08 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 06:07:03 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,12 @@ void				fill_bin(t_bfile *bfile, int fd);
 void				fill_args_atc(t_bfile *bfile, unsigned char *binary,
 										t_inst *inst);
 int					corrections(int type, char *arg, t_op op_ref);
+int					corr_arithm(int type, char *arg, t_op op_ref);
 void				fill_opts(char **opts, char *arg);
 void				check_args(t_op *op_tab, int op_nbr, char *str, int i);
-int					check_corr_arithm(int type, char *arg, t_op op_ref);
-int					check_corr_val(int type, char *arg, t_op op_ref);
+int					check_arithm(int type, char *arg, t_op op_ref);
+int					check_hex_val(int type, char *arg, t_op op_ref);
+int					check_dec_val(int type, char *arg, t_op op_ref);
 int					count_dquotes(t_sfile *sfile, t_chr *curr, char *str);
 void				str_n_combin(char **s1, char *s2);
 long long			ft_strcalcul(char **opts);

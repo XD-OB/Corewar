@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:01:08 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/19 04:01:10 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 07:42:06 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@
 # define ERROR_INCOMPLET_OP 19
 # define ERROR_WRONG_ATC 20
 # define ERROR_WRONG_OP 21
+# define ERROR_NO_CODE 22
 
 #endif

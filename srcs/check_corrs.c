@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:31:34 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 03:46:36 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 06:32:10 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		print_val_error(char *arg, int type)
 	return (0);
 }
 
-int				check_corr_val(int type, char *arg, t_op op_ref)
+int				check_dec_val(int type, char *arg, t_op op_ref)
 {
 	size_t		len;
 	long		n;
@@ -44,8 +44,31 @@ int				check_corr_val(int type, char *arg, t_op op_ref)
 	return (1);
 }
 
+int				check_hex_val(int type, char *arg, t_op op_ref)
+{
+	size_t		len;
+	long		n;
+	int			i;
+
+	i = 2;
+	while (arg[i] == '0')
+		i++;
+	if ((type == T_DIR && op_ref.tdir_size == 2) ||
+			type == T_IND)
+	{
+		if (ft_strlen(arg) > 4)
+			return (print_val_error(arg, 2));
+	}
+	else
+	{
+		if (ft_strlen(arg) > 8)
+			return (print_val_error(arg, 4));
+	}
+	return (1);
+}
+
 static int		print_arithm_error(char *arg, int type,
-									char **opts, int ret)
+		char **opts, int ret)
 {
 	free(opts[0]);
 	free(opts[1]);
@@ -55,7 +78,7 @@ static int		print_arithm_error(char *arg, int type,
 	return (ret);
 }
 
-int				check_corr_arithm(int type, char *arg, t_op op_ref)
+int				check_arithm(int type, char *arg, t_op op_ref)
 {
 	size_t		len;
 	char		*opts[3];
