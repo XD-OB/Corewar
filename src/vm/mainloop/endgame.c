@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_strhex.c                                     :+:      :+:    :+:   */
+/*   endgame.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/21 05:21:17 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 03:36:34 by ishaimou         ###   ########.fr       */
+/*   Created: 2020/01/20 03:20:42 by aaguert           #+#    #+#             */
+/*   Updated: 2020/01/21 22:40:41 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
+#include "vm_visu.h"
 
-int			ft_is_strhex(char *str)
+void	anounce_winner(void)
 {
-	int		i;
+	if (VIS)
+		v_anounce_winner();
+	else
+		ft_printf("Player %d (%s) won\n",
+			g_arena.last_live_player,
+			g_players[g_arena.last_live_player - 1].header.prog_name);
+}
 
-	if (str[0] != '0')
-		return (0);
-	if (str[1] != 'x' && str[1] != 'X')
-		return (0);
-	if (str[2] == 0)
-		return (0);
-	i = 1;
-	while (str[++i])
-		if (!ft_isxdigit(str[i]))
-			return (0);
-	return (1);
+void	free_all(void)
+{
+	free_processes();
+	if (VIS)
+		endwin();
+}
+
+void	endgame(void)
+{
+	anounce_winner();
+	free_all();
 }

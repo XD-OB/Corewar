@@ -1,3 +1,0 @@
-#!/bin/bash
-
-diff me/$1 they/$1

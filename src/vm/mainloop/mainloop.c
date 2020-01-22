@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_strhex.c                                     :+:      :+:    :+:   */
+/*   mainloop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/21 05:21:17 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 03:36:34 by ishaimou         ###   ########.fr       */
+/*   Created: 2020/01/06 23:45:16 by aaguert           #+#    #+#             */
+/*   Updated: 2020/01/21 22:41:12 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
+#include "vm_visu.h"
 
-int			ft_is_strhex(char *str)
+void	mainloop(void)
 {
-	int		i;
-
-	if (str[0] != '0')
-		return (0);
-	if (str[1] != 'x' && str[1] != 'X')
-		return (0);
-	if (str[2] == 0)
-		return (0);
-	i = 1;
-	while (str[++i])
-		if (!ft_isxdigit(str[i]))
-			return (0);
-	return (1);
+	while (g_arena.game_run)
+	{
+		if (g_arena.check.remain < 1)
+			perform_check();
+		if (VIS)
+		{
+			print_frame();
+			g_flow();
+		}
+		else if (DUMP)
+			manage_dump();
+		exec_cycle();
+	}
+	endgame();
 }

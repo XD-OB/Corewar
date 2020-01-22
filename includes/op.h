@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/01/19 04:02:05 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 19:26:59 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@
 # define DIR_CODE				2
 # define IND_CODE				3
 
-# define MAX_ARGS_NUMBER		4
-# define MAX_PLAYERS			4
-# define MEM_SIZE				(4*1024)
-# define IDX_MOD				(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+# define MAX_ARGS_NUMBER			4
+# define MAX_PLAYERS				4
+# define MEM_SIZE					(4*1024)
+# define IDX_MOD					(MEM_SIZE / 8)
+# define CHAMP_MAX_SIZE				(MEM_SIZE / 6)
 
 # define COMMENT_CHAR			'#'
 # define LABEL_CHAR				':'
-# define DIRECT_CHAR			'%'
+# define DIRECT_CHAR				'%'
 # define SEPARATOR_CHAR			','
 
-# define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
+# define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-# define NAME_CMD_STRING		".name"
+# define NAME_CMD_STRING			".name"
 # define COMMENT_CMD_STRING		".comment"
 
 # define REG_NUMBER				16
@@ -50,7 +50,7 @@
 # define MAX_CHECKS				10
 
 /*
-**
+** .
 */
 
 typedef char	t_arg_type;
@@ -61,19 +61,21 @@ typedef char	t_arg_type;
 # define T_LAB					8
 
 /*
-**
+** .
 */
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct		header_s
+typedef struct		s_header
 {
-  unsigned int		magic;
-  char				prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
-}					header_t;
+	unsigned int		magic;
+	char				prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int		prog_size;
+	char				comment[COMMENT_LENGTH + 1];
+}					t_header;
+
+extern char	g_type[];
 
 #endif

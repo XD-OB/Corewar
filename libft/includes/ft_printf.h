@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 03:31:40 by ishaimou          #+#    #+#             */
-/*   Updated: 2019/07/24 05:32:44 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 20:07:59 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@
 # include <stdarg.h>
 # include <limits.h>
 # include <inttypes.h>
+# include <errno.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "structs.h"
+
+# define TRUE	1
+# define FALSE	0
 
 # define ABS(x) (x < 0) ? -x : x
 

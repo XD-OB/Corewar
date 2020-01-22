@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol_hex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 04:51:00 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 05:28:54 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 22:48:48 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,24 @@ static int		ft_get_val(char c)
 	return (-1);
 }
 
-long			ft_atol_hex(const char *str)
+long			ft_atol_hex(char *str)
 {
-	long 		nb;
-	int 		power;
+	char		*s;
+	long		nb;
+	int			power;
 	int			val;
 	int			i;
 
 	nb = 0;
 	power = 1;
-	i = ft_strlen(str) - 1;
+	if (str[0] == '0' && str[1] == 'x')
+		s = &str[2];
+	else
+		s = str;
+	i = ft_strlen(s) - 1;
 	while (i >= 0)
 	{
-		val = ft_get_val(str[i]);
+		val = ft_get_val(s[i]);
 		if (val < 0)
 			return (0);
 		nb += val * power;

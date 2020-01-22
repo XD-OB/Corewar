@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_strhex.c                                     :+:      :+:    :+:   */
+/*   s_flag.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/21 05:21:17 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 03:36:34 by ishaimou         ###   ########.fr       */
+/*   Created: 2020/01/21 05:56:35 by aaguert           #+#    #+#             */
+/*   Updated: 2020/01/21 21:52:25 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-int			ft_is_strhex(char *str)
+void		add_s_flag(char **argv, int position)
 {
-	int		i;
+	int i;
+	int num;
 
-	if (str[0] != '0')
-		return (0);
-	if (str[1] != 'x' && str[1] != 'X')
-		return (0);
-	if (str[2] == 0)
-		return (0);
-	i = 1;
-	while (str[++i])
-		if (!ft_isxdigit(str[i]))
-			return (0);
-	return (1);
+	i = position;
+	if (!argv[i + 1] || !ft_isnumeric_str(argv[i + 1]))
+		invalid_dump_arg_err(argv[i + 1]);
+	else
+	{
+		num = ft_atoi(argv[i + 1]);
+		if (num < 1)
+			invalid_dump_num(num);
+		g_flags[FLAG_S_I].present = TRUE;
+		g_flags[FLAG_S_I].data.num = num;
+		argv[i + 1] = NULL;
+	}
 }

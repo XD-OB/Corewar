@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 01:07:21 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 05:25:37 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/21 22:07:38 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "ft_printf.h"
 # define BUFF_SIZE 1000
 # define HASH_C 2
+
+typedef int			t_bool;
 
 /*
 **		HASH :			-----------------------------------------------------
@@ -190,6 +192,7 @@ char				*ft_utoa_base(size_t val, int base);
 int					ft_atoibase(char *str, char *base_from);
 int					ft_atoi(const char *str);
 long				ft_atol(const char *str);
+long				ft_atol_hex(char *str);
 char				*ft_poslltoa(long long int n);
 
 /*
@@ -308,7 +311,7 @@ int					ft_min(int a, int b);
 int					ft_sqrt(int nb);
 int					ft_prime(int nb);
 void				ft_epurstr(char **str);
-long				ft_atol_hex(const char *str);
-long				ft_atol(const char *str);
+int					ft_ends_with(char *str, char *word);
+t_bool				ft_isnumeric_str(char *str);
 
 #endif
