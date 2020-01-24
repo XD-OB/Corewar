@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chatbox.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:40:25 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/24 00:05:52 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/24 04:14:27 by aaguert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	render_comments(void)
 		wattron(g_vis.siders.chatbox, COLOR_PAIR(g_vis.game.comments[i].plid));
 		wprintw(g_vis.siders.chatbox, "%s", plname);
 		wattroff(g_vis.siders.chatbox, COLOR_PAIR(g_vis.game.comments[i].plid));
-		wprintw(g_vis.siders.chatbox, " : %-100s",
-		g_vis.game.comments[i].comment);
+		wprintw(g_vis.siders.chatbox, " : %-*s",
+		BOX_WIDTH * 3 - ft_strlen(plname) - 3, g_vis.game.comments[i].comment);
 	}
 	wattroff(g_vis.siders.chatbox, A_BOLD);
 }
