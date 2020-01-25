@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:29:43 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 06:47:41 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/25 06:58:19 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,10 @@ static void		check_tabargs(char **tab_arg, t_op op_ref)
 	}
 }
 
-void			check_args(t_op *op_tab, int op_nbr, char *str, int i)
+void			check_args(t_op *op_tab, int op_nbr, char *str)
 {
 	char		**tab_arg;
 
-	(void)i;
 	if (str[ft_strlen(str) - 1] == SEPARATOR_CHAR)
 		ft_printf("The Instruction end with %{red}%c%{eoc}\n", SEPARATOR_CHAR);
 	else

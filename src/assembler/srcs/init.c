@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:11 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 05:07:04 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/24 00:39:37 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ int		init_sfile(t_sfile *sfile, int fd)
 	sfile->insts = NULL;
 	sfile->sf = NULL;
 	sfile->file_name = NULL;
+	sfile->nl = 2;
 	if (!(sfile->op_tab = (t_op*)malloc(sizeof(t_op) * 16)))
 		return (0);
 	fill_op_tab(sfile->op_tab);
-	if (!(sfile->sf = file_save_chr(fd)))
+	if (!(sfile->sf = file_save_chr(fd, &sfile->nl)))
 		return (-1);
 	return (1);
 }

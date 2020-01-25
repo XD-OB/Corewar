@@ -6,11 +6,20 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 05:08:33 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/25 00:39:52 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	exit_usage(char *exe)
+{
+	ft_dprintf(2, "%{red}Usage:%{eoc} %s", exe);
+	ft_dprintf(2, " [-ra] <sourcefile.s> ...\n");
+	ft_dprintf(2, "  --reverse   -r : deassembler mode\n");
+	ft_dprintf(2, "  --annotated -a : annotated mode\n");
+	exit(EXIT_FAILURE);
+}
 
 void	exit_serror(t_sfile *sfile, int type)
 {
@@ -19,8 +28,14 @@ void	exit_serror(t_sfile *sfile, int type)
 		ft_dprintf(2, "Error While Creating the .cor File!\n");
 	else if (type == ERROR_ALLOC)
 		ft_dprintf(2, "Can't Allocate Memory\n");
-	else if (type == ERROR_NO_CODE)
-		ft_dprintf(2, "No Code in this file\n");
+	else if (type == ERROR_NO_INSTS)
+		ft_dprintf(2, "No Instructions in this file\n");
+	else if (type == ERROR_NC_NAMECMT_END)
+		ft_dprintf(2, "File end whitout the necessary cmds\n");
+	else if (type == ERROR_NO_NL)
+		ft_dprintf(2, "The last instruction doesn't have new line\n");
+	else if (type == ERROR_FEMPTY)
+		ft_dprintf(2, "File whitout cmds and instructions\n");
 	else if (type == ERROR_EXEC_SIZE)
 	{
 		ft_dprintf(2, "Executable Code Exceed the Max!");
@@ -43,21 +58,5 @@ void	exit_berror(t_bfile *bfile, int type)
 		ft_dprintf(2, " (Max %d)\n", CHAMP_MAX_SIZE);
 	}
 	close(bfile->param_asm.fd);
-	exit(EXIT_FAILURE);
-}
-
-void	exit_qerror(t_sfile *sfile, size_t line, int type)
-{
-	ft_dprintf(2, "line %{red}%d%{eoc}:", line);
-	if (type == ERROR_LESS_QUOTES)
-		ft_dprintf(2, " Closing quote not found!\n");
-	else if (type == ERROR_CHAR_QUOTES)
-		ft_dprintf(2, " Character before the quote!\n");
-	else if (type == ERROR_NO_STR)
-		ft_dprintf(2, " No string after the parameter!\n");
-	else if (type == ERROR_NO_QUOTES)
-		ft_dprintf(2, " No Quotes for the string!\n");
-	close(sfile->param_asm.fd);
-	free_sfile(sfile);
 	exit(EXIT_FAILURE);
 }

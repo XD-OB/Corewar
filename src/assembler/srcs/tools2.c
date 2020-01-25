@@ -6,17 +6,11 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:40 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/20 07:39:31 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/25 02:47:18 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-void		str_n_combin(char **s1, char *s2)
-{
-	ft_strcombin(s1, "\n");
-	ft_strcombin(s1, s2);
-}
 
 int			int_4_bytes(unsigned char *binary)
 {
@@ -34,6 +28,31 @@ int			int_2_bytes(unsigned char *binary)
 
 	res = 0;
 	res = (binary[0] << 8) | binary[1];
+	return (res);
+}
+
+int			int_atc(t_inst *inst)
+{
+	unsigned char	arg[3];
+	int				res;
+	int				i;
+
+	res = 0;
+	i = 0;
+	while (i < 3)
+	{
+		if (inst->args[i].type == T_REG)
+			arg[i] = REG_CODE;
+		else if (inst->args[i].type == T_DIR)
+			arg[i] = DIR_CODE;
+		else if (inst->args[i].type == T_IND)
+			arg[i] = IND_CODE;
+		i++;
+	}
+	arg[0] <<= 6;
+	arg[1] <<= 4;
+	arg[2] <<= 2;
+	res = arg[0] | arg[1] | arg[2];
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:23 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 20:00:25 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/25 02:47:34 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,29 +103,4 @@ void				write_inst_advinfos(t_op op_infos, t_inst *inst)
 		ft_printf("        ");
 	write_advargs(op_infos, inst);
 	ft_printf("\n");
-}
-
-int					int_atc(t_inst *inst)
-{
-	unsigned char	arg[3];
-	int				res;
-	int				i;
-
-	res = 0;
-	i = 0;
-	while (i < 3)
-	{
-		if (inst->args[i].type == T_REG)
-			arg[i] = REG_CODE;
-		else if (inst->args[i].type == T_DIR)
-			arg[i] = DIR_CODE;
-		else if (inst->args[i].type == T_IND)
-			arg[i] = IND_CODE;
-		i++;
-	}
-	arg[0] <<= 6;
-	arg[1] <<= 4;
-	arg[2] <<= 2;
-	res = arg[0] | arg[1] | arg[2];
-	return (res);
 }

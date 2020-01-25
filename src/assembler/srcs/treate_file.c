@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 05:11:00 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/25 23:54:07 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,47 @@ static void		print_ferror(char *file, int type)
 		ft_dprintf(2, "%{red}%s%{eoc}: File with Bad extension!\n", file);
 }
 
-static void		gest_initsf(t_sfile *sfile, int type)
+static void		get_instructions(t_sfile *sfile, t_chr *curr)
 {
-	if (type == -1)
-		exit_serror(sfile, ERROR_NO_CODE);
-	if (type == 0)
-		exit_serror(sfile, ERROR_ALLOC);
+	if (!curr)
+	{
+		if (sfile->name && sfile->comment)
+			exit_serror(sfile, ERROR_NO_INSTS);
+		else
+			exit_serror(sfile, ERROR_NC_NAMECMT_END);
+	}
+	if (sfile->name && sfile->comment)
+		get_instructs(sfile, curr);
+	else
+		exit_ass_error(sfile, curr, ERROR_NC_NAMECMT);
+	if (sfile->nl == 2)		    /////////////
+		exit_serror(sfile, ERROR_NO_NL);
 }
 
 static void		encode_asm(t_asm *asmbl, char *file)
 {
 	t_sfile		sfile;
 	t_chr		*curr;
+	int			error;
 
 	sfile.param_asm = *asmbl;
-	gest_initsf(&sfile, init_sfile(&sfile, asmbl->fd));
+	error = init_sfile(&sfile, asmbl->fd);
+	if (error == 0)
+		exit_serror(&sfile, ERROR_ALLOC);
+	if (error == -1)
+		exit_serror(&sfile, ERROR_FEMPTY);
 	sfile.file_name = ft_strndup(file, ft_strlen(file) - 2);
 	curr = sfile.sf;
+	chr_print(sfile.sf);
 	while (curr)
 	{
-		if (get_name_cmt(&sfile, &curr, curr->str))
+		if (get_name_cmt(&sfile, curr, curr->str))
 			break ;
 		curr = curr->next;
 	}
-	if (sfile.name && sfile.comment)
-		get_instructs(&sfile, curr);
-	else
-		exit_ass_error(&sfile, curr, ERROR_NC_NAME_CMT);
-	if (asmbl->a)
-		write_stdout(sfile);
-	else
-		write_cor(sfile);
+	get_instructions(&sfile, curr);
+	print_sfile(&sfile);				/////////////////////
+	(asmbl->a) ? write_stdout(sfile) : write_cor(sfile);
 	free_sfile(&sfile);
 }
 
@@ -80,14 +90,14 @@ void			treate_file(char *file, t_asm *asmbl)
 	{
 		if (asmbl->r)
 		{
-			if (!ft_strcmp(&file[ft_strlen(file) - 4], ".cor"))
+			if (ft_ends_with(file, ".cor"))
 				decode_asm(asmbl, file);
 			else
 				print_ferror(file, ERROR_FILE_BE);
 		}
 		else
 		{
-			if (!ft_strcmp(&file[ft_strlen(file) - 2], ".s"))
+			if (ft_ends_with(file, ".s"))
 				encode_asm(asmbl, file);
 			else
 				print_ferror(file, ERROR_FILE_BE);

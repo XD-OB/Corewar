@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:31:34 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 22:03:14 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/25 00:35:13 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int				check_hex_val(int type, char *arg, t_op op_ref)
 }
 
 static int		print_arithm_error(char *arg, int type,
-		char **opts, int ret)
+								char **opts, int ret)
 {
 	free(opts[0]);
 	free(opts[1]);

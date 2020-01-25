@@ -6,20 +6,11 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:52 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 22:46:26 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/26 00:04:59 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-void			exit_usage(char *exe)
-{
-	ft_dprintf(2, "%{red}Usage:%{eoc} %s", exe);
-	ft_dprintf(2, " [-ra] <sourcefile.s> ...\n");
-	ft_dprintf(2, "  --reverse   -r : deassembler mode\n");
-	ft_dprintf(2, "  --annotated -a : annotated mode\n");
-	exit(EXIT_FAILURE);
-}
 
 void			exit_error_label(t_sfile *sfile, t_inst *inst, char *label)
 {
@@ -58,7 +49,12 @@ static void		error_name_cmt(t_chr *def)
 	{
 		str = ft_strtrim(tab[0]);
 		if (str[0] == '.')
-			ft_dprintf(2, " Wrong command! [ %{red}%s%{eoc} ]", str);
+		{
+			if (ft_strequ(str, ".name") || ft_strequ(str, ".comment"))
+				ft_dprintf(2, " Duplicate command! [ %{red}%s%{eoc} ]", str);
+			else
+				ft_dprintf(2, " Wrong command! [ %{red}%s%{eoc} ]", str);
+		}
 		else
 		{
 			ft_dprintf(2, " Syntax Error! Wrong line ");
@@ -72,21 +68,25 @@ static void		error_name_cmt(t_chr *def)
 
 void			exit_ass_error(t_sfile *sfile, t_chr *def, int type)
 {
-	ft_dprintf(2, "line %{red}%d%{eoc}:", def->len);
+	if (def)
+		ft_dprintf(2, "line %{red}%d%{eoc}: ", def->len);
 	if (type == ERROR_NAME_LENGTH)
-		ft_dprintf(2, " Champion name is too long (Max length %d)",
+		ft_dprintf(2, "Champion name is too long (Max length %d)",
 					PROG_NAME_LENGTH);
 	else if (type == ERROR_COMMENT_LENGTH)
-		ft_dprintf(2, " Champion comment is too long (Max length %d)",
+		ft_dprintf(2, "Champion comment is too long (Max length %d)",
 					COMMENT_LENGTH);
 	else if (type == ERROR_LEXICAL)
-		ft_dprintf(2, " Lexical Error!\n");
-	else if (type == ERROR_NC_NAME_CMT)
+		ft_dprintf(2, "Lexical Error!");
+	else if (type == ERROR_QUOTES)
+		ft_dprintf(2, "Command Quotes Error!");
+	else if (type == ERROR_NC_NAMECMT)
 		error_name_cmt(def);
 	else if (type == ERROR_BAD_INSTRUCT)
 	{
-		ft_dprintf(2, " Syntax Error! Bad Instruction! ");
-		ft_dprintf(2, "%{green}[%{eoc}%s%{green}]%{eoc}", def->str);
+		ft_dprintf(2, "Syntax Error! Bad Instruction! ");
+		if (def)
+			ft_dprintf(2, "%{green}[%{eoc}%s%{green}]%{eoc}", def->str);
 	}
 	ft_putchar_fd('\n', 2);
 	close(sfile->param_asm.fd);

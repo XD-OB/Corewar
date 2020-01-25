@@ -6,7 +6,7 @@
 /*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 20:53:15 by aaguert          ###   ########.fr       */
+/*   Updated: 2020/01/25 07:28:39 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,4 @@ void			add_aloneinst(t_sfile *sfile, t_chr **list_label,
 	node = ft_lstnew_sm(inst, sizeof(inst));
 	ft_lstadd_last(&sfile->insts, node);
 	*list_label = NULL;
-}
-
-void			add_instlabel(t_sfile *sfile, t_chr **list_label,
-								char *str, int len)
-{
-	char		*label;
-	int			i;
-
-	i = 0;
-	while (ft_strchr(LABEL_CHARS, str[i]) && str[i] != LABEL_CHAR)
-		i++;
-	label = ft_strsub(str, 0, i);
-	chr_addnode_sm(list_label, label, 0);
-	i++;
-	while (str[i] && ft_isblank(str[i]))
-		i++;
-	add_aloneinst(sfile, list_label, &str[i], len);
 }

@@ -6,16 +6,16 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:35 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/22 00:00:36 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/24 23:55:32 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-long long		ft_strcalcul(char **opts)
+long long	ft_strcalcul(char **opts)
 {
-	long		n1;
-	long		n2;
+	long	n1;
+	long	n2;
 
 	n1 = ft_atol(opts[0]);
 	n2 = ft_atol(opts[2]);
@@ -36,10 +36,10 @@ long long		ft_strcalcul(char **opts)
 	}
 }
 
-t_inst			*create_inst(void)
+t_inst		*create_inst(void)
 {
-	t_inst		*inst;
-	int			i;
+	t_inst	*inst;
+	int		i;
 
 	if (!(inst = (t_inst*)malloc(sizeof(t_inst))))
 		return (NULL);
@@ -55,4 +55,16 @@ t_inst			*create_inst(void)
 		i++;
 	}
 	return (inst);
+}
+
+int			ret_tabstr_free(char ***atab, int ret)
+{
+	tabstr_free(atab);
+	return (ret);
+}
+
+void		str_n_combin(char **s1, char *s2)
+{
+	ft_strcombin(s1, "\n");
+	ft_strcombin(s1, s2);
 }

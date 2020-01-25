@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:06:40 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 05:37:11 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/25 23:31:53 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			is_reg(char *str)
 		if (!ft_isdigit(str[1]))
 			return (0);
 		n = str[1] - 48;
-		if (n == 0 || n > REG_NUMBER)
+		if (n == 0)
 			return (0);
 		return (1);
 	}
@@ -69,7 +69,7 @@ int			is_reg(char *str)
 		if (!ft_isdigit(str[1]) || !ft_isdigit(str[2]))
 			return (0);
 		n = ft_atoi(&str[1]);
-		if (n == 0 || n > REG_NUMBER)
+		if (n == 0)
 			return (0);
 		return (1);
 	}

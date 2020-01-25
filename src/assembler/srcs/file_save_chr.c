@@ -6,44 +6,38 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 00:06:20 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/25 23:03:14 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int		is_comment(char *str)
-{
-	size_t		i;
-
-	i = 0;
-	while (ft_isblank(str[i]))
-		i++;
-	if (str[i] == '#')
-		return (1);
-	return (0);
-}
-
-static void		delete_comment(char **str, int q)
+static void		delete_comment(char **str)
 {
 	char		*new;
 	int			i;
+	int			q;
 
-	if (q % 2 != 0)
+	i = 0;
+	q = 0;
+	if (!*str)
 		return ;
-	if (ft_is_strblank(*str) || is_comment(*str))
-		new = ft_strnew(0);
-	else
+	while ((*str)[i])
 	{
-		i = 0;
-		while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
-			i++;
-		if (!(*str)[i])
-			return ;
-		new = ft_strsub(*str, 0, i);
+		if ((*str)[i] == '\"' && (i == 0 || ((*str)[i - 1] != '\\')))
+			q++;
+		if (q == 2)
+			break ;
+		i++;
 	}
+	if (!(*str)[i])
+		i = 0;
+	while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
+		i++;
+	new = ft_strsub(*str, 0, i);
 	free(*str);
-	*str = new;
+	*str = ft_strtrim(new);
+	free(new);
 }
 
 static int		quotes_nbr(char *str)
@@ -55,38 +49,67 @@ static int		quotes_nbr(char *str)
 	q = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"')
+		if (str[i] == '\"' &&
+			(i == 0 || str[i - 1] != '\\'))
 			q++;
 		i++;
 	}
 	return (q);
 }
 
-t_chr			*file_save_chr(int fd)
+static int		treate_line(char **line, int fd, int *q)
+{
+	char		*tmp;
+	int			ret;
+	int			pas;
+
+	pas = 0;
+	while ((*q % 2) != 0 && (ret = gnl(fd, &tmp)) > 0)
+	{
+		*q += quotes_nbr(tmp);
+		str_n_combin(line, tmp);
+		free(tmp);
+		pas++;
+	}
+	delete_comment(line);
+	return (pas);
+}
+
+static t_chr	*return_val(t_chr **input, char *line, int ret)
+{
+	if (line)
+		free(line);
+	if (ret != 0 && *input)
+	{
+		chr_free(input);
+		*input = NULL;
+	}
+	return (*input);
+}
+
+t_chr			*file_save_chr(int fd, int *nl)
 {
 	t_chr		*input;
 	char		*line;
 	int			ret;
+	int			ind[2];
 	int			q;
-	int			i;
 
-	i = 1;
-	input = NULL;
-	line = NULL;
 	q = 0;
-	while ((ret = get_next_line(fd, &line)) > 0)
+	ind[0] = 1;
+	input = NULL;
+	while ((ret = gnl(fd, &line)) > 0)
 	{
-		delete_comment(&line, q);
-		chr_addnode(&input, line, i);
 		q += quotes_nbr(line);
-		free(line);
-		i++;
+		if (!is_comment(line) && !ft_is_strblank(line))
+		{
+			ind[1] = treate_line(&line, fd, &q);
+			chr_addnode(&input, line, ind[0]);
+			ind[0] += ind[1];
+			*nl = ret;
+			free(line);
+		}
+		(ind[0])++;
 	}
-	if (line)
-		free(line);
-	if (ret == 0)
-		return (input);
-	if (input)
-		chr_free(&input);
-	return (NULL);
+	return (return_val(&input, line, ret));
 }
