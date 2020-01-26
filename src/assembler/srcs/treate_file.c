@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/26 05:14:01 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 05:49:46 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		get_instructions(t_sfile *sfile, t_chr *curr)
 		get_instructs(sfile, curr);
 	else
 		exit_ass_error(sfile, curr, ERROR_NC_NAMECMT);
-	if (sfile->nl == 2)		    /////////////
+	if (sfile->nl == 2)
 		exit_serror(sfile, ERROR_NO_NL);
 }
 
@@ -58,7 +58,6 @@ static void		encode_asm(t_asm *asmbl, char *file)
 		curr = curr->next;
 	}
 	get_instructions(&sfile, curr);
-	//print_sfile(&sfile);				/////////////////////
 	(asmbl->a) ? write_stdout(sfile) : write_cor(sfile);
 	free_sfile(&sfile);
 }

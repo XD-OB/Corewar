@@ -6,7 +6,7 @@
 #    By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 04:59:45 by obelouch          #+#    #+#              #
-#    Updated: 2020/01/25 19:30:02 by obelouch         ###   ########.fr        #
+#    Updated: 2020/01/26 05:57:23 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,9 @@ ASM = main init free fill_optab fill_optab_p1 fill_optab_p2 fill_optab_p3\
 	  fill_bin get_insts_values get_instructs get_name_cmt get_instructs_bin\
 	  write_inst_low inst_error is_aloneinst write_exec_code write_cor\
 	  write_advinfos write_stdout write_stdout_bin write_s fill_args_atc\
-	  treate_file exit1 exit2 tools1 tools2 tools3 types1 types2 gnl\
-	  save_options check_corrs check_args file_save_chr add_inst\
-	  corr_arithm replace_label write_tools split_labels\
-	  delete_me\
+	  treate_file exit1 exit2 tools1 tools2 tools3 types1 types2 add_inst\
+	  save_options check_corrs check_args file_save_chr replace_label\
+	  corr_arithm write_tools split_labels\
 
 SRC = $(addprefix srcs/, $(addsuffix .c, $(ASM)))
 

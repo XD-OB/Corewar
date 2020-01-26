@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 01:07:21 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/21 22:07:38 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/26 05:55:34 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ t_chr				*gnl_save_chr(int fd);
 **	PRINT/READ:			-----------------------------------------------------
 */
 
+int					gnl(const int fd, char **line);
 int					get_next_line(const int fd, char **line);
 void				ft_printhex(int n);
 void				ft_putchar(char c);

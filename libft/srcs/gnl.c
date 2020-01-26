@@ -6,20 +6,19 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 23:49:59 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/24 23:50:50 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 05:56:40 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "libft.h"
 
 /*
-** gnl V1.2:
-** return :
-**	   nl = 1 : the line had \n
+**  gnl V1.2:
+**  return :
+** 	   nl = 1 : the line had \n
 **	      = 2 : the line had eof
-**  or:  -1 : error
-**        0 : read complete
-**
+**   or:  -1 : error
+**         0 : read complete
 */
 
 static	unsigned int	ft_linelen(char *tab, int *nl)

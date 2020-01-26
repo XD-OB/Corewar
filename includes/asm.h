@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 19:29:53 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 06:02:54 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct		s_bfile
 	t_asm			param_asm;
 }					t_bfile;
 
-
 t_chr				*file_save_chr(int fd, int *nl);
 void				add_aloneinst(t_sfile *sfile, t_chr **labels,
 										char *str, int len);
@@ -114,7 +113,6 @@ void				get_instructs(t_sfile *sfile, t_chr *begin);
 void				get_instructs_bin(t_bfile *bfile);
 void				get_insts_values(t_sfile *sfile);
 int					get_name_cmt(t_sfile *sfile, t_chr *curr, char *str);
-int					gnl(int const fd, char **line);
 void				exit_inst_error(t_sfile *sfile, t_chr *curr);
 int					is_aloneinst(t_op *op_tab, char *str);
 int					replace_label(t_list *list_insts, t_inst *inst,
@@ -129,8 +127,6 @@ void				write_s(t_bfile bfile);
 void				write_stdout_bin(t_bfile bfile);
 void				write_stdout(t_sfile sfile);
 char				**split_labels(char *str);
-
-void				print_sfile(t_sfile *sfile);     ///////////
 
 /*
 **	check_corrs:

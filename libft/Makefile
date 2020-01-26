@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/01/26 05:55:48 by obelouch          #+#    #+#              #
+#    Updated: 2020/01/26 05:56:17 by obelouch         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = libft.a
 
 LIBFT  = ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_printhex ft_putchar\
@@ -17,7 +29,7 @@ LIBFT  = ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr ft_printhe
 		 tabstr_len tabstr_free tabstr_add tabstr_join tabstr_njoin tabstr_copy\
 		 tabstr_ncopy tabstr_print tabstr_trim tabstr_new ft_strccombin ft_strcjoin\
 		 ft_is_strdigit ft_is_strblank ft_is_strhex ft_atol ft_atol_hex\
-		ft_ends_with ft_isnumeric_str
+		 ft_ends_with ft_isnumeric_str gnl\
 
 LIBFT_SRC = $(addprefix srcs/, $(addsuffix .c, $(LIBFT)))
 LIBFT_OBJ = $(addprefix srcs/, $(addsuffix .o, $(LIBFT)))

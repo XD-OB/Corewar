@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 06:15:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 23:35:55 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 06:00:43 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	int		ft_not_c(char ch, char *prev_ch)
 {
 	if (ch == LABEL_CHAR && (prev_ch == NULL ||
 		(!ft_isblank(*prev_ch) && *prev_ch != DIRECT_CHAR &&
-		 *prev_ch != SEPARATOR_CHAR && *prev_ch != LABEL_CHAR)))
+			*prev_ch != SEPARATOR_CHAR && *prev_ch != LABEL_CHAR)))
 		return (0);
 	return (1);
 }
