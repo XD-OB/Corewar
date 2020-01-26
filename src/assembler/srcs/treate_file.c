@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:41:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 23:54:07 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 05:14:01 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void		encode_asm(t_asm *asmbl, char *file)
 		exit_serror(&sfile, ERROR_FEMPTY);
 	sfile.file_name = ft_strndup(file, ft_strlen(file) - 2);
 	curr = sfile.sf;
-	chr_print(sfile.sf);
 	while (curr)
 	{
 		if (get_name_cmt(&sfile, curr, curr->str))
@@ -59,7 +58,7 @@ static void		encode_asm(t_asm *asmbl, char *file)
 		curr = curr->next;
 	}
 	get_instructions(&sfile, curr);
-	print_sfile(&sfile);				/////////////////////
+	//print_sfile(&sfile);				/////////////////////
 	(asmbl->a) ? write_stdout(sfile) : write_cor(sfile);
 	free_sfile(&sfile);
 }

@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:38:29 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 02:50:02 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/26 04:48:59 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			write_cor(t_sfile sfile)
 	int			fd;
 
 	file = ft_strjoin(sfile.file_name, ".cor");
-	fd = open(file, O_CREAT | O_WRONLY, 0666);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	free(file);
 	if (fd < 0)
 		exit_serror(&sfile, ERROR_FD);

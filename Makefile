@@ -6,7 +6,7 @@
 #    By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/21 23:03:49 by ishaimou          #+#    #+#              #
-#    Updated: 2020/01/22 20:55:05 by aaguert          ###   ########.fr        #
+#    Updated: 2020/01/26 05:15:48 by obelouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ VM_DIR := src/vm
 VM := $(VM_DIR)/$(VM_NAME)
 
 
-all: $(VM_NAME) $(ASSEMBLER_NAME)
+all: $(ASSEMBLER_NAME) $(VM_NAME)
 	@echo "$(YELLOW)"
 	@echo "  _________                                                    "
 	@echo "  \_   ___ \   ____  _______   ____  __  _  _______   _______  "
@@ -47,8 +47,8 @@ $(VM_NAME):
 	make -C $(VM_DIR) && cp $(VM) .
 
 clean:
-	make clean -C $(VM_DIR)
-	make clean -C $(ASSEMBLER_DIR)
+	@make clean -C $(VM_DIR)
+	@make clean -C $(ASSEMBLER_DIR)
 	@echo "$(YELLOW)Clean the Workspace$(EOC)"
 
 fclean: clean

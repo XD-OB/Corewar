@@ -6,7 +6,7 @@
 /*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 14:19:36 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/22 21:03:59 by aaguert          ###   ########.fr       */
+/*   Updated: 2020/01/26 04:48:12 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 
 # define FLAG_A_I 6
 # define FLAG_A_T "a"
+
+# define SET_CARRY 1
 
 # define FSE (g_flags[FLAG_S_I].present)
 # define FDE (g_flags[FLAG_D_I].present)
