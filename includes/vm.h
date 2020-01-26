@@ -6,7 +6,7 @@
 /*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 14:19:36 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/24 00:22:17 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/22 21:03:59 by aaguert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ typedef	union			u_dir
 
 # define LONG_OP	1
 # define NORM_OP	0
-# define SET_CARRY	1
 
 /*
 ** register macro

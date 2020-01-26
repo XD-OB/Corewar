@@ -6,7 +6,7 @@
 /*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 18:03:07 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/24 04:15:38 by aaguert          ###   ########.fr       */
+/*   Updated: 2020/01/22 22:11:50 by aaguert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,12 +160,12 @@ typedef struct	s_progbar_state
 # define THIGHT 4
 
 # define BOX_ROW (ARENA_ROW + (0.6) * ARENA_HEIGHT)
-# define BOX_COL (PB_RESF_COL)
+# define BOX_COL (PB_RESF_COL - 2)
 # define BOX_WIDTH	(PB_WIDTH + 4)
 # define BOX_HEIGHT (BOX_MMNB * 3)
 
 # define FIRST_COM_ROW (BOX_HEIGHT - 3)
-# define COMS_COL 0
+# define COMS_COL 2
 
 /*
 ** ****************** usage *********************
