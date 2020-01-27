@@ -6,37 +6,50 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 07:29:43 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 06:58:19 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 01:09:11 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+static int		print_val_error(char *arg, int type)
+{
+	ft_printf("The argument %{red}%s%{eoc} can't fit", arg);
+	ft_printf(" %{green}%d%{eoc} bytes\n", type);
+	return (0);
+}
+
+static int		check_hex_val(int type, char *arg, t_op op_ref)
+{
+	int			i;
+
+	i = 2;
+	while (arg[i] == '0')
+		i++;
+	if ((type == T_DIR && op_ref.tdir_size == 2) ||
+			type == T_IND)
+	{
+		if (ft_strlen(arg) > 4)
+			return (print_val_error(arg, 2));
+	}
+	else
+	{
+		if (ft_strlen(arg) > 8)
+			return (print_val_error(arg, 4));
+	}
+	return (1);
+}
 
 static int		check_values(int type, char *arg, t_op op_ref)
 {
 	char		*str;
 
 	str = &arg[(type == T_DIR) ? 1 : 0];
-	if (str[0] == '(')
+	if (str[0] != '(' && str[0] != LABEL_CHAR)
 	{
-		if (!check_arithm(type, str, op_ref))
+		if (ft_is_strhex(str) &&
+			!check_hex_val(type, str, op_ref))
 			return (0);
-	}
-	else
-	{
-		if (str[0] != LABEL_CHAR)
-		{
-			if (ft_is_strhex(str))
-			{
-				if (!check_hex_val(type, str, op_ref))
-					return (0);
-			}
-			else
-			{
-				if (!check_dec_val(type, str, op_ref))
-					return (0);
-			}
-		}
 	}
 	return (1);
 }

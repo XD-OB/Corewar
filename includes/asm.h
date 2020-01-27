@@ -6,7 +6,7 @@
 /*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/26 06:02:54 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 01:05:57 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,19 +127,6 @@ void				write_s(t_bfile bfile);
 void				write_stdout_bin(t_bfile bfile);
 void				write_stdout(t_sfile sfile);
 char				**split_labels(char *str);
-
-/*
-**	check_corrs:
-*/
-int					check_arithm(int type, char *arg, t_op op_ref);
-int					check_hex_val(int type, char *arg, t_op op_ref);
-int					check_dec_val(int type, char *arg, t_op op_ref);
-
-/*
-**	corr_arithm:
-*/
-int					corr_arithm(int type, char *arg, t_op op_ref);
-void				fill_opts(char **opts, char *arg);
 
 /*
 **	exit1:
