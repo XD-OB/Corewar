@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 02:46:33 by ishaimou          #+#    #+#             */
-/*   Updated: 2020/01/23 23:57:05 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:31:36 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void			modify_carry(t_process *p, char r_num)
 		p->carry = p->reg[r_num - 1] ? 0 : 1;
 }
 
-void				write_into_reg(t_process *p, int r_num, int val, int cflag)
+void				write_into_reg(t_process *p, int r_num, int val, t_bool cflag)
 {
 	if (is_valid_reg(r_num))
 	{
@@ -41,7 +41,7 @@ static	void		get_dir_arg(t_process *p, int args[2], int *offset, int i)
 }
 
 void				get_op_args(t_process *p, int args[2], int *offset,
-		int reg_type)
+		t_bool reg_type)
 {
 	int				i;
 	int				r_src;
