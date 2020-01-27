@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_save_chr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 23:03:14 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:47:12 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,17 @@ static int		treate_line(char **line, int fd, int *q)
 	{
 		*q += quotes_nbr(tmp);
 		str_n_combin(line, tmp);
-		free(tmp);
+		FREE(tmp);
 		pas++;
 	}
+	if (tmp)
+		FREE(tmp);
 	delete_comment(line);
 	return (pas);
 }
 
-static t_chr	*return_val(t_chr **input, char *line, int ret)
+static t_chr	*return_val(t_chr **input, int ret)
 {
-	if (line)
-		free(line);
 	if (ret != 0 && *input)
 	{
 		chr_free(input);
@@ -107,9 +107,11 @@ t_chr			*file_save_chr(int fd, int *nl)
 			chr_addnode(&input, line, ind[0]);
 			ind[0] += ind[1];
 			*nl = ret;
-			free(line);
 		}
+		FREE(line);
 		(ind[0])++;
 	}
-	return (return_val(&input, line, ret));
+	if (line)
+		FREE(line);
+	return (return_val(&input, ret));
 }

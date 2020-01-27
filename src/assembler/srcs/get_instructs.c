@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_instructs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:51 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 19:49:50 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 03:20:44 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int		get_inst(t_sfile *sfile, t_chr **list_label,
 
 	i = -1;
 	tab = split_labels(str);
+	if (tabstr_len(tab) < 1)
+		return (0);
 	while (++i < tabstr_len(tab) - 1)
 	{
 		if (!is_label(tab[i]))

@@ -1,3 +1,6 @@
-.name "goo ds\"f".comment "hdjsahjkda"
+.name "dasdasdas"
+.comment "dasdasdas"
 
-live %5
+label1:
+label2:
+	ld %:label1, r2

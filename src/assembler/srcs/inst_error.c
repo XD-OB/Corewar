@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inst_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/25 19:50:22 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 03:27:49 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 	i = 0;
 	while (str[i] && !ft_isblank(str[i]))
 		i++;
-	if (str[i] == '\0')
-	{
-		ft_dprintf(2, "Syntax Error!\n");
-		return ;
-	}
 	op = ft_strsub(str, 0, i++);
 	if (!(op_nbr = is_op(op_tab, op)))
 	{
@@ -66,20 +61,24 @@ void			exit_inst_error(t_sfile *sfile, t_chr *curr)
 	int			len;
 	int			i;
 
+	i = -1;
 	ft_dprintf(2, "line %{red}%d%{eoc}: ", curr->len);
 	tab = split_labels(curr->str);
-	i = -1;
 	len = tabstr_len(tab);
-	while (++i < len - 1)
-		if (!is_label(tab[i]))
-			exit_label_error(sfile, &tab, i);
-	if (curr->str[ft_strlen(curr->str) - 1] == LABEL_CHAR)
-	{
-		if (!is_label(tab[i]))
-			exit_label_error(sfile, &tab, i);
-	}
+	if (tabstr_len(tab) < 1)
+		ft_dprintf(2, "A %{red}%c%{eoc} without a label\n", LABEL_CHAR);
 	else
-		check_aloneinst(sfile->op_tab, tab[i]);
+	{
+		while (++i < len - 1)
+			if (!is_label(tab[i]))
+				exit_label_error(sfile, &tab, i);
+		if (curr->str[ft_strlen(curr->str) - 1] != LABEL_CHAR)
+			check_aloneinst(sfile->op_tab, tab[i]);
+		else if (!is_label(tab[i]))
+			exit_label_error(sfile, &tab, i);
+		else
+			ft_dprintf(2, "Syntax Error!\n");
+	}
 	tabstr_free(&tab);
 	free_sfile(sfile);
 	exit(EXIT_FAILURE);
