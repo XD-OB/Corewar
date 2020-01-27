@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_labels.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 06:15:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/26 06:00:43 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 05:39:29 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,25 @@
 
 static	int		ft_not_c(char ch, char *prev_ch)
 {
-	if (ch == LABEL_CHAR && (prev_ch == NULL ||
-		(!ft_isblank(*prev_ch) && *prev_ch != DIRECT_CHAR &&
-			*prev_ch != SEPARATOR_CHAR && *prev_ch != LABEL_CHAR)))
+	if (ch == LABEL_CHAR && !prev_ch)
+		return (0);
+	if (ch == LABEL_CHAR && (!ft_isblank(*prev_ch) &&
+		*prev_ch != DIRECT_CHAR && *prev_ch != SEPARATOR_CHAR))
 		return (0);
 	return (1);
 }
 
 static	int		ft_count_w(char *str)
 {
-	int		i;
-	int		j;
-	int		n;
+	int			n;
+	int			i;
 
 	i = 0;
-	j = 0;
 	n = 0;
-	while (str[i] != '\0')
-	{
-		if (ft_not_c(str[i], (i == 0) ? NULL : &str[i - 1]) == 0)
-		{
-			if (j == 1)
-				j = 0;
-		}
-		if (ft_not_c(str[i], (i == 0) ? NULL : &str[i - 1]) == 1)
-			if (j == 0)
-			{
-				n++;
-				j = 1;
-			}
-		i++;
-	}
-	return (n);
+	while (str[i])
+		if (str[i++] == LABEL_CHAR)
+			n++;
+	return (n + 1);
 }
 
 static	int		ft_size_w(char *str, int ind)
@@ -79,21 +66,21 @@ char			**split_labels(char *str)
 		return (NULL);
 	t[0] = 0;
 	*pt = 0;
-	table = (char**)malloc((ft_count_w(str) + 1) * sizeof(char*));
-	if (table)
+	if (!(table = (char**)malloc((ft_count_w(str) + 1) * sizeof(char*))))
+		return (NULL);
+	while (t[0] < ft_count_w(str))
 	{
-		while (t[0] < ft_count_w(str))
-		{
-			t[1] = 0;
+		t[1] = 0;
+		if (*pt > 0)
 			ft_position(str, pt);
-			t[2] = ft_size_w(str, *pt);
-			table[t[0]] = (char*)malloc((t[2] + 1) * sizeof(char));
-			while (t[1] < t[2])
-				table[t[0]][t[1]++] = str[(*pt)++];
-			table[t[0]++][t[1]] = '\0';
-		}
-		table[t[0]] = 0;
+		t[2] = ft_size_w(str, *pt);
+		table[t[0]] = (char*)malloc((t[2] + 1) * sizeof(char));
+		while (t[1] < t[2])
+			table[t[0]][t[1]++] = str[(*pt)++];
+		table[t[0]++][t[1]] = '\0';
+		*pt += (!*pt) ? 1 : 0;
 	}
+	table[t[0]] = NULL;
 	tabstr_trim(table);
 	return (table);
 }

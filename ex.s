@@ -1,6 +1,5 @@
 .name "dasdasdas"
 .comment "dasdasdas"
 
-label1:
-label2:
-	ld %:label1, r2
+:sdfsfds:djshfjkd
+	ld %:label2, r2

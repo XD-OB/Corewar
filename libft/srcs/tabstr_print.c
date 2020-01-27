@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tabstr_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 09:14:44 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/18 09:15:47 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 05:16:56 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		tabstr_print(char **tab)
 
 	i = -1;
 	len_tab = tabstr_len(tab);
-	ft_printf("-------------------\n");
+	ft_printf("--------- %d ------\n", len_tab);
 	while (++i < len_tab)
 		ft_printf("%s\n", tab[i]);
 	ft_printf("-------------------\n");

@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:00:48 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 03:27:49 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 05:08:28 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@ static void		check_aloneinst(t_op *op_tab, char *str)
 
 static void		exit_label_error(t_sfile *sfile, char ***tab, int i)
 {
-	ft_dprintf(2, "[%{red}%s%{eoc}] ", (*tab)[i]);
-	ft_dprintf(2, "contain invalid characters!\n");
+	if (!(*tab)[i] || (*tab)[i][0] == '\0')
+		ft_dprintf(2, "Empty string as label!\n");
+	else
+	{
+		ft_dprintf(2, "[%{red}%s%{eoc}] ", (*tab)[i]);
+		ft_dprintf(2, "contain invalid characters!\n");
+	}
 	tabstr_free(tab);
 	close(sfile->param_asm.fd);
 	free_sfile(sfile);
@@ -66,7 +71,7 @@ void			exit_inst_error(t_sfile *sfile, t_chr *curr)
 	tab = split_labels(curr->str);
 	len = tabstr_len(tab);
 	if (tabstr_len(tab) < 1)
-		ft_dprintf(2, "A %{red}%c%{eoc} without a label\n", LABEL_CHAR);
+		ft_dprintf(2, "Syntax Error!\n");
 	else
 	{
 		while (++i < len - 1)
