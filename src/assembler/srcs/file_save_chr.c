@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 02:47:12 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:11:00 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void		delete_comment(char **str)
 	q = 0;
 	if (!*str)
 		return ;
-	while ((*str)[i])
+	while ((*str)[i] && q < 2)
 	{
-		if ((*str)[i] == '\"' && (i == 0 || ((*str)[i - 1] != '\\')))
+		if ((*str)[i] == '\\')
+			i++;
+		else if ((*str)[i] == '\"')
 			q++;
-		if (q == 2)
-			break ;
 		i++;
 	}
 	if (!(*str)[i])
@@ -49,8 +49,9 @@ static int		quotes_nbr(char *str)
 	q = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"' &&
-			(i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\\')
+			i++;
+		else if (str[i] == '\"')
 			q++;
 		i++;
 	}
@@ -72,7 +73,7 @@ static int		treate_line(char **line, int fd, int *q)
 		pas++;
 	}
 	if (tmp)
-		FREE(tmp);
+		free(tmp);
 	delete_comment(line);
 	return (pas);
 }
@@ -112,6 +113,6 @@ t_chr			*file_save_chr(int fd, int *nl)
 		(ind[0])++;
 	}
 	if (line)
-		FREE(line);
+		free(line);
 	return (return_val(&input, ret));
 }

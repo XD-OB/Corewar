@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:04 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 02:45:56 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:15:32 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int		true_strlen(char *str)
 	len = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"' && str[i - 1] != '\\')
+		if (str[i] == '\"')
 			break ;
 		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
-			len--;
+			i++;
 		len++;
 		i++;
 	}
@@ -50,7 +50,7 @@ static char		*q_take_value(char *str)
 	new = ft_strnew(len);
 	while (j < len)
 	{
-		if (str[i] == '\\' && ft_strchr("\'\"", str[i + 1]))
+		if (str[i] == '\\' && ft_strchr("\'\"\\", str[i + 1]))
 			i++;
 		new[j++] = str[i++];
 	}
