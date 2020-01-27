@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 06:15:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 00:06:03 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 00:28:01 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char			**split_labels(char *str)
 			table[t[0]][t[1]++] = str[(t[3])++];
 		table[t[0]++][t[1]] = '\0';
 		(t[3])++;
-		ft_printf("position: %d\tsize_w: %d\n", t[3], t[2]);
 	}
 	table[t[0]] = NULL;
 	tabstr_trim(table);
