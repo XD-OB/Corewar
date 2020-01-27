@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 14:19:36 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/26 04:48:12 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 23:31:48 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@
 
 # define FLAG_A_I 6
 # define FLAG_A_T "a"
-
-# define SET_CARRY 1
 
 # define FSE (g_flags[FLAG_S_I].present)
 # define FDE (g_flags[FLAG_D_I].present)
@@ -178,6 +176,8 @@ typedef	union			u_dir
 	short				s;
 	int					n;
 }						t_dir;
+
+# define SET_CARRY 1
 
 # define SHORT_TDIR 1
 # define NORMAL_TDIR 0
@@ -373,9 +373,9 @@ t_ind					read_ind_val(t_process *p, int *offset, int type);
 
 void					reverse_bytes(void *add, size_t size);
 void					get_op_args(t_process *p, int args[2], int *pos,
-		int reg_type);
+		t_bool reg_type);
 void					write_into_reg(t_process *p, int r_num, int val,
-		int cflag);
+		t_bool cflag);
 void					write_mem(t_process *p, int *reg, int addr,
 		size_t size);
 t_bool					check_operation(t_process *p, int t_dir_type,
