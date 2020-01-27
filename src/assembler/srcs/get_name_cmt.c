@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_name_cmt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:04 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/26 00:13:15 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:14:09 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ static int		true_strlen(char *str)
 		len++;
 		i++;
 	}
-	return (len);
+	if (str[i] == '\"')
+		return (len);
+	return (-1);
 }
 
 static char		*q_take_value(char *str)
@@ -90,7 +92,7 @@ int				get_name_cmt(t_sfile *sfile, t_chr *curr, char *str)
 	{
 		sfile->name = val_cmd(str, NAME_CMD_STRING);
 		if (!sfile->name)
-			exit_ass_error(sfile, curr, ERROR_QUOTES);
+			exit_ass_error(sfile, curr, ERROR_SYNTAX);
 		if (ft_strlen(sfile->name) > PROG_NAME_LENGTH)
 			exit_ass_error(sfile, curr, ERROR_NAME_LENGTH);
 		return (0);
@@ -99,7 +101,7 @@ int				get_name_cmt(t_sfile *sfile, t_chr *curr, char *str)
 	{
 		sfile->comment = val_cmd(str, COMMENT_CMD_STRING);
 		if (!sfile->comment)
-			exit_ass_error(sfile, curr, ERROR_QUOTES);
+			exit_ass_error(sfile, curr, ERROR_SYNTAX);
 		if (ft_strlen(sfile->comment) > COMMENT_LENGTH)
 			exit_ass_error(sfile, curr, ERROR_COMMENT_LENGTH);
 		return (0);

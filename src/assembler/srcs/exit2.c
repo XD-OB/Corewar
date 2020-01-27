@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:02:52 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/26 00:04:59 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:05:47 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void			exit_ass_error(t_sfile *sfile, t_chr *def, int type)
 					COMMENT_LENGTH);
 	else if (type == ERROR_LEXICAL)
 		ft_dprintf(2, "Lexical Error!");
-	else if (type == ERROR_QUOTES)
-		ft_dprintf(2, "Command Quotes Error!");
+	else if (type == ERROR_SYNTAX)
+		ft_dprintf(2, "Syntax Error!");
 	else if (type == ERROR_NC_NAMECMT)
 		error_name_cmt(def);
 	else if (type == ERROR_BAD_INSTRUCT)

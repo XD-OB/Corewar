@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:01:08 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/24 04:46:17 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/27 02:05:35 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define ERROR_EXEC_SIZE 6
 # define ERROR_ALLOC 7
 # define ERROR_FD 8
-# define ERROR_QUOTES 9
+# define ERROR_SYNTAX 9
 # define ERROR_NO_STR 10
 # define ERROR_FILE_NF 11
 # define ERROR_FILE_BE 12
