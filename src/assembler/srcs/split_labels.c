@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 06:15:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 01:22:45 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 07:24:25 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ static int		ft_not_c(char ch, char *prev_ch)
 	return (0);
 }
 
-static	int		ft_count_w(char *str)
+static int		ft_count_w(char *str)
 {
 	int			ind;
 	int			n;
 	int			i;
+
 	i = -1;
 	n = 0;
 	while (str[++i])

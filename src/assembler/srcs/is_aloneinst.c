@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:39:00 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 06:06:52 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 07:24:59 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ static int		corrections(int type, char *str, t_op op_ref)
 {
 	if (str[0] != '(' && str[0] != LABEL_CHAR)
 	{
-		if (ft_is_strhex(str) &&
-			!corr_hex_value(type, str, op_ref))
-				return (0);
+		if (ft_is_strhex(str) && !corr_hex_value(type, str, op_ref))
+			return (0);
 	}
 	return (1);
 }
