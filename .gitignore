@@ -55,9 +55,15 @@ dkms.conf
 vm_champs
 settings.json
 russianCorewar
+mine
+other
+russi
+warriors/
+test.s
 .vscode
 russiancorewar
 *corewar
+*asm
 *.cor
 #*.s
 *2018*
