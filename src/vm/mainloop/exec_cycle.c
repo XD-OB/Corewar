@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 14:20:37 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/28 02:10:14 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/28 06:42:14 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_cycle(void)
 	t_process	*p;
 
 	p = g_arena.processes;
-	if (p)
+	if (g_arena.game_run)
 	{
 		g_arena.cycles_nb++;
 		g_arena.check.remain--;
