@@ -4,4 +4,4 @@
 
 xxx:
 typj:ds:
-label:label1:ld %:label, r5
+label:label1:ld %:label, r5   #kdsjk

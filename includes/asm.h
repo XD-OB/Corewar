@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <OB-96@hotmail.com>               +#+  +:+       +#+        */
+/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 04:00:06 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 01:05:57 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:28:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int					int_atc(t_inst *inst);
 int					is_label(char *str);
 int					is_comment(char *str);
 int					is_cmd(char *str, char *cmd);
+int					is_cmds(char *str);
 
 /*
 **	types1:

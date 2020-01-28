@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 02:03:14 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:27:34 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void		delete_comment(char **str)
 			q++;
 		i++;
 	}
-	if (!(*str)[i])
-		return ;
+	if (!(*str)[i] && q == 0)
+		i = 0;
 	while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
 		i++;
 	new = ft_strsub(*str, 0, i);
@@ -65,16 +65,19 @@ static int		treate_line(char **line, int fd, int *q)
 	int			pas;
 
 	pas = 0;
-	while ((*q % 2) != 0 && (ret = gnl(fd, &tmp)) > 0)
+	tmp = NULL;
+	if (is_cmds(*line))
 	{
-		*q += quotes_nbr(tmp);
-		str_n_combin(line, tmp);
-		FREE(tmp);
-		pas++;
+		while ((*q % 2) != 0 && (ret = gnl(fd, &tmp)) > 0)
+		{
+			*q += quotes_nbr(tmp);
+			str_n_combin(line, tmp);
+			FREE(tmp);
+			pas++;
+		}
 	}
 	if (tmp)
 		free(tmp);
-	ft_printf("========> %s\n", *line);
 	delete_comment(line);
 	return (pas);
 }
