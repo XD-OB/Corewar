@@ -1,5 +1,7 @@
-.name "o"
+.name "o#jfdhsjkdfhk" #kldfjlg
 .comment "djsfh"
 
 
-live %5
+xxx:
+typj:ds:
+label:label1:ld %:label, r5

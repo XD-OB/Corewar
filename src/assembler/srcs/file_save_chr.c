@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/27 23:11:00 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:03:14 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		delete_comment(char **str)
 		i++;
 	}
 	if (!(*str)[i])
-		i = 0;
+		return ;
 	while ((*str)[i] && (*str)[i] != COMMENT_CHAR)
 		i++;
 	new = ft_strsub(*str, 0, i);
@@ -74,6 +74,7 @@ static int		treate_line(char **line, int fd, int *q)
 	}
 	if (tmp)
 		free(tmp);
+	ft_printf("========> %s\n", *line);
 	delete_comment(line);
 	return (pas);
 }

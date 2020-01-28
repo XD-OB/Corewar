@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:01:51 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 01:22:17 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:25:04 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int		get_inst(t_sfile *sfile, t_chr **list_label,
 
 	i = -1;
 	tab = split_labels(str);
+	tabstr_print(tab);
 	if (tabstr_len(tab) < 1)
 		return (0);
 	while (++i < tabstr_len(tab) - 1)
