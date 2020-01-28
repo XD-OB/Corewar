@@ -1,6 +1,5 @@
-	.name "o"
+.name "o"
 .comment "djsfh"
 
 
-libe:
-ldsa::live %5
+live %5
