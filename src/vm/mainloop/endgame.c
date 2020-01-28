@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 03:20:42 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/23 23:59:48 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:13:44 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ void	free_all(void)
 {
 	free_processes();
 	if (VIS)
-	{
 		endwin();
-	}
 }
 
 void	endgame(void)
