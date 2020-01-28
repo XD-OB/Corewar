@@ -6,7 +6,7 @@
 /*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 06:15:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 00:28:01 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/28 01:22:45 by obelouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static	int		ft_count_w(char *str)
 	int			ind;
 	int			n;
 	int			i;
-
 	i = -1;
 	n = 0;
 	while (str[++i])
@@ -42,7 +41,7 @@ static	int		ft_count_w(char *str)
 			ind = i;
 			n++;
 		}
-	if (str[ind + 1] || n == 0)
+	if (n == 0 || str[ind + 1])
 		return (n + 1);
 	return (n);
 }
@@ -59,26 +58,29 @@ static	int		ft_size_w(char *str, int ind)
 
 char			**split_labels(char *str)
 {
-	int		t[4];
+	int		i;
+	int		j;
+	int		k;
+	int		l;
 	char	**table;
 
 	if (str == NULL)
 		return (NULL);
-	t[0] = 0;
-	t[3] = 0;
+	i = 0;
+	l = 0;
 	if (!(table = (char**)malloc((ft_count_w(str) + 1) * sizeof(char*))))
 		return (NULL);
-	while (t[0] < ft_count_w(str))
+	while (i < ft_count_w(str))
 	{
-		t[1] = 0;
-		t[2] = ft_size_w(str, t[3]);
-		table[t[0]] = (char*)malloc((t[2] + 1) * sizeof(char));
-		while (t[1] < t[2])
-			table[t[0]][t[1]++] = str[(t[3])++];
-		table[t[0]++][t[1]] = '\0';
-		(t[3])++;
+		j = 0;
+		k = ft_size_w(str, l);
+		table[i] = (char*)malloc((k + 1) * sizeof(char));
+		while (j < k)
+			table[i][j++] = str[l++];
+		table[i++][j] = '\0';
+		l++;
 	}
-	table[t[0]] = NULL;
+	table[i] = NULL;
 	tabstr_trim(table);
 	return (table);
 }
