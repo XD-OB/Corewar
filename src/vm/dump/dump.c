@@ -6,7 +6,7 @@
 /*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 05:29:00 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/21 22:01:27 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/29 02:07:00 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	manage_dump(void)
 		dump_memory(64);
 	else if (g_flags[FLAG_S_I].present)
 	{
-		if (g_arena.cycles_nb % g_flags[FLAG_S_I].data.num == 0)
+		if (g_arena.cycles_nb &&
+		g_arena.cycles_nb % g_flags[FLAG_S_I].data.num == 0)
 		{
 			dump_memory(64);
 			getchar();
