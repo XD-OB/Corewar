@@ -1,7 +1,8 @@
-.name "o#jfdhsjkdfhk" #kldfjlg
-.comment "djsfh"
+##header
+.comment "fuck you"
+.name "dszds" #jfdkls
 
-
-xxx:
-typj:ds:
-label:label1:ld %:label, r5   #kdsjk
+label: #comment after label
+ld  %9999 , r5
+label: ld  %:label , r5
+x1:
