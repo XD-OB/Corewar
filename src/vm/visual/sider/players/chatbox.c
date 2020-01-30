@@ -6,7 +6,7 @@
 /*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:40:25 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/24 04:14:27 by aaguert          ###   ########.fr       */
+/*   Updated: 2020/01/30 23:06:11 by aaguert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	add_comment(int plid, char *cmt)
 	int i;
 
 	i = MAX_COMMENTS - 1;
+	free(g_vis.game.comments[i].comment);
 	while (i > 0)
 	{
 		g_vis.game.comments[i] = g_vis.game.comments[i - 1];

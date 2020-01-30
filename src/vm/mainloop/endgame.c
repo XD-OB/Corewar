@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   endgame.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaguert <aaguert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 03:20:42 by aaguert           #+#    #+#             */
-/*   Updated: 2020/01/29 02:13:58 by ishaimou         ###   ########.fr       */
+/*   Updated: 2020/01/30 22:56:37 by aaguert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	free_all(void)
 {
 	free_processes();
 	if (VIS)
+	{
+		vfree_comments();
 		endwin();
+	}
 }
 
 void	endgame(void)
