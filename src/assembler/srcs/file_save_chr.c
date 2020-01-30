@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_save_chr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obelouch <obelouch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ishaimou <ishaimou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 00:05:30 by obelouch          #+#    #+#             */
-/*   Updated: 2020/01/28 02:27:34 by obelouch         ###   ########.fr       */
+/*   Updated: 2020/01/30 23:29:07 by ishaimou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_chr			*file_save_chr(int fd, int *nl)
 	q = 0;
 	ind[0] = 1;
 	input = NULL;
+	line = NULL;
 	while ((ret = gnl(fd, &line)) > 0)
 	{
 		q += quotes_nbr(line);
