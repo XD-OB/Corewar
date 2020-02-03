@@ -69,6 +69,7 @@ static char		*val_cmd(char *str, char *cmd)
 	char		*new;
 	size_t		i;
 
+	new = NULL;
 	i = ft_strlen(cmd);
 	while (ft_isblank(str[i]))
 		i++;

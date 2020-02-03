@@ -12,6 +12,13 @@
 
 #include "asm.h"
 
+static void		init_args(unsigned char *arg)
+{
+	arg[0] = 0;
+	arg[1] = 0;
+	arg[2] = 0;
+}
+
 static void		write_inst_atc(t_inst *inst, int fd)
 {
 	unsigned char	arg[3];
@@ -20,6 +27,7 @@ static void		write_inst_atc(t_inst *inst, int fd)
 
 	res = 0;
 	i = 0;
+	init_args(arg);
 	while (i < 3)
 	{
 		if (inst->args[i].type == T_REG)

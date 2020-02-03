@@ -88,7 +88,7 @@ void			check_args(t_op *op_tab, int op_nbr, char *str)
 		ft_printf("The Instruction end with %{red}%c%{eoc}\n", SEPARATOR_CHAR);
 	else
 	{
-		tab_arg = ft_strsplit(str, SEPARATOR_CHAR);
+		tab_arg = ft_strsplit_char(str, SEPARATOR_CHAR);
 		tabstr_trim(tab_arg);
 		check_tabargs(tab_arg, op_tab[op_nbr - 1]);
 		tabstr_free(&tab_arg);

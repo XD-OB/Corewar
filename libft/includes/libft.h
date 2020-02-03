@@ -283,6 +283,7 @@ char				*ft_strcjoin(char const *s1, char c);
 void				ft_trimstr(char **str);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
+char				**ft_strsplit_char(char *s, char c);
 size_t				ft_strlen(const char *str);
 char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strncpy(char *dest, const char *src, size_t len);

@@ -83,7 +83,7 @@ int				is_aloneinst(t_op *op_tab, char *str)
 		return (0);
 	if (str[ft_strlen(str) - 1] == SEPARATOR_CHAR)
 		return (0);
-	tab_arg = ft_strsplit(&str[i], SEPARATOR_CHAR);
+	tab_arg = ft_strsplit_char(&str[i], SEPARATOR_CHAR);
 	tabstr_trim(tab_arg);
 	if (!corr_tabargs(tab_arg, op_tab[op_nbr - 1]))
 		return (ret_tabstr_free(&tab_arg, 0));

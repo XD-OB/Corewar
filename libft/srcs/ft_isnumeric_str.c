@@ -25,5 +25,5 @@ t_bool	ft_isnumeric_str(char *str)
 			return (FALSE);
 		i++;
 	}
-	return (TRAP_TRACE);
+	return (TRUE);
 }

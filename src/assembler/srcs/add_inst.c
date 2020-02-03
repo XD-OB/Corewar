@@ -37,7 +37,7 @@ static void		fill_inst_args(t_inst *inst, char *str)
 	char		**tab_args;
 	int			i;
 
-	tab_args = ft_strsplit(str, SEPARATOR_CHAR);
+	tab_args = ft_strsplit_char(str, SEPARATOR_CHAR);
 	tabstr_trim(tab_args);
 	i = 0;
 	while (i < tabstr_len(tab_args))
