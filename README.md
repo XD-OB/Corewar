@@ -2,7 +2,7 @@
 
 Corewar is a School 42 project. The purpose of this project is an implementation of the programming game **“Core War”**.
 
-![Corewar](/resources/corewar.svg)
+![Corewar](/ressources/corewar.svg)
 
 - What is Corewar?
 Corewar is a very peculiar game. It’s about bringing “players” together around a “virtual machine”, which will load some “champions” who will fight against one another with the support of “processes”, with the objective being for these champions to stay “alive”.
@@ -66,7 +66,7 @@ Usage: ./corewar [-a (-dump|-d) <num> (-shed|-s) <num> -l <num>] [-v] [-n <num>]
 
 ## Visualizer
 
-![Visualizer](/resources/displayer.jpg)
+![Visualizer](/ressources/displayer.jpg)
 
 
 ## Owners
