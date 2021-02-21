@@ -2,7 +2,7 @@
 
 Corewar is a School 42 project. The purpose of this project is an implementation of the programming game **“Core War”**.
 
-![Corewar](/ressources/corewar.svg)
+![Corewar](/ressources/screenshots/corewar.png)
 
 - What is Corewar?
 
@@ -34,40 +34,27 @@ create the **asm** & **corewar** progerams
 
 - Run `make`
 
+## Files and ressources to use
+
+`ressources/vm_champs`
+
 ## Usage
 
 ### `asm`
 
-```
-Usage: ./asm (champion.s|champion.cor)
-    champion.s   — from assemble to bytecode
-    champion.cor — from bytecode to assemble
-```
-
-### `desasm`
+![asm](/ressources/screenshots/asm.png)
 
 ### `corewar`
 
-```
-Usage: ./corewar [-a (-dump|-d) <num> (-shed|-s) <num> -l <num>] [-v] [-n <num>] <champion.cor> <...>
-    -a          : Print output from "aff" (Default is off)
-    -dump <num> : Dump memory (32 octets per line) after <num> cycles and exit
-    -d    <num> : Dump memory (64 octets per line) after <num> cycles and exit
-    -show <num> : Run <num> cycles, dump memory (32 octets per line), pause and repeat
-    -s    <num> : Run <num> cycles, dump memory (64 octets per line), pause and repeat
-    -l    <num> : Log levels
-                   1  : Show lives
-                   2  : Show cycles
-                   4  : Show operations
-                   8  : Show deaths
-                   16 : Show PC movements
-    -v          : Run visualizer
-    -n    <num> : Set <num> of the next player
-```
+![vm](/ressources/screenshots/vm.png)
+
+Whitout visualizer result:
+
+![nodisplayer](/ressources/screenshots/nodisplayer.png)
 
 ## Visualizer
 
-![Visualizer](/ressources/displayer.jpg)
+![Visualizer](/ressources/screenshots/displayer.jpg)
 
 
 ## Owners
